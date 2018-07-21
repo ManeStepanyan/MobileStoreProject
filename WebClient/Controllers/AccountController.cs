@@ -18,6 +18,11 @@ namespace WebClient.Controllers
    
     public class AccountController : Controller
     {
+        public IActionResult LoginView()
+        {
+            return View();
+        }
+
         // GET: /<controller>/
         [Route("account/login")]
         public async Task<IActionResult> Login(string login,string password)
@@ -36,21 +41,75 @@ namespace WebClient.Controllers
                 Console.WriteLine(tokenResponse.Error);
                 return new JsonResult(404);
             }
-            return View(new JsonResult(tokenResponse.Json));
+            return new JsonResult(tokenResponse.Json);
                
         }
-        public IActionResult Index()
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+        // GET: /<controller>/
+        public  IActionResult RegisterCustomerView()
+        {
+
+            return View();
+        }
+
+        public async Task<bool> RegisterSellerAsync(string name, string address,string cellphone, string login, string email, string password)
+        {
+            var model = new SellerCreateModel(name, address, cellphone, login, email, password);
+            // ... Target page.
+            Uri siteUri = new Uri("http://localhost:5001/api/Sellers");
+            SellerModel seller = new SellerModel();
+
+            // ... Use HttpClient.
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.PostAsJsonAsync(
+                siteUri, model))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string result = await content.ReadAsStringAsync();
+                        seller = JsonConvert.DeserializeObject<SellerModel>(result);
+                        Console.WriteLine(seller);
+                    }
+                }
+            }
+            return true;
+        }
+
+
+
+
+        public IActionResult RegisterSellerView()
         {
             return View();
         }
 
-        // GET: /<controller>/
-        /*[Route("account/register")]
-        public async Task<IActionResult> t RegisternAsync()
+        public async Task<bool> RegisterCustomerAsync(string name, string surename, string login, string email, string password)
         {
-            return View();
+            var model = new CustomerModel(name, surename, login, email, password);
+            // ... Target page.
+            Uri siteUri = new Uri("http://localhost:5001/api/Customers");
+            CustomerModel customer = new CustomerModel();
+
+            // ... Use HttpClient.
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.PostAsJsonAsync(
+                siteUri, model))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string result = await content.ReadAsStringAsync();
+                        customer = JsonConvert.DeserializeObject<CustomerModel>(result);
+                    }
+                }
+            }
+            return true;
         }
-        */
 
     }
 }

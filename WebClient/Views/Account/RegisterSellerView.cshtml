@@ -1,0 +1,71 @@
+﻿@model WebClient.Models.SellerCreateModel
+@{
+    ViewData["Title"] = "RegisterCustomerView";
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Sign Up</h1>
+        <!--if (hasErrors)
+        {<div class="alert alert-danger">
+                foreach (var msg in ErrorMsg)
+                {<p>{msg}</p>}
+            </div>
+        }-->
+
+        <form asp-controller="Account" asp-action="RegisterCustomer" method="post">
+            <div class="form-group">
+                <label for="Name">Your shop's name</label>
+                <input type="text" name="Name" id="Name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="Address">Your shop's address</label>
+                <input type="text" name="Address" id="Address" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="CellPhone">Your shop's cellphone</label>
+                <input type="text" name="CellPhone" id="CellPhone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="Login">Login for your shop's account</label>
+                <input type="text" name="Login" id="Login" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input type="email" name="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password for your shop's account</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <input type="hidden" name="_csrf" value="">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var name = $("input#Name").val();
+    var address = $("input#Address").val();
+    var cellphone = $("input#CellPhone").val();
+    var login = $("input#Login").val();
+    var email = $("input#Email").val();
+    var password = $("input#Password").val();
+    $('button').hasClass("products").on('click', function () {
+            $.ajax
+                ({
+                    type: "POST",
+                    dataType: "Json",
+                    url: '@Url.Action("RegisterSeller", "Account")',
+                    async: false,
+                    data: { name: name, address: address, cellphone: cellphone, login: login, email: email, password: password },
+                    success: function (data) {
+
+                    }
+                    error: function () {
+                        ErrorMessage("", '');
+                    }
+                })
+        });
+</script>
+

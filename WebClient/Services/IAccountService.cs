@@ -6,6 +6,8 @@ namespace WebClient.Services
     {
         bool IsSignedIn(ClaimsPrincipal principal);
         string GetUserName(ClaimsPrincipal principal);
+        int Quantity { get; set; }
+
     }
 }
 

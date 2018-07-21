@@ -6,9 +6,12 @@ using System.Security.Claims;
 
 namespace WebClient.Services
 {
-    public class AccountService:IAccountService
+    public class AccountService : IAccountService
     {
         private HttpContext httpContext;
+
+        public int Quantity { get ; set; }
+
         public AccountService(IHttpContextAccessor diContextAccessor)
         {
             httpContext = diContextAccessor.HttpContext;
@@ -32,5 +35,7 @@ namespace WebClient.Services
 
             return name;
         }
+
     }
+        
 }

@@ -26,7 +26,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Brand</a>
+                <a class="navbar-brand" href="/">MobileStore</a>
+            </div>
+            <div>
+                <form asp-controller="Account" asp-action="login" method="get">   
+                    <input type="text" name="search" value="" />
+                    <button type="button" class="btn btn-primary">Search</button>
+                </form>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -34,20 +40,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Sellers">Shops</a></li>
-                    <li>
-                        <a href="/shopping-cart/">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> My Shopping Card
-                            <span class="badge"></span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Managment <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/user/signup">Signup</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/user/signin">Signin</a></li>
-                        </ul>
-                    </li>
+                    @Html.Partial("~/Views/Home/_LoginPartial.cshtml")
                 </ul>
             </div>
         </div>
