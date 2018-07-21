@@ -1,0 +1,23 @@
+﻿
+<div class="row">
+    <h3 style="margin:0 auto;">How do you want to register?</h3>
+    <div style="float:left;" class="col-lg-6 col-md-6">
+        <h2>As Customer</h2>
+        <ul>
+            <li>You Can</li>
+            <li>Serch products</li>
+            <li>Compare the product in different shops</li>
+            <li>Buy any product from any shop</li>   
+        </ul>    
+        <button onclick="location.href='@Url.Action("RegisterCustomerView", "Account")';">Register</button>  
+    </div>
+    <div style="float:left;" class="col-lg-6 col-md-6">
+        <h2>As Shop</h2>
+        <ul>
+            <li>You Can</li>
+            <li>Add your products</li>
+            <li>Sell them</li>
+        </ul>
+        <button onclick="location.href='@Url.Action("RegisterSellerView", "Account")';">Register</button>
+    </div>
+</div>

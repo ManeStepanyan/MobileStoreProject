@@ -3,25 +3,29 @@
 
 @if (AccountService.IsSignedIn(User))
 {
-    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+    <li>
+        <a href="/shopping-cart/">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i> My Shopping Card
+            <span class="badge">@AccountService.Quantity</span>
+        </a>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Managment <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="/user/profile">My Account, @AccountService.GetUserName(User)!</a></li>
+            <li><a href="/Account/MyAccount">My Account</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/user/logout">Logout</a></li>
-
-           <!-- <li><a asp-page="/Account/Manage/Index" title="Manage">Welcome, @AccountService.GetUserName(User)!</a></li>
-            <li><a asp-page="/Account/Manage/Index" title="Manage">Account</a></li>
-            <li><button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button></li> -->
+            <li><a href="/Account/LogOut">Log Out</a></li>
         </ul>
-    </form>
+    </li>
 }
 else
 {
-    <form asp-controller="Account" asp-action="Login" method="post" id="loginForm" class="navbar-right">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Managment <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="/user/signup">Signup</a></li>
+            <li><a href="/Account/SignUp">Signup</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/user/signin">Log In</a></li>
+            <li><a href="/Account/LoginView">Signin</a></li>
         </ul>
-    </form>
+    </li>
 }
