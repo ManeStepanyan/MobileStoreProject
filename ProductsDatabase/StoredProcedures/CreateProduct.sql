@@ -15,4 +15,5 @@ declare @res int
 begin
 	exec @res= InsertHelper @Name, @Brand, @Version, @Price, @RAM, @Year, @Display, @Battery, @Camera, @Image,@Quantity
 	select @res
+	return 0
 end

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/sellerproduct")]
+    [Authorize(Policy ="Seller")]
     public class SellerProductController : ControllerBase
     {
 
@@ -67,21 +70,32 @@ namespace CatalogAPI.Controllers
 
         // POST: api/SellerProduct
         [HttpPost]
-        //  [Authorize(Policy = "Seller")]
-        public async Task<IActionResult> Post([FromBody] Product product)
+        [Authorize(Policy = "Seller")]
+        public async Task<IActionResult> Post([FromBody]JToken jsonbody)
         {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:5002/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            MediaTypeFormatter jsonFormatter = new JsonMediaTypeFormatter();
-            var jsonstring = JsonConvert.SerializeObject(product);
-
-            StringContent content = new StringContent(jsonstring);
-
-            HttpResponseMessage response = await client.PostAsync("api/products/", content);
-            int id = int.Parse(response.ToString());
-            return new JsonResult(id);
+            using (var productClient = new HttpClient())
+            {
+                productClient.BaseAddress = new Uri("http://localhost:5002/");
+                productClient.DefaultRequestHeaders.Accept.Clear();
+                productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await productClient.PostAsync("/api/products/", content);
+                int productId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+            }
+            var userId = int.Parse(
+                         ((ClaimsIdentity)this.User.Identity).Claims
+                         .Where(claim => claim.Type == "user_id").First().Value);
+            using (var sellerClient = new HttpClient())
+            {
+                sellerClient.BaseAddress = new Uri("http://localhost:5001/");
+                sellerClient.DefaultRequestHeaders.Accept.Clear();
+                sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/"+userId);
+               SellerPublicInfo seller=(SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
+                int sellerId = seller.Id;
+            }
+            return new StatusCodeResult(200);
         }
 
 
