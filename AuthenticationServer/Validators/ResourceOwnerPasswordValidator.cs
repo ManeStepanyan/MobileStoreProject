@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿
+using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using System;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace AuthenticationServer.Validators
                 if (user != null)
                 {
                     // if password is ok set
-                    if (user.Password == MyCryptography.Encrypt(context.Password) && user.IsVerified == true) //
+                   if (user.Password == MyCryptography.Encrypt(context.Password) && user.IsVerified == true) //                 
                     {
                         context.Result = new GrantValidationResult(
                         subject: user.Id.ToString(),

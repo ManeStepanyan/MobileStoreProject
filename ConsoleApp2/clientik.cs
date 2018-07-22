@@ -21,8 +21,8 @@ namespace ConsoleApp2
             var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
 
 
-            //    var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("sffgggg", "dsdfsss", "UserAPI");
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "UserAPI");
+            //   var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "UserAPI");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "CatalogAPI");
 
 
             if (tokenResponse.IsError)
@@ -38,16 +38,7 @@ namespace ConsoleApp2
             var client = new HttpClient();
             client.SetBearerToken(tokenResponse.AccessToken);
 
-            var response = await client.DeleteAsync("http://localhost:5001/api/sellers/1");
-            /*      AdminInfo Admin = new AdminInfo();
-                  Admin.Name = "Admin";
-                  Admin.Login = "admin888";
-                  Admin.Email= "admin789 @gmail.com";
-                  Admin.Password = "administrator11";
-                  var stringContent = new StringContent( JsonConvert.SerializeObject(Admin));
-                  var response = await client.PostAsync("http://localhost:5001/api/admins", stringContent); */
-
-
+            var response = await client.GetAsync("http://localhost:5003/api/sellerproduct");
 
 
             if (!response.IsSuccessStatusCode)

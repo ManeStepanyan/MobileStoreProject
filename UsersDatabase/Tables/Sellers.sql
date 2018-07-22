@@ -4,10 +4,12 @@
     [Name]      VARCHAR (30)   NOT NULL,
     [CellPhone] VARCHAR (30)   NOT NULL,
     [Address]   VARCHAR (60)   NOT NULL,
-    [Rating]    DECIMAL (5, 2) NULL,
+    [Rating]    DECIMAL (5, 2) CONSTRAINT [DF_SomeName] DEFAULT ((10)) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Sellers_ToTableUsers] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id]),
     UNIQUE NONCLUSTERED ([Address] ASC)
 );
+
+
 
 

@@ -295,9 +295,18 @@ namespace DatabaseAccess.SpExecuters
 
             // setting result object properties
             foreach (var property in properties)
-            { if (property.Name == "IsValidated" || property.Name=="IsActive")
+            //  { if (property.Name == "IsValidated" || property.Name=="IsActive")
+            { if(reader[property.Name].GetType()==typeof(Boolean))
                 {////????????????
                     reader.GetBoolean(reader.GetOrdinal(property.Name));
+                }
+              if(reader[property.Name].GetType() == typeof(DateTime))
+                {
+                    reader.GetDateTime(reader.GetOrdinal(property.Name));
+                }
+                if (reader[property.Name].GetType() == typeof(decimal))
+                {
+                    reader.GetDecimal(reader.GetOrdinal(property.Name));
                 }
                 if (reader[property.Name].ToString() == DBNull.Value.ToString())
                 {

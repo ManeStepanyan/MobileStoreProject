@@ -102,8 +102,6 @@ namespace UsersAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        //  [Authorize(Policy = "Admin")]
-        //    [Authorize(Policy = "Seller")]
         [Authorize("Admin, Seller")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -58,19 +58,19 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="StoredProcedures" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SellerProduct.sql" />
-    <Build Include="StoredProcedures\GetSeller.sql" />
+    <Build Include="StoredProcedures\GetSellerByProductId.sql" />
     <Build Include="StoredProcedures\GetProductsBySellerId.sql" />
-    <Build Include="CustomerProduct.sql" />
-    <Build Include="StoredProcedures\GetCustomer.sql" />
-    <Build Include="StoredProcedures\GetProductByCustomerId.sql" />
     <Build Include="StoredProcedures\GetAllSellerProducts.sql" />
-    <Build Include="StoredProcedures\GetAllCustomerProducts.sql" />
+    <Build Include="StoredProcedures\GetAllCustomerOrders.sql" />
     <Build Include="StoredProcedures\AddSellerProduct.sql" />
     <Build Include="StoredProcedures\DeleteSellerProduct.sql" />
-    <Build Include="StoredProcedures\DeleteCostumerProduct.sql" />
-    <Build Include="StoredProcedures\AddCustomerProduct.sql" />
+    <Build Include="StoredProcedures\AddCustomerOrder.sql" />
+    <Build Include="dbo\Tables\CustomerOrder.sql" />
+    <Build Include="StoredProcedures\GetOrdersByCustomerId.sql" />
   </ItemGroup>
 </Project>
