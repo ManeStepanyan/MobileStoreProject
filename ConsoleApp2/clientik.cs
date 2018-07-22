@@ -21,9 +21,9 @@ namespace ConsoleApp2
             var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
 
 
-            //   var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "UserAPI");
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "CatalogAPI");
-
+           //   var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "CatalogAPI");
+           var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "CatalogAPI");
+     
 
             if (tokenResponse.IsError)
             {

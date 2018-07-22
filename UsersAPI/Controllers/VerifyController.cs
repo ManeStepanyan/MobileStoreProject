@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using UsersAPI.Models;
 
 namespace UsersAPI.Controllers
 {

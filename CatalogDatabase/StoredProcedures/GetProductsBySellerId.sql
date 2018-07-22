@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[GetProducts]
+﻿CREATE PROCEDURE [dbo].[GetProductsBySellerId]
 	@Seller_Id int
 AS
-	SELECT Product_Id from [SellerProduct] where Seller_Id=@Seller_Id
+	select * from CustomerProduct where @Seller_Id=@Seller_Id
 GO

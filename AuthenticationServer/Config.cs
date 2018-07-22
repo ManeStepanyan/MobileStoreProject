@@ -34,8 +34,11 @@ namespace AuthenticationServer
                         new Secret("secret".Sha256())
                     },
                     ClientClaimsPrefix = "",
-                    AllowedScopes = { "UserAPI","ProductAPI","OrderAPI","CatalogAPI" }
-                }
+                    AllowedScopes = { "UserAPI" ,"ProductAPI","OrderAPI","CatalogAPI" },
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    AccessTokenLifetime = 3600
+                },
+
             };
 
         }
@@ -45,8 +48,8 @@ namespace AuthenticationServer
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResources.Email(),
+               // new IdentityResources.Profile(),
+             //   new IdentityResources.Email(),
                 new IdentityResource
                 {
                     Name = JwtClaimTypes.Role,

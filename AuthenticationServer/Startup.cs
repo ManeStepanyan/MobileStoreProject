@@ -24,8 +24,7 @@ namespace AuthenticationServer
 
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddMvc();
-
+              services.AddMvc();       
             services.AddIdentityServer().AddDeveloperSigningCredential()
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
                     .AddInMemoryApiResources(Config.GetApiResources())
@@ -39,6 +38,7 @@ namespace AuthenticationServer
             services.AddSingleton(new Repo<User>(
                 new MapInfo(this.Configuration["Mappers:Users"]),
                 new SpExecuter(this.Configuration["ConnectionStrings:UsersDB"])));
+            services.AddAuthorization(options => options.AddPolicy("Seller", policy => policy.RequireClaim("role", "2")));
 
         }
 

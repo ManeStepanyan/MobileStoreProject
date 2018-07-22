@@ -1,10 +1,13 @@
-﻿using System.IO;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using CatalogAPI.Models;
 using DatabaseAccess.Repository;
 using DatabaseAccess.SpExecuters;
 using DatabaseAccessor.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,10 +15,10 @@ namespace CatalogAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+     /*   public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
+        } */
 
         // public IConfiguration Configuration { get; }
         private IConfiguration Configuration = new ConfigurationBuilder()
@@ -24,11 +27,17 @@ namespace CatalogAPI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvcCore()
-                .AddRazorViewEngine()
+        {  // adding MVC Core,authorization and JSON formatting
+            services.AddMvcCore(options=>  {
+                    // require scope1 or scope2
+                    var policy = ScopePolicy.Create("CatalogAPI", "scope2");
+                    options.Filters.Add(new AuthorizeFilter(policy));
+                })
+              //  .AddRazorViewEngine()
                     .AddAuthorization()
                     .AddJsonFormatters();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            // adding authentication info
             services.AddAuthentication("Bearer")
                    .AddIdentityServerAuthentication(options =>
                    {
@@ -36,7 +45,9 @@ namespace CatalogAPI
                        options.RequireHttpsMetadata = false;
                        options.ApiName = "CatalogAPI";
                    });
-            services.AddAuthorization(options => options.AddPolicy("Seller", policy => policy.RequireClaim("role", "2")));
+            // adding policies
+            services.AddAuthorization(options => options.AddPolicy("Seller", policy => { policy.RequireScope("CatalogAPI"); policy.RequireClaim("role", "2"); }));
+            // adding singletons
             services.AddSingleton(new Repo<SellerProduct>(
                new MapInfo(this.Configuration["Mappers:Catalog"]),
                new SpExecuter(this.Configuration["ConnectionStrings:CatalogDB"])));
@@ -49,10 +60,11 @@ namespace CatalogAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseMvc();
             app.UseStaticFiles();
             app.UseAuthentication();
         }
+
     }
 }

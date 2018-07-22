@@ -61,11 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="SellerProduct.sql" />
-    <Build Include="StoredProcedures\GetSeller.sql" />
-    <Build Include="StoredProcedures\GetProductsBySellerId.sql" />
+    <Build Include="StoredProcedures\GetSellerByProductId.sql" />
     <Build Include="CustomerProduct.sql" />
     <Build Include="StoredProcedures\GetCustomer.sql" />
-    <Build Include="StoredProcedures\GetProductByCustomerId.sql" />
+    <Build Include="StoredProcedures\GetProductsBySellerId.sql" />
     <Build Include="StoredProcedures\GetAllSellerProducts.sql" />
     <Build Include="StoredProcedures\GetAllCustomerProducts.sql" />
     <Build Include="StoredProcedures\AddSellerProduct.sql" />
