@@ -22,7 +22,7 @@ namespace ConsoleApp2
 
 
             //   var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "UserAPI");
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "CatalogAPI");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "UserAPI");
 
 
             if (tokenResponse.IsError)
