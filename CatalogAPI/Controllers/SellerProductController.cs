@@ -42,22 +42,23 @@ namespace CatalogAPI.Controllers
         {
             List<Product> list = new List<Product>();
             var sellerProducts = (IEnumerable<SellerProduct>)(await this.repo.ExecuteOperationAsync("GetProductsBySellerId", new[] { new KeyValuePair<string, object>("id", id) }));
-          
-                using (var productClient = new HttpClient())
-                {
-                    productClient.BaseAddress = new Uri("http://localhost:5002/");
-                    productClient.DefaultRequestHeaders.Accept.Clear();
-                    productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            using (var productClient = new HttpClient())
+            {
+                productClient.BaseAddress = new Uri("http://localhost:5002/");
+                productClient.DefaultRequestHeaders.Accept.Clear();
+                productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 foreach (var item in sellerProducts)
                 {
-                    HttpResponseMessage response = await productClient.GetAsync("/api/products/" +item.ProductId);
+                    HttpResponseMessage response = await productClient.GetAsync("/api/products/" + item.ProductId);
                     if (response.IsSuccessStatusCode)
                     {
                         list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
-                    } return new StatusCodeResult(404);
+                    }
+                    return new StatusCodeResult(404);
                 }
             }
- 
+
             return new JsonResult(list);
         }
 
@@ -65,16 +66,17 @@ namespace CatalogAPI.Controllers
         // returns seller by specified product id
         [HttpGet("{id}", Name = "GetSellerByProductId")]
         public async Task<IActionResult> GetSellerId(int id)
-        { Object res;
-            var sellerId =(int) await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
+        {
+            Object res;
+            var sellerId = (int)await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
             using (var sellerClient = new HttpClient())
             {
                 sellerClient.BaseAddress = new Uri("http://localhost:5001/");
                 sellerClient.DefaultRequestHeaders.Accept.Clear();
                 sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/" + sellerId);
-                res= await response.Content.ReadAsStringAsync();  
-            }          
+                res = await response.Content.ReadAsStringAsync();
+            }
             if (res == null)
             {
                 return new StatusCodeResult(404);
@@ -87,7 +89,8 @@ namespace CatalogAPI.Controllers
         [HttpPost]
         [Authorize(Policy = "Seller")]
         public async Task<IActionResult> Post([FromBody]JToken jsonbody)
-        { int productId, sellerId;
+        {
+            int productId, sellerId;
             using (var productClient = new HttpClient())
             {
                 productClient.BaseAddress = new Uri("http://localhost:5002/");
@@ -95,7 +98,7 @@ namespace CatalogAPI.Controllers
                 productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await productClient.PostAsync("/api/products/", content);
-                 productId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+                productId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
             }
             var userId = int.Parse(
                          ((ClaimsIdentity)this.User.Identity).Claims
@@ -104,10 +107,10 @@ namespace CatalogAPI.Controllers
             {
                 sellerClient.BaseAddress = new Uri("http://localhost:5001/");
                 sellerClient.DefaultRequestHeaders.Accept.Clear();
-                sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));                
-                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/"+userId);
-               SellerPublicInfo seller=(SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
-                 sellerId = seller.Id;
+                sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/" + userId);
+                SellerPublicInfo seller = (SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
+                sellerId = seller.Id;
             }
             await this.repo.ExecuteOperationAsync("AddSellerProduct", new[] { new KeyValuePair<string, object>("productId", productId), new KeyValuePair<string, object>("sellerId", sellerId) });
             return new StatusCodeResult(200);
@@ -119,7 +122,7 @@ namespace CatalogAPI.Controllers
         [Authorize(Policy = "Seller")]
         public async Task<IActionResult> Delete(int id)
         {
-             int currentSellerId;
+            int currentSellerId;
             var sellerId = (int)await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
             var userId = int.Parse(
                          ((ClaimsIdentity)this.User.Identity).Claims
@@ -139,9 +142,17 @@ namespace CatalogAPI.Controllers
                 await this.repo.ExecuteOperationAsync("DeleteSellerProduct", new[]
                 {
                 new KeyValuePair<string, object>("id", id)
-            });
+            }); using (var productClient = new HttpClient())
+                {
+                    productClient.BaseAddress = new Uri("http://localhost:5002/");
+                    productClient.DefaultRequestHeaders.Accept.Clear();
+                    productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    await productClient.DeleteAsync("/api/products/" + id);
+                }
+
                 return new StatusCodeResult(200);
-            } return new StatusCodeResult(404);
+            }
+            return new StatusCodeResult(404);
         }
     }
 }
