@@ -52,7 +52,7 @@ namespace WebClient.Controllers
         }
 
         //[Route("home/seller/{id}")]
-        /* public async Task<IActionResult> Seller(int id)
+        /*public async Task<IActionResult> Seller(int id)
          {
              // ... Target page.
              Uri idSiteUri = new Uri("http://localhost:5001/api/" + id);
@@ -69,20 +69,20 @@ namespace WebClient.Controllers
                          // ... Read the string.
                          string result = await content.ReadAsStringAsync();
                          product_ids = JsonConvert.DeserializeObject<List<KeyValuePair<string, int>>>(result);
-                         using (HttpResponseMessage res = await client.GetAsync(prodSiteUri, product_ids))
-                         {
+                        using (HttpResponseMessage res = await client.GetAsync(prodSiteUri))
+                        {
+                            using (HttpContent content1 = response.Content)
+                            {
+                                
 
-                         }
-                         foreach(var seller in obj)
-                         {
-                             sellers.Add(obj);
-                         }
-
-                         if (result != null &&
-                         result.Length >= 50)
-                         {
-                             Console.WriteLine(result.Substring(0, 50) + "...");
-                         }
+                                if (result != null &&
+                                result.Length >= 50)
+                                {
+                                    Console.WriteLine(result.Substring(0, 50) + "...");
+                                }
+                            }
+                        }
+                        
                      }
                  }
              }

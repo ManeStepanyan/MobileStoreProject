@@ -5,12 +5,12 @@
     @foreach (var seller in Model)
     {
         <div>
-            <p data-type = "id">@seller.Id</p>
-            <p>@seller.Name</p>
-            <p>@seller.Address</p>
-            <p>@seller.CellPhone</p>
-            <p>@seller.Email</p>
-            <p>@seller.Rating</p>
+            <p data-type = "id">seller's id - @seller.Id</p>
+            <p>seller's name - @seller.Name</p>
+            <p>seller's address - @seller.Address</p>
+            <p>seller's cellphone - @seller.CellPhone</p>
+            <p>seller's email - @seller.Email</p>
+            <p>seller's rating - @seller.Rating</p>
             <input type="button" class="products btn btn-primary" value="See All Products">
         </div>
     }

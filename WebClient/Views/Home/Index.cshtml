@@ -1,3 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var msg = ViewData["message"];
+}
+
+@if (msg != null)
+{
+    <div class="success alert-success" role="alert">
+        <p>@msg</p>
+    </div>
 }

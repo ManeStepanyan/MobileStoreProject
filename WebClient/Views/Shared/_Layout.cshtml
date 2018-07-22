@@ -28,20 +28,26 @@
                 </button>
                 <a class="navbar-brand" href="/">MobileStore</a>
             </div>
-            <div>
-                <form asp-controller="Account" asp-action="login" method="get">   
-                    <input type="text" name="search" value="" />
-                    <button type="button" class="btn btn-primary">Search</button>
-                </form>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Sellers">Shops</a></li>
-                    @Html.Partial("~/Views/Home/_LoginPartial.cshtml")
-                </ul>
+            
+            <div class="collapse navbar-collapse row" id="bs-example-navbar-collapse-1">
+                <div class="col-lg-5 col-md-5">
+                    <div class="col-lg-10 col-md-10">
+                        <input type="text" name="search" value="" class="form-control" />
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <button type="button" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                   
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Shop" asp-action="SellerAsync">Shops</a></li>
+                        @Html.Partial("~/Views/Home/_LoginPartial.cshtml")
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>

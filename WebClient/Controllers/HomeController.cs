@@ -15,11 +15,11 @@ namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string msg = null)
         {
+            ViewData["message"] = msg;
             return View();
         }
-       
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

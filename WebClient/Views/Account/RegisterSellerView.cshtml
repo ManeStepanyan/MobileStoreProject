@@ -1,19 +1,20 @@
 ﻿@model WebClient.Models.SellerCreateModel
 @{
     ViewData["Title"] = "RegisterCustomerView";
+    var errmsg = ViewData["ErrorMessage"];
 }
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <h1>Sign Up</h1>
-        <!--if (hasErrors)
-        {<div class="alert alert-danger">
-                foreach (var msg in ErrorMsg)
-                {<p>{msg}</p>}
+        @if (errmsg != null) 
+        {
+            <div class="alert alert-danger">
+                <p>@errmsg</p>
             </div>
-        }-->
+        }
 
-        <form asp-controller="Account" asp-action="RegisterCustomer" method="post">
+        <form asp-controller="Account" asp-action="RegisterSellerAsync" method="post">
             <div class="form-group">
                 <label for="Name">Your shop's name</label>
                 <input type="text" name="Name" id="Name" class="form-control" required>
@@ -39,7 +40,7 @@
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
             <input type="hidden" name="_csrf" value="">
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <button type="submit" class="btn btn-primary signup">Sign Up</button>
         </form>
     </div>
 </div>
@@ -51,12 +52,12 @@
     var login = $("input#Login").val();
     var email = $("input#Email").val();
     var password = $("input#Password").val();
-    $('button').hasClass("products").on('click', function () {
+    $('button').hasClass("signup").on('click', function () {
             $.ajax
                 ({
                     type: "POST",
                     dataType: "Json",
-                    url: '@Url.Action("RegisterSeller", "Account")',
+                    url: '@Url.Action("RegisterSellerAsync", "Account")',
                     async: false,
                     data: { name: name, address: address, cellphone: cellphone, login: login, email: email, password: password },
                     success: function (data) {
