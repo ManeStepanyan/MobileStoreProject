@@ -46,7 +46,8 @@ namespace AuthenticationServer.Validators
                 if (user != null)
                 {
                     // if password is ok set
-                    if (user.Password == MyCryptography.Encrypt(context.Password) && user.IsVerified == true) //
+                    //  if (user.Password == MyCryptography.Encrypt(context.Password) && user.IsVerified == true) //
+                    if (user.Password == context.Password && user.IsVerified == true)
                     {
                         context.Result = new GrantValidationResult(
                         subject: user.Id.ToString(),

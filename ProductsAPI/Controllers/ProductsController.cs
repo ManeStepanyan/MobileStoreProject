@@ -54,6 +54,19 @@ namespace ProductAPI.Controllers
             return new JsonResult(res);
         }
 
+        // GET: api/Products/5
+        [HttpGet("{Id}", Name = "GetListOfProducts")]
+        public async Task<IActionResult> GetListOfProducts(List<int> listOfIds)
+        {
+            var products = new List<object>();
+            foreach (var id in listOfIds)
+            {
+                var res = await this.repository.ExecuteOperationAsync("GetProduct", new[] { new KeyValuePair<string, object>("id", id) });
+                products.Add(res);
+            }
+            return new JsonResult(products);
+        }
+
         // POST: api/Products
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Product product)
