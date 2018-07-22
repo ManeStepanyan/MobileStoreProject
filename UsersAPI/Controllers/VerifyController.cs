@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UsersAPI.Controllers
@@ -7,6 +8,12 @@ namespace UsersAPI.Controllers
     [Route("api/Verify")]
     public class VerifyController : Controller
     {
+        private readonly Repo<UserInformation> repo;
+        public VerifyController(Repo<UserInformation> repo)
+        {
+            this.repo = repo;
+
+        }
         // GET: api/Verify
         [HttpGet]
         public IEnumerable<string> Get()
@@ -15,10 +22,11 @@ namespace UsersAPI.Controllers
         }
 
         // GET: api/Verify/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "Validate")]
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            await this.repo.ExecuteOperationAsync("VerifyUser", new[] { new KeyValuePair<string, object>("activationCode", id) });
+            return new StatusCodeResult(200);
         }
 
         // POST: api/Verify

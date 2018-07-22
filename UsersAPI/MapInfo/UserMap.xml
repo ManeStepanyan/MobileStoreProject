@@ -458,4 +458,14 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
+  <operation name="ExistsEmail">
+    <spName>EmailExists</spName>
+    <parameters>
+      <parameter>
+        <parameterName>email</parameterName>
+        <spParameterName>Email</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Scalar</returnDataType>
+  </operation>
 </operations>

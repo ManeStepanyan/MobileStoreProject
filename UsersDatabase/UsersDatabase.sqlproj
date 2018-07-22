@@ -104,5 +104,6 @@
     <Build Include="StoredProcedures\AddActivationCode.sql" />
     <Build Include="StoredProcedures\ReadOperations\GetSellerByUserId.sql" />
     <Build Include="StoredProcedures\ReadOperations\GetCustomerByUserId.sql" />
+    <Build Include="StoredProcedures\Other\EmailExists.sql" />
   </ItemGroup>
 </Project>
