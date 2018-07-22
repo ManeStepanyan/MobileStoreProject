@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace CatalogAPI.Models
 {
-    public class CustomerProduct
+    public class CustomerOrder
     {
-        public int ProductId { get; set; }
+        public int OrderId { get; set; }
         public int CustomerId { get; set; }
     }
 }

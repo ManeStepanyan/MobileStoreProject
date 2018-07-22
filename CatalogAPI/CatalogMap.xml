@@ -54,46 +54,26 @@
     <spName>GetAllCustomerProducts</spName>
     <returnDataType>Enumerable</returnDataType>
   </operation>
-  <operation name='GetProductByCustomerId'>
-    <spName>GetProductByCustomerId</spName>
+  <operation name='GetOrdersByCustomerId'>
+    <spName>GetOrdersByCustomerId</spName>
     <parameters>
       <parameter>
         <parameterName>id</parameterName>
         <spParameterName>Customer_Id</spParameterName>
       </parameter>
     </parameters>
-    <returnDataType>Entity</returnDataType>
+    <returnDataType>Enumerable</returnDataType>
   </operation>
-  <operation name='GetCustomer'>
-    <spName>GetCustomer</spName>
+  <operation name="AddCustomerOrder">
+    <spName>AddCustomerOrder</spName>
     <parameters>
       <parameter>
-        <parameterName>id</parameterName>
-        <spParameterName>Product_Id</spParameterName>
-      </parameter>
-    </parameters>
-    <returnDataType>Entity</returnDataType>
-  </operation>
-  <operation name="AddCustomerProduct">
-    <spName>AddCustomerProduct</spName>
-    <parameters>
-      <parameter>
-        <parameterName>ProductId</parameterName>
-        <spParameterName>Product_Id</spParameterName>
+        <parameterName>OrderId</parameterName>
+        <spParameterName>Order_Id</spParameterName>
       </parameter>
       <parameter>
         <parameterName>CustomerId</parameterName>
         <spParameterName>Customer_Id</spParameterName>
-      </parameter>
-    </parameters>
-    <returnDataType>NoReturnValue</returnDataType>
-  </operation>
-  <operation name='DeleteCustomerProduct'>
-    <spName>DeleteCustomerProduct</spName>
-    <parameters>
-      <parameter>
-        <parameterName>id</parameterName>
-        <spParameterName>Product_Id</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
