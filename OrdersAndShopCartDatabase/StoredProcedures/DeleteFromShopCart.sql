@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteFromShopCart]
-	@Id int
+	@Product_Id int,
+	@Customer_Id int
 AS
 	delete from ShopCart
-	where [Id]=@Id 
+	where Product_Id=@Product_Id and Customer_Id=@Customer_Id
 GO

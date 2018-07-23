@@ -84,6 +84,17 @@ namespace CatalogAPI.Controllers
             return new JsonResult(res);
         }
 
+        [HttpGet("{id}", Name = "GetCatalogIdByProductId")]
+        public async Task<IActionResult> GetCatalogIdByProductId(int id)
+        {
+            int catalogId = (int)await this.repo.ExecuteOperationAsync("GetByProductId", new[] { new KeyValuePair<string, object>("id", id) });
+            if (catalogId != 0)
+            {
+                return new JsonResult(catalogId);
+            }
+            return new JsonResult(404);
+        }
+
 
         // POST: api/SellerProduct
         [HttpPost]

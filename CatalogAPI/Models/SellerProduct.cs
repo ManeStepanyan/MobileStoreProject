@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace CatalogAPI.Models
 {
     public class SellerProduct
-    {
+    {        
         public int ProductId { get; set; }
         public int SellerId { get; set; }
     }

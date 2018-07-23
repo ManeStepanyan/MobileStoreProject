@@ -1,7 +1,0 @@
-﻿CREATE TABLE [dbo].[ShopCart]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
-	Customer_Id INT NOT NULL,
-	Product_Id INT NOT NULL,
-	Quantity INT NOT NULL
-)
