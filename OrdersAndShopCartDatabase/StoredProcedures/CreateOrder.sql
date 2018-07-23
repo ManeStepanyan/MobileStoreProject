@@ -8,4 +8,6 @@
 AS
 	insert into Orders(Product_Id, [Date], [Address], CellPhone, Quantity, TotalAmount)
 	Values (@Product_Id, @Date, @Address, @CellPhone, @Quantity, @TotalAmount)
+	select scope_identity()
+	return 0
 GO

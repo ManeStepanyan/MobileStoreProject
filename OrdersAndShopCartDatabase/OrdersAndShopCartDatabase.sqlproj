@@ -74,5 +74,7 @@
     <Build Include="dbo\Tables\Orders.sql" />
     <Build Include="dbo\Stored Procedures\GetProductsByCustomerId.sql" />
     <Build Include="dbo\Stored Procedures\GetOrderByProductId.sql" />
+    <Build Include="StoredProcedures\GetQuantity.sql" />
+    <Build Include="StoredProcedures\GetProductIdByOrderId.sql" />
   </ItemGroup>
 </Project>

@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using CatalogAPI.Models;
 using DatabaseAccess.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
 {
@@ -45,14 +51,47 @@ namespace CatalogAPI.Controllers
 
         // POST: api/CustomerProduct
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CustomerOrder customerOrder)
+        [Authorize(Policy ="Customer")]
+        public async Task<IActionResult> Post([FromBody] JToken jsonbody)
         { // don't forget ro delete product
-            var res = await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[]
+
+            int orderId, customerId, quantity, productId;
+            using (var orderClient = new HttpClient())
             {
-                new KeyValuePair<string, object>("ProductId", customerOrder.OrderId),
-                new KeyValuePair<string, object>("CustomerId", customerOrder.CustomerId)
-            });
-            return new JsonResult(res);
+                orderClient.BaseAddress = new Uri("http://localhost:5005/");
+                orderClient.DefaultRequestHeaders.Accept.Clear();
+                orderClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await orderClient.PostAsync("/api/orders/", content);
+                orderId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+                response = await orderClient.GetAsync("/api/orders/quantity" +orderId);
+                quantity = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+                response = await orderClient.GetAsync("/api/products/id" + orderId);
+                productId = (int)((await response.Content.ReadAsAsync(typeof(int))));
+            }
+            var userId = int.Parse(
+                         ((ClaimsIdentity)this.User.Identity).Claims
+                         .Where(claim => claim.Type == "user_id").First().Value);
+            using (var customerClient = new HttpClient())
+            {
+                customerClient.BaseAddress = new Uri("http://localhost:5001/");
+                customerClient.DefaultRequestHeaders.Accept.Clear();
+                customerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/" + userId);
+                CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
+                customerId = customer.Id;
+            }
+            using (var productClient = new HttpClient())
+            {
+                productClient.BaseAddress = new Uri("http://localhost:5002/");
+                productClient.DefaultRequestHeaders.Accept.Clear();
+                productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpContent content = new StringContent(quantity.ToString(), Encoding.UTF8, "application/json");
+                await productClient.PutAsync("/api/products/quantity/" + productId,content);
+            }
+            await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });
+
+            return new JsonResult(200);
         }
 
    

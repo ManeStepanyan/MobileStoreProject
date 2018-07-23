@@ -7,7 +7,7 @@ using ProductsAPI.Models;
 namespace ProductAPI.Controllers
 {
     [Route("api/products")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : Controller
     {
 
         private readonly Repo<Product> repository;
@@ -103,6 +103,17 @@ namespace ProductAPI.Controllers
 
             return new JsonResult(await this.repository.ExecuteOperationAsync("GetProduct", new[]
                                   { new KeyValuePair<string, object>("Id", Id) }));
+        }
+        [HttpPut("quantity/{id}")]
+        public async Task<IActionResult> Put(int id, int orderedQuantity)
+        {
+         var res=  await this.repository.ExecuteOperationAsync("UpdateQuantity", new[]
+            {
+                new KeyValuePair<string, object>("id", id),
+                new KeyValuePair<string, object>("orderedQuantity", orderedQuantity)           
+            });
+            if (res == null) return new StatusCodeResult(404);
+            return new StatusCodeResult(200);
         }
 
         // DELETE: api/ApiWithActions/5

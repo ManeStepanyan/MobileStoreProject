@@ -122,4 +122,24 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
+  <operation name='GetQuantity'>
+    <spName>GetQuantity</spName>
+    <parameters>
+      <parameter>
+        <parameterName>orderId</parameterName>
+        <spParameterName>Order_Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Scalar</returnDataType>
+  </operation>
+  <operation name='GetProductIdByOrderId'>
+    <spName>GetProductIdByOrderId</spName>
+    <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Scalar</returnDataType>
+  </operation>
 </operations>
