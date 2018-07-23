@@ -70,6 +70,7 @@
     <Build Include="StoredProcedures\SelectProducts.sql" />
     <Build Include="StoredProcedures\ChangeQuantity.sql" />
     <Build Include="StoredProcedures\InsertHelper.sql" />
+    <Build Include="StoredProcedures\UpdateQuantity.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProductsDatabase.refactorlog" />

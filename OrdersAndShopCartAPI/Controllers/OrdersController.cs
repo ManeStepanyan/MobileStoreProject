@@ -11,7 +11,7 @@ namespace OrdersAndShopCartAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/orders")]
-    public class OrdersController : ControllerBase
+    public class OrdersController : Controller
     {
         private readonly Repo<Order> repo;
 
@@ -58,9 +58,28 @@ namespace OrdersAndShopCartAPI.Controllers
             }
             return new JsonResult(res);
         }
-
-
-        [HttpGet("{productId}", Name = "GetOrderByProductId")]
+        [HttpGet("quantity/{orderId}", Name = "GetQuantityByOrderId")]
+        public async Task<IActionResult> GetQuantity(int orderId)
+        {
+            var res = await this.repo.ExecuteOperationAsync("GetQuantity", new[]
+            {      new KeyValuePair<string, object>("orderId", orderId) });
+            if (res == null)
+            {
+                return new StatusCodeResult(404);
+            } return new JsonResult(res);
+        }
+        [HttpGet("id/{orderId}", Name = "GetProductyOrderId")]
+        public async Task<IActionResult> Getproduct(int orderId)
+        {
+            var res = await this.repo.ExecuteOperationAsync("GetProductIdByOrderId", new[]
+            {      new KeyValuePair<string, object>("id", orderId) });
+            if (res == null)
+            {
+                return new StatusCodeResult(404);
+            }
+            return new JsonResult(res);
+        }
+        [HttpGet("{id}", Name = "GetOrderByProductId")]
         public async Task<IActionResult> GetOrderByProductId(int id)
         {
             var res = await this.repo.ExecuteOperationAsync("GetOrderByProductId", new[]

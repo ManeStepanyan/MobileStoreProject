@@ -28,11 +28,7 @@ namespace CatalogAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  // adding MVC Core,authorization and JSON formatting
-            services.AddMvcCore(options=>  {
-                    // require scope1 or scope2
-                    var policy = ScopePolicy.Create("CatalogAPI", "scope2");
-                    options.Filters.Add(new AuthorizeFilter(policy));
-                })
+            services.AddMvcCore()
               //  .AddRazorViewEngine()
                     .AddAuthorization()
                     .AddJsonFormatters();

@@ -78,6 +78,26 @@
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
+  <operation name='GetByProductId'>
+    <spName>GetByProductId</spName>
+    <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>Product_Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Entity</returnDataType>
+  </operation>
+  <operation name='GetByCatalogId'>
+    <spName>GetByCatalogId</spName>
+    <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>Catalog_Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Entity</returnDataType>
+  </operation>
 </operations>
   
 
