@@ -11,7 +11,7 @@ using WebClient.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using IdentityModel.Client;
-
+using Microsoft.AspNetCore.Http;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebClient.Controllers
@@ -42,8 +42,8 @@ namespace WebClient.Controllers
                 Console.WriteLine(tokenResponse.Error);
                 return new JsonResult(404);
             }
-            return new JsonResult(tokenResponse.Json);
-
+            HttpContext.Session.SetInt32("Is logged",1);
+            return RedirectToAction("Index","Home");
         }
 
         public IActionResult SignUp()
@@ -70,7 +70,6 @@ namespace WebClient.Controllers
             var model = new UserModel(name, null, cellphone, address, login, password, email, 2);
             // ... Target page.
             Uri siteUri = new Uri("http://localhost:5001/api/Register");
-            SellerModel seller = new SellerModel();
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
@@ -112,11 +111,17 @@ namespace WebClient.Controllers
                     var responseString = await response.Content.ReadAsStringAsync();
                     var responseStr = JsonConvert.DeserializeObject<String>(responseString);
                     if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
-                        return RedirectToAction("Index", "Home", new { msg = responseStr.ToString() });
+                        return RedirectToAction("Index", "Home", new { msg = responseStr });
                     else
-                        return RedirectToAction("RegisterCustomerView", "Account", new { ErrorMsg = responseStr.ToString() });
+                        return RedirectToAction("RegisterCustomerView", "Account", new { ErrorMsg = responseStr });
                 }
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "home");
         }
     }
 }
