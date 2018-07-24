@@ -107,16 +107,6 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <spName>GetProducts</spName>
     <returnDataType>Enumerable</returnDataType>
   </operation>
-  <operation name='GetProduct'>
-    <spName>GetProductById</spName>
-    <parameters>
-      <parameter>
-        <parameterName>id</parameterName>
-        <spParameterName>Id</spParameterName>
-      </parameter>
-    </parameters>
-    <returnDataType>Enumerable</returnDataType>
-  </operation>
   <operation name="UpdateQuantity">
     <spName>UpdateQuantity</spName>
     <parameters>

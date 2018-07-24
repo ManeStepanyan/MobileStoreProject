@@ -85,6 +85,7 @@ namespace CatalogAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCatalogIdByProductId")]
+        [Authorize(Policy = "Seller")]
         public async Task<IActionResult> GetCatalogIdByProductId(int id)
         {
             int catalogId = (int)await this.repo.ExecuteOperationAsync("GetByProductId", new[] { new KeyValuePair<string, object>("id", id) });
@@ -119,7 +120,7 @@ namespace CatalogAPI.Controllers
                 sellerClient.BaseAddress = new Uri("http://localhost:5001/");
                 sellerClient.DefaultRequestHeaders.Accept.Clear();
                 sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/" + userId);
+                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + userId);
                 SellerPublicInfo seller = (SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
                 sellerId = seller.Id;
             }
