@@ -8,7 +8,7 @@ namespace WebClient.Services
 {
     public class AccountService : IAccountService
     {
-        private HttpContext httpContext;
+        private readonly HttpContext httpContext;
 
         public int Quantity { get ; set; }
 

@@ -1,7 +1,8 @@
 ﻿@using WebClient.Services
+@using Microsoft.AspNetCore.Http
 @inject IAccountService AccountService
-
-@if (AccountService.IsSignedIn(User))
+@{/*var a = new HttpContext.Session();*/}
+@if (this.Context.Session.GetInt32("Is logged") == 1)
 {
     <li>
         <a href="/shopping-cart/">

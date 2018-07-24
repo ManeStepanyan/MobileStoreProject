@@ -61,7 +61,7 @@ namespace ProductAPI.Controllers
             var products = new List<object>();
             foreach (var id in listOfIds)
             {
-                var res = await this.repository.ExecuteOperationAsync("GetProduct", new[] { new KeyValuePair<string, object>("id", id) });
+                var res = await Get(id);
                 products.Add(res);
             }
             return new JsonResult(products);
