@@ -64,9 +64,9 @@ namespace OrdersAndShopCart
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

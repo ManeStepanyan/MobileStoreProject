@@ -6,6 +6,16 @@
     <spName>GetAllSellerProducts</spName>
     <returnDataType>Enumerable</returnDataType>
   </operation>
+  <operation name="GetAllOrdersByCustomerId">
+    <spName>GetAllOrdersByCustomerId</spName>
+    <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Enumerable</returnDataType>
+  </operation>
   <operation name='GetProductsBySellerId'>
     <spName>GetProductBySellerId</spName>
     <parameters>
@@ -32,6 +42,16 @@
       <parameter>
         <parameterName>id</parameterName>
         <spParameterName>Product_Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Scalar</returnDataType>
+  </operation>
+  <operation name='GetCustomerIdByOderId'>
+    <spName>GetCustomerIdByOderId</spName>
+    <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>id</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Scalar</returnDataType>

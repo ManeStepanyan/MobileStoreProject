@@ -42,6 +42,8 @@ namespace CatalogAPI.Controllers
         [Authorize(Policy ="Customer")]
         public async Task<IActionResult> GetOrdersByCustomerId(int id)
         {
+            List<int> orderIds = new List<int>();
+            List<Order> orders = new List<Order>();
             int customerId;
             var userId = int.Parse(
                           ((ClaimsIdentity)this.User.Identity).Claims
@@ -57,15 +59,26 @@ namespace CatalogAPI.Controllers
             }
             if (id == customerId)
             {
-                var res = await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
-                if (res == null)
+               orderIds= (List<int>) await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
+                if (orderIds.Count==0)
                 {
                     return new JsonResult("No orders");
                 }
-                return new JsonResult(res);
+                using (var orderClient = new HttpClient())
+                {
+                    orderClient.BaseAddress = new Uri("http://localhost:5005/");
+                    orderClient.DefaultRequestHeaders.Accept.Clear();
+                    orderClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    foreach (var orderid in orderIds)
+                    {
+                        HttpResponseMessage response = await orderClient.GetAsync("/api/orders/"+ orderid);
+                       orders.Add((Order)((await response.Content.ReadAsAsync(typeof(Order)))));
+                    }             
+                }
+                return new JsonResult(orders);
             } return new StatusCodeResult(404);
         }
-
+       
         // POST: api/CustomerProduct
         [HttpPost]
         [Authorize(Policy ="Customer")]
