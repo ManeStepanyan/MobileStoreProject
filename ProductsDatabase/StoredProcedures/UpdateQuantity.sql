@@ -4,5 +4,5 @@
 AS
 	Update Products
 	set Quantity= Quantity-@orderedQuantity
-	where Id=@Id
+	where  Catalog_Id=@Id
 RETURN 0

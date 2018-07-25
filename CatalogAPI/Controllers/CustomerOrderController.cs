@@ -55,7 +55,7 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> Post([FromBody] JToken jsonbody)
         { // don't forget ro delete product
 
-            int orderId, customerId, quantity, productId;
+            int orderId, customerId, quantity, catalogId;
             using (var orderClient = new HttpClient())
             {
                 orderClient.BaseAddress = new Uri("http://localhost:5005/");
@@ -66,8 +66,8 @@ namespace CatalogAPI.Controllers
                 orderId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
                 response = await orderClient.GetAsync("/api/orders/quantity" +orderId);
                 quantity = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
-                response = await orderClient.GetAsync("/api/products/id" + orderId);
-                productId = (int)((await response.Content.ReadAsAsync(typeof(int))));
+                response = await orderClient.GetAsync("/api/orders/catalog/" + orderId);
+                catalogId = (int)((await response.Content.ReadAsAsync(typeof(int))));
             }
             var userId = int.Parse(
                          ((ClaimsIdentity)this.User.Identity).Claims
@@ -91,7 +91,7 @@ namespace CatalogAPI.Controllers
              new KeyValuePair<string, string>("quantity", quantity.ToString())
 
         });
-                await productClient.PutAsync("/api/products/quantity/" + productId,content);
+                await productClient.PutAsync("/api/products/quantity/" + catalogId,content);
             }
             await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });
 
