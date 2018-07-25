@@ -68,10 +68,10 @@ namespace OrdersAndShopCartAPI.Controllers
                 return new StatusCodeResult(404);
             } return new JsonResult(res);
         }
-        [HttpGet("id/{orderId}", Name = "GetProductyOrderId")]
+        [HttpGet("catalog/{orderId}", Name = "GetCatalogByOrderId")]
         public async Task<IActionResult> Getproduct(int orderId)
         {
-            var res = await this.repo.ExecuteOperationAsync("GetProductIdByOrderId", new[]
+            var res = await this.repo.ExecuteOperationAsync("GetCatalogIdByOrderId", new[]
             {      new KeyValuePair<string, object>("id", orderId) });
             if (res == null)
             {
@@ -79,12 +79,12 @@ namespace OrdersAndShopCartAPI.Controllers
             }
             return new JsonResult(res);
         }
-        [HttpGet("{id}", Name = "GetOrderByProductId")]
-        public async Task<IActionResult> GetOrderByProductId(int id)
+        [HttpGet("{id}", Name = "GetOrderByCatalogId")]
+        public async Task<IActionResult> GetOrderByCatalogId(int id)
         {
-            var res = await this.repo.ExecuteOperationAsync("GetOrderByProductId", new[]
+            var res = await this.repo.ExecuteOperationAsync("GetOrderByCatalogId", new[]
             {
-                new KeyValuePair<string, object>("id", id)
+                new KeyValuePair<string, object>("Catalog_Id", id)
             });
             if (res == null)
             {
@@ -99,7 +99,7 @@ namespace OrdersAndShopCartAPI.Controllers
         {
             var res = await this.repo.ExecuteOperationAsync("CreateOrder", new[]
             {
-                new KeyValuePair<string, object>("ProductId", order.ProductId),
+                new KeyValuePair<string, object>("Catalog", order.CatalogId),
                 new KeyValuePair<string, object>("Date", order.Date),
                 new KeyValuePair<string, object>("Address", order.Address),
                 new KeyValuePair<string, object>("CellPhone", order.CellPhone),

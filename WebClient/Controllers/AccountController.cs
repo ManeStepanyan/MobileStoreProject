@@ -95,7 +95,8 @@ namespace WebClient.Controllers
                 siteUri, byteContent))
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
-                    var responseStr = JsonConvert.DeserializeObject<String>(responseString);
+                    var json = JsonConvert.SerializeObject(responseString);
+                    var responseStr = JsonConvert.DeserializeObject<string>(json);
                     if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
                         return RedirectToAction("Index", "Home", new { msg = responseStr.ToString() });
                     else

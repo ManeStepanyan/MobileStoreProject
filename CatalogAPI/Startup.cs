@@ -1,13 +1,10 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.IO;
+﻿using System.IO;
 using CatalogAPI.Models;
 using DatabaseAccess.Repository;
 using DatabaseAccess.SpExecuters;
 using DatabaseAccessor.Repository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,10 +26,10 @@ namespace CatalogAPI
         public void ConfigureServices(IServiceCollection services)
         {  // adding MVC Core,authorization and JSON formatting
             services.AddMvcCore()
-              //  .AddRazorViewEngine()
+                    .AddRazorViewEngine()
                     .AddAuthorization()
                     .AddJsonFormatters();
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             // adding authentication info
             services.AddAuthentication("Bearer")
                    .AddIdentityServerAuthentication(options =>
@@ -48,7 +45,7 @@ namespace CatalogAPI
             services.AddAuthorization(options => options.AddPolicy("Admin, Seller", policy => policy.RequireClaim("role", "1", "2")));
             services.AddAuthorization(options => options.AddPolicy("Admin, Customer", policy => policy.RequireClaim("role", "1", "3")));
             // adding singletons
-            services.AddSingleton(new Repo<SellerProduct>(
+                services.AddSingleton(new Repo<SellerProduct>(
                new MapInfo(this.Configuration["Mappers:Catalog"]),
                new SpExecuter(this.Configuration["ConnectionStrings:CatalogDB"])));
         }
@@ -61,9 +58,10 @@ namespace CatalogAPI
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseMvc();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseMvc();
+
         }
 
     }

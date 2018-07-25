@@ -32,16 +32,12 @@ namespace AuthenticationServer
                     .AddProfileService<ProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddTransient<IProfileService, ProfileService>();
-
-            // adding singletons
-
+            //adding policies
+            
             services.AddSingleton(new Repo<User>(
                 new MapInfo(this.Configuration["Mappers:Users"]),
                 new SpExecuter(this.Configuration["ConnectionStrings:UsersDB"])));
-            services.AddAuthorization(options => options.AddPolicy("Seller", policy => policy.RequireClaim("role", "2")));
-
         }
-
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

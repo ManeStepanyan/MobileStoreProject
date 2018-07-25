@@ -4,12 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using OrdersAndShopCartAPI.Models;
 
 namespace OrdersAndShopCartAPI.Controllers
@@ -41,16 +39,16 @@ namespace OrdersAndShopCartAPI.Controllers
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
-            var productsIds = (IEnumerable<int>)(await this.repo.ExecuteOperationAsync("GetProductsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
+            var catalogIds = (IEnumerable<int>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
 
-            using (var productClient = new HttpClient())
+            using (var catalogClient = new HttpClient())
             {
-                productClient.BaseAddress = new Uri("http://localhost:5002/");
-                productClient.DefaultRequestHeaders.Accept.Clear();
-                productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                foreach (var id in productsIds)
+                catalogClient.BaseAddress = new Uri("http://localhost:5003/");
+                catalogClient.DefaultRequestHeaders.Accept.Clear();
+                catalogClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                foreach (var id in catalogIds)
                 {
-                    HttpResponseMessage response = await productClient.GetAsync("/api/products/" +id);
+                    HttpResponseMessage response = await catalogClient.GetAsync("/api/sellerproduct/catalog/" +id);
                     if (response.IsSuccessStatusCode)
                     {
                         list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
@@ -58,7 +56,6 @@ namespace OrdersAndShopCartAPI.Controllers
                     return new StatusCodeResult(404);
                 }
             }
-
             return new JsonResult(list);
         }
 
@@ -72,7 +69,7 @@ namespace OrdersAndShopCartAPI.Controllers
         // POST: api/ShopCart
         [HttpPost]
         [Authorize(Policy ="Customer")]
-        public async Task<IActionResult> Post([FromBody]int productId)
+        public async Task<IActionResult> Post([FromBody]int catalogId)
         { int currentCustomerId;
             var userId = int.Parse(
                        ((ClaimsIdentity)this.User.Identity).Claims
@@ -86,7 +83,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
-      var res= await this.repo.ExecuteOperationAsync("AddToShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("ProductId", productId) });
+      var res= await this.repo.ExecuteOperationAsync("AddToShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
             if (res == null) return new StatusCodeResult(404);
             return new StatusCodeResult(200);
         }
@@ -99,7 +96,7 @@ namespace OrdersAndShopCartAPI.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int productId)
+        public async Task<IActionResult> Delete(int catalogId)
         {
             int currentCustomerId;
             var userId = int.Parse(
@@ -114,7 +111,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
-            var res = await this.repo.ExecuteOperationAsync("DeleteFromShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("ProductId", productId) });
+            var res = await this.repo.ExecuteOperationAsync("DeleteFromShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
             if (res == null) return new StatusCodeResult(404);
             return new StatusCodeResult(200);
         }

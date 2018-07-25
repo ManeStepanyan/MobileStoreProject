@@ -26,7 +26,7 @@ namespace UsersAPI.Controllers
             this.userRepo = userRepo;
         }
         // GET: api/Sellers
-        [HttpGet(Name = "GetSellers")]
+        [HttpGet(Name = "GetSellers")]      
         public async Task<IActionResult> GetSellers()
         {
             var result = await this.publicRepo.ExecuteOperationAsync("GetAllSellers");

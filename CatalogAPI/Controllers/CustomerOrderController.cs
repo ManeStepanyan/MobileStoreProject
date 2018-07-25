@@ -25,9 +25,9 @@ namespace CatalogAPI.Controllers
             this.repo = repo;
         }
 
-
         // GET: api/CustomerProduct
         [HttpGet]
+        [Authorize(Policy ="Admin")]
         public async Task<IActionResult> Get()
         {
             var result = await this.repo.ExecuteOperationAsync("GetAllCustomerOrders");
@@ -39,14 +39,31 @@ namespace CatalogAPI.Controllers
 
         // GET: api/CustomerProduct/5
         [HttpGet("{id}", Name = "GetOrdersByCustomerId")]
+        [Authorize(Policy ="Customer")]
         public async Task<IActionResult> GetOrdersByCustomerId(int id)
         {
-            var res = await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
-            if (res == null)
+            int customerId;
+            var userId = int.Parse(
+                          ((ClaimsIdentity)this.User.Identity).Claims
+                          .Where(claim => claim.Type == "user_id").First().Value);
+            using (var customerClient = new HttpClient())
             {
-                return new StatusCodeResult(404);
+                customerClient.BaseAddress = new Uri("http://localhost:5001/");
+                customerClient.DefaultRequestHeaders.Accept.Clear();
+                customerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage resp = await customerClient.GetAsync("/api/customers/users/" + userId);
+                CustomerPublicInfo customer = (CustomerPublicInfo)((await resp.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
+                customerId = customer.Id;
             }
-            return new JsonResult(res);
+            if (id == customerId)
+            {
+                var res = await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
+                if (res == null)
+                {
+                    return new JsonResult("No orders");
+                }
+                return new JsonResult(res);
+            } return new StatusCodeResult(404);
         }
 
         // POST: api/CustomerProduct
@@ -55,7 +72,7 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> Post([FromBody] JToken jsonbody)
         { // don't forget ro delete product
 
-            int orderId, customerId, quantity, productId;
+            int orderId, customerId, quantity, catalogId;
             using (var orderClient = new HttpClient())
             {
                 orderClient.BaseAddress = new Uri("http://localhost:5005/");
@@ -66,8 +83,8 @@ namespace CatalogAPI.Controllers
                 orderId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
                 response = await orderClient.GetAsync("/api/orders/quantity" +orderId);
                 quantity = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
-                response = await orderClient.GetAsync("/api/products/id" + orderId);
-                productId = (int)((await response.Content.ReadAsAsync(typeof(int))));
+                response = await orderClient.GetAsync("/api/orders/catalog/" + orderId);
+                catalogId = (int)((await response.Content.ReadAsAsync(typeof(int))));
             }
             var userId = int.Parse(
                          ((ClaimsIdentity)this.User.Identity).Claims
@@ -86,8 +103,12 @@ namespace CatalogAPI.Controllers
                 productClient.BaseAddress = new Uri("http://localhost:5002/");
                 productClient.DefaultRequestHeaders.Accept.Clear();
                 productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpContent content = new StringContent(quantity.ToString(), Encoding.UTF8, "application/json");
-                await productClient.PutAsync("/api/products/quantity/" + productId,content);
+                var content = new FormUrlEncodedContent(new[]
+        {
+             new KeyValuePair<string, string>("quantity", quantity.ToString())
+
+        });
+                await productClient.PutAsync("/api/products/quantity/" + catalogId,content);
             }
             await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });
 
