@@ -86,7 +86,10 @@ namespace CatalogAPI.Controllers
                 productClient.BaseAddress = new Uri("http://localhost:5002/");
                 productClient.DefaultRequestHeaders.Accept.Clear();
                 productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpContent content = new StringContent(quantity.ToString(), Encoding.UTF8, "application/json");
+                var content = new FormUrlEncodedContent(new[]
+        {
+             new KeyValuePair<string, string>("quantity", quantity.ToString())
+        });
                 await productClient.PutAsync("/api/products/quantity/" + productId,content);
             }
             await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });

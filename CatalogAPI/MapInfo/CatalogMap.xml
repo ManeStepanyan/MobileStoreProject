@@ -38,7 +38,7 @@
         <spParameterName>Seller_Id</spParameterName>
       </parameter>
     </parameters>
-    <returnDataType>NoReturnValue</returnDataType>
+    <returnDataType>Scalar</returnDataType>
   </operation>
   <operation name='DeleteSellerProduct'>
     <spName>DeleteSellerProduct</spName>

@@ -115,6 +115,17 @@ namespace ProductAPI.Controllers
             if (res == null) return new StatusCodeResult(404);
             return new StatusCodeResult(200);
         }
+        [HttpPut("catalog/{id}")]
+        public async Task<IActionResult> PutCatalogId(int id, int catalogId)
+        {
+            var res = await this.repository.ExecuteOperationAsync("UpdateCatalogId", new[]
+               {
+                new KeyValuePair<string, object>("id", id),
+                new KeyValuePair<string, object>("catalogId", catalogId)
+            });
+            if (res == null) return new StatusCodeResult(404);
+            return new StatusCodeResult(200);
+        }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]

@@ -102,7 +102,10 @@ namespace CatalogAPI.Controllers
         [Authorize(Policy = "Seller")]
         public async Task<IActionResult> Post([FromBody]JToken jsonbody)
         {
-            int productId, sellerId;
+            int productId, sellerId, catalogId;
+            var userId = int.Parse(
+                        ((ClaimsIdentity)this.User.Identity).Claims
+                        .Where(claim => claim.Type == "user_id").First().Value);
             using (var productClient = new HttpClient())
             {
                 productClient.BaseAddress = new Uri("http://localhost:5002/");
@@ -111,20 +114,25 @@ namespace CatalogAPI.Controllers
                 HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await productClient.PostAsync("/api/products/", content);
                 productId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
-            }
-            var userId = int.Parse(
-                         ((ClaimsIdentity)this.User.Identity).Claims
-                         .Where(claim => claim.Type == "user_id").First().Value);
-            using (var sellerClient = new HttpClient())
+
+
+                using (var sellerClient = new HttpClient())
+                {
+                    sellerClient.BaseAddress = new Uri("http://localhost:5001/");
+                    sellerClient.DefaultRequestHeaders.Accept.Clear();
+                    sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
+                    SellerPublicInfo seller = (SellerPublicInfo)((await resp.Content.ReadAsAsync(typeof(SellerPublicInfo))));
+                    sellerId = seller.Id;
+                }
+                
+                catalogId =Convert.ToInt32( await this.repo.ExecuteOperationAsync("AddSellerProduct", new[] { new KeyValuePair<string, object>("productId", productId), new KeyValuePair<string, object>("sellerId", sellerId) }));
+                 content = new FormUrlEncodedContent(new[]
             {
-                sellerClient.BaseAddress = new Uri("http://localhost:5001/");
-                sellerClient.DefaultRequestHeaders.Accept.Clear();
-                sellerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                SellerPublicInfo seller = (SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
-                sellerId = seller.Id;
+             new KeyValuePair<string, string>("catalogId", catalogId.ToString())
+        });
+                response = await productClient.PutAsync("/api/products/catalog/" + productId, content);
             }
-            await this.repo.ExecuteOperationAsync("AddSellerProduct", new[] { new KeyValuePair<string, object>("productId", productId), new KeyValuePair<string, object>("sellerId", sellerId) });
             return new StatusCodeResult(200);
         }
 

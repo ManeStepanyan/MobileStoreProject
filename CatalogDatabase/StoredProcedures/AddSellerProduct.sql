@@ -4,5 +4,7 @@
 AS
 	insert into SellerProduct(Product_Id, Seller_Id)
 	values (@Product_Id, @Seller_Id)
+	select scope_identity()
+	return 0
 GO
 
