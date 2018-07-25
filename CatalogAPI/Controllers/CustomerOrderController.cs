@@ -25,9 +25,9 @@ namespace CatalogAPI.Controllers
             this.repo = repo;
         }
 
-
         // GET: api/CustomerProduct
         [HttpGet]
+        [Authorize(Policy ="Admin")]
         public async Task<IActionResult> Get()
         {
             var result = await this.repo.ExecuteOperationAsync("GetAllCustomerOrders");
@@ -39,14 +39,31 @@ namespace CatalogAPI.Controllers
 
         // GET: api/CustomerProduct/5
         [HttpGet("{id}", Name = "GetOrdersByCustomerId")]
+        [Authorize(Policy ="Customer")]
         public async Task<IActionResult> GetOrdersByCustomerId(int id)
         {
-            var res = await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
-            if (res == null)
+            int customerId;
+            var userId = int.Parse(
+                          ((ClaimsIdentity)this.User.Identity).Claims
+                          .Where(claim => claim.Type == "user_id").First().Value);
+            using (var customerClient = new HttpClient())
             {
-                return new StatusCodeResult(404);
+                customerClient.BaseAddress = new Uri("http://localhost:5001/");
+                customerClient.DefaultRequestHeaders.Accept.Clear();
+                customerClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage resp = await customerClient.GetAsync("/api/customers/users/" + userId);
+                CustomerPublicInfo customer = (CustomerPublicInfo)((await resp.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
+                customerId = customer.Id;
             }
-            return new JsonResult(res);
+            if (id == customerId)
+            {
+                var res = await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
+                if (res == null)
+                {
+                    return new JsonResult("No orders");
+                }
+                return new JsonResult(res);
+            } return new StatusCodeResult(404);
         }
 
         // POST: api/CustomerProduct
