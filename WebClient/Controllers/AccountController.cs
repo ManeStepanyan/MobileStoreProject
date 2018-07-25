@@ -12,6 +12,8 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using WebClient.Services;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebClient.Controllers
@@ -19,6 +21,7 @@ namespace WebClient.Controllers
 
     public class AccountController : Controller
     {
+        AccountService _accountService;
         public IActionResult LoginView()
         {
             return View();
@@ -42,8 +45,18 @@ namespace WebClient.Controllers
                 Console.WriteLine(tokenResponse.Error);
                 return new JsonResult(404);
             }
+            HttpContextAccessor httpContextAccessor = new HttpContextAccessor();
+
+            _accountService = new AccountService(httpContextAccessor);
+            _accountService.GetUserName(User as ClaimsPrincipal);
+            var caller = User as ClaimsPrincipal;
+            var identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
             HttpContext.Session.SetInt32("Is logged",1);
-            return RedirectToAction("Index","Home");
+            HttpContext.Session.SetString("Role", caller.Claims.ToString());
+            
+            //return RedirectToAction("Index","Home", claims.ToArray());
+            return View();
         }
 
         public IActionResult SignUp()

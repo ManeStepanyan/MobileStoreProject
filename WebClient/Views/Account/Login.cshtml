@@ -1,7 +1,7 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Login";
 }
 
 <h2>Logged in</h2>
-
+<p>@this.Context.Session.GetString("Role")</p>

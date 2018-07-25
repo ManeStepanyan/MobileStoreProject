@@ -1,11 +1,12 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
     ViewData["Title"] = "Home Page";
-    var msg = ViewData["message"];
+    IEnumerable<Claim> claims = (IEnumerable<Claim>)ViewData["claims"];
 }
 
-@if (msg != null)
+@foreach (var claim in claims)
 {
     <div class="success alert-success" role="alert">
-        <p>@msg</p>
+        <p>@claim</p>
     </div>
 }

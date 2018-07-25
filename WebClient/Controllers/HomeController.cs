@@ -10,14 +10,15 @@ using Microsoft.AspNetCore.Mvc;
 using WebClient.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(string msg = null)
+        public IActionResult Index(IEnumerable<Claim> claims = null)
         {
-            ViewData["message"] = msg;
+            ViewData["claims"] = claims;
             return View();
         }
         public IActionResult About()
