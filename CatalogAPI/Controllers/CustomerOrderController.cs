@@ -89,6 +89,7 @@ namespace CatalogAPI.Controllers
                 var content = new FormUrlEncodedContent(new[]
         {
              new KeyValuePair<string, string>("quantity", quantity.ToString())
+
         });
                 await productClient.PutAsync("/api/products/quantity/" + productId,content);
             }

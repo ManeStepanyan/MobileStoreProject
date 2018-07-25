@@ -37,7 +37,7 @@ namespace CatalogAPI.Controllers
         }
 
         // GET: api/SellerProduct/5
-        [HttpGet("{id}", Name = "GetProductsBySellerId")]
+        [HttpGet("products/{id}", Name = "GetProductsBySellerId")]
         public async Task<IActionResult> GetProductsBySellerId(int id)
         {
             List<Product> list = new List<Product>();
@@ -61,10 +61,31 @@ namespace CatalogAPI.Controllers
 
             return new JsonResult(list);
         }
+        [HttpGet("{catalog/id}", Name = "GetProductByCatalogId")]
+        public async Task<IActionResult> GetProductsByCatalogId(int id)
+        {
+            Product product = new Product();
+            int productId = (int)(await this.repo.ExecuteOperationAsync("GetProductByCatalogId", new[] { new KeyValuePair<string, object>("catalogId", id) }));
+
+            using (var productClient = new HttpClient())
+            {
+                productClient.BaseAddress = new Uri("http://localhost:5003/");
+                productClient.DefaultRequestHeaders.Accept.Clear();
+                productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+               
+                    HttpResponseMessage response = await productClient.GetAsync("/api/products/" + productId);
+                    if (response.IsSuccessStatusCode)
+                    {
+                      product=(Product)(await response.Content.ReadAsAsync(typeof(Product)));
+                    }
+                 else  return new StatusCodeResult(404);              
+            }
+            return new JsonResult(product);
+        }
 
         // GET: api/SellerProduct/5
         // returns seller by specified product id
-        [HttpGet("{id}", Name = "GetSellerByProductId")]
+        [HttpGet("seller/{id}", Name = "GetSellerByProductId")]
         public async Task<IActionResult> GetSellerId(int id)
         {
             Object res;
@@ -85,7 +106,6 @@ namespace CatalogAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCatalogIdByProductId")]
-        [Authorize(Policy = "Seller")]
         public async Task<IActionResult> GetCatalogIdByProductId(int id)
         {
             int catalogId = (int)await this.repo.ExecuteOperationAsync("GetByProductId", new[] { new KeyValuePair<string, object>("id", id) });

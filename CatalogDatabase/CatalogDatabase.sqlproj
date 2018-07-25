@@ -74,5 +74,7 @@
     <Build Include="StoredProcedures\GetOrdersByCustomerId.sql" />
     <Build Include="StoredProcedures\GetByCatalogId.sql" />
     <Build Include="StoredProcedures\GetByProductId.sql" />
+    <Build Include="StoredProcedures\GetProductByCatalogId.sql" />
+    <Build Include="StoredProcedures\GetCatalogsByCustomerId.sql" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,16 @@
     <spName>GetAllSellerProducts</spName>
     <returnDataType>Enumerable</returnDataType>
   </operation>
+  <operation name='GetProductByCatalogId'>
+    <spName>GetProductByCatalogId</spName>
+    <parameters>
+      <parameter>
+        <parameterName>catalogId</parameterName>
+        <spParameterName>Catalog_Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Enumerable</returnDataType>
+  </operation>
   <operation name='GetProductsBySellerId'>
     <spName>GetProductBySellerId</spName>
     <parameters>
