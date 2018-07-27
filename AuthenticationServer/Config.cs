@@ -35,7 +35,7 @@ namespace AuthenticationServer
                         new Secret("secret".Sha256())
                     },
                     ClientClaimsPrefix = "",
-                    AllowedScopes = { "UserAPI" ,"ProductAPI","OrderAPI","CatalogAPI","WebClient","openid" },
+                    AllowedScopes = { "UserAPI" ,"ProductAPI","OrderAPI","CatalogAPI","WebClient","openid"},
                     UpdateAccessTokenClaimsOnRefresh = true,
                     AccessTokenLifetime = 3600
                 },

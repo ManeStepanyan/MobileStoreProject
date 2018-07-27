@@ -61,7 +61,7 @@ namespace CatalogAPI.Controllers
 
             return new JsonResult(list);
         }
-        [HttpGet("{catalog/id}", Name = "GetProductByCatalogId")]
+        [HttpGet("catalog/{id}", Name = "GetProductByCatalogId")]
         public async Task<IActionResult> GetProductsByCatalogId(int id)
         {
             Product product = new Product();

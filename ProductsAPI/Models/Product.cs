@@ -11,7 +11,7 @@ namespace ProductsAPI.Models
         public string Name { get; set; }
         public string Brand { get; set; }
         public string Version { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int RAM { get; set; }
         public int Year { get; set; }
         public decimal Display { get; set; }

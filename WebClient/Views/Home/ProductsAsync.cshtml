@@ -1,0 +1,57 @@
+﻿@model List<WebClient.Models.ProductModel>
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" hidden>
+        </div>
+    </div>
+</div>
+
+@foreach (var product in Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@product.Image" alt="..." class="img-responsive">
+                    <div class="caption">
+                        <h3>@product.Name</h3>
+                        <p class="description">Brand - @product.Brand</p>
+                        <p class="description">Year of anouncment - @product.Year</p>
+                        <p class="description">Ram - @product.RAM GB</p>
+                        <p class="description">Display - @product.Display</p>
+                        <p class="description">Camera - @product.Camera px</p>
+                        <p class="description">Battery - @product.Battery mAh</p>
+                        <div class="clearfix">
+                            <div class="price pull-left">@product.Price AMD</div>
+                            <input type="text" hidden />  
+                            <a href="/add-to-cart/@product.Id" class="btn btn-success pull-right addToCart" role="button">Add to Shopping Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var login = $("input#login").val();
+    var password = $("input#password").val();
+    $('button').hasClass("addToCart").on('click', function () {
+            $.ajax
+                ({
+                    type: "GET",
+                    dataType: "Json",
+                    url: "http://localhost:5004/account/login",
+                    async: false,
+                    data: {login:login, password:password},
+                    success: function (data) {
+                        console.log(data)
+                        alert("logged in")
+                    },
+                    error: function () {
+                        ErrorMessage("", '');
+                    }
+                })
+        });
+
+</script>

@@ -16,18 +16,14 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CatalogAPI": {
+    "ProductsAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-<<<<<<< HEAD
       "applicationUrl": "http://localhost:5004/"
-=======
-      "applicationUrl": "http://localhost:5003/"
->>>>>>> 78cf81e6042026f84b9aca800c310f1f5c7a778c
     }
   }
 }

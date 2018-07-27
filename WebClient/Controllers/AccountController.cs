@@ -37,7 +37,7 @@ namespace WebClient.Controllers
                 return new JsonResult(404);
             }
             var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(login, password, "openid ");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(login, password, "openid");
 
             
             if (tokenResponse.IsError)
