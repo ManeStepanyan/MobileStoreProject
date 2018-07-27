@@ -16,9 +16,8 @@ namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(IEnumerable<Claim> claims = null)
+        public IActionResult Index()
         {
-            ViewData["claims"] = claims;
             return View();
         }
         public IActionResult About()

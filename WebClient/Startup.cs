@@ -31,6 +31,19 @@ namespace WebClient
             services.AddScoped<IAccountService, AccountService>();
             services.AddDistributedMemoryCache();
 
+            services.AddMvcCore()
+                    .AddRazorViewEngine()
+                    .AddAuthorization()
+                    .AddJsonFormatters();
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication("Bearer")
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "http://localhost:5000";
+                        options.RequireHttpsMetadata = false;
+                        options.ApiName = "WebClient";
+                    });
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
@@ -38,7 +51,7 @@ namespace WebClient
                 options.Cookie.HttpOnly = true;
             });
 
-            services.AddMvc();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +68,7 @@ namespace WebClient
             }
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseSession();
 
             app.UseMvc(routes =>

@@ -13,7 +13,8 @@ namespace AuthenticationServer
                 new ApiResource("UserAPI"),
                   new ApiResource("OrderAPI"),
                     new ApiResource("ProductAPI"),
-                      new ApiResource("CatalogAPI")
+                      new ApiResource("CatalogAPI"),
+                        new ApiResource("WebClient")
 
             };
         }
@@ -34,7 +35,7 @@ namespace AuthenticationServer
                         new Secret("secret".Sha256())
                     },
                     ClientClaimsPrefix = "",
-                    AllowedScopes = { "UserAPI" ,"ProductAPI","OrderAPI","CatalogAPI" },
+                    AllowedScopes = { "UserAPI" ,"ProductAPI","OrderAPI","CatalogAPI","WebClient","openid" },
                     UpdateAccessTokenClaimsOnRefresh = true,
                     AccessTokenLifetime = 3600
                 },
@@ -48,7 +49,7 @@ namespace AuthenticationServer
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-               // new IdentityResources.Profile(),
+                new IdentityResources.Profile(),
              //   new IdentityResources.Email(),
                 new IdentityResource
                 {

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Net;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using WebClient.Models;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using IdentityModel.Client;
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using WebClient.Models;
 using WebClient.Services;
+using System.Web;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebClient.Controllers
@@ -38,25 +37,23 @@ namespace WebClient.Controllers
                 return new JsonResult(404);
             }
             var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(login, password, "UserAPI");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(login, password, "openid ");
 
+            
             if (tokenResponse.IsError)
             {
                 Console.WriteLine(tokenResponse.Error);
                 return new JsonResult(404);
             }
-            HttpContextAccessor httpContextAccessor = new HttpContextAccessor();
 
-            _accountService = new AccountService(httpContextAccessor);
-            _accountService.GetUserName(User as ClaimsPrincipal);
-            var caller = User as ClaimsPrincipal;
-            var identity = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identity.Claims;
-            HttpContext.Session.SetInt32("Is logged",1);
-            HttpContext.Session.SetString("Role", caller.Claims.ToString());
-            
-            //return RedirectToAction("Index","Home", claims.ToArray());
-            return View();
+            var userInfoClient = new UserInfoClient(disco.UserInfoEndpoint);
+            var identityClaims = await userInfoClient.GetAsync(tokenResponse.AccessToken);
+            var claims = JsonConvert.DeserializeObject<Dictionary<string,dynamic>>(identityClaims.Json.ToString());
+
+            HttpContext.Session.SetInt32("user_id", (int)claims["user_id"][0]);
+            HttpContext.Session.SetInt32("role", (int)claims["role"][0]);
+            HttpContext.Session.SetInt32("Is logged", 1);
+            return RedirectToAction("Index","Home");
         }
 
         public IActionResult SignUp()
