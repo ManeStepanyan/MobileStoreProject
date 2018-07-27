@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatabaseAccess.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrdersAndShopCartAPI.Models;
@@ -22,6 +23,7 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // GET: api/Orders
         [HttpGet]
+        [Authorize(Policy ="Admin")]
         public async Task<IActionResult> Get()
         {
             var result = await this.repo.ExecuteOperationAsync("GetAllOrders");
@@ -33,6 +35,7 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}", Name = "GetOrderByOrderId")]
+        [Authorize(Policy ="Admin")] 
         public async Task<IActionResult> GetOrderById(int id)
         {
             var res = await this.repo.ExecuteOperationAsync("GetOrderByOrderId", new[] { new KeyValuePair<string, object>("id", id) });
@@ -45,6 +48,7 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{date}", Name = "GetOrderByTimeSpan")]
+        [Authorize(Policy ="Admin")]
         public async Task<IActionResult> GetOrderByTimeSpan(DateTime start, DateTime end)
         {
             var res = await this.repo.ExecuteOperationAsync("GetOrderByTimeSpan", new[]
@@ -69,7 +73,7 @@ namespace OrdersAndShopCartAPI.Controllers
             } return new JsonResult(res);
         }
         [HttpGet("catalog/{orderId}", Name = "GetCatalogByOrderId")]
-        public async Task<IActionResult> Getproduct(int orderId)
+        public async Task<IActionResult> GetCatalog(int orderId)
         {
             var res = await this.repo.ExecuteOperationAsync("GetCatalogIdByOrderId", new[]
             {      new KeyValuePair<string, object>("id", orderId) });
