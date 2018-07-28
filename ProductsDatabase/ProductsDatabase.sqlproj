@@ -72,6 +72,7 @@
     <Build Include="StoredProcedures\InsertHelper.sql" />
     <Build Include="StoredProcedures\UpdateQuantity.sql" />
     <Build Include="StoredProcedures\UpdateCatalogIdByProductId.sql" />
+    <Build Include="StoredProcedures\increamentCount.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProductsDatabase.refactorlog" />

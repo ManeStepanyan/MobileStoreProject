@@ -46,11 +46,11 @@ AS
 	from Products
 	select * from Products
     intersect
-	select  *  from Products where [Name]=@Name1 COLLATE SQL_Latin1_General_CP1_CI_AS
+	select  *  from Products where [Name]=@Name1 	
 	intersect
-	select *  from Products where [Brand]=@Brand1 COLLATE SQL_Latin1_General_CP1_CI_AS
+	select *  from Products where [Brand]=@Brand1 
 	intersect
-	select *  from Products where [Version]=@Version1 COLLATE SQL_Latin1_General_CP1_CI_AS
+	select *  from Products where [Version]=@Version1 
 	intersect
 	select *  from Products where [Price] between @Price1  and @Price2
 	intersect
