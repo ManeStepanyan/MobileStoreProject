@@ -41,7 +41,7 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> GetProductsBySellerId(int id)
         {
             List<Product> list = new List<Product>();
-            var sellerProducts = (IEnumerable<int>)(await this.repo.ExecuteOperationAsync("GetProductsBySellerId", new[] { new KeyValuePair<string, object>("id", id) }));
+            var sellerProducts = (IEnumerable<SellerProduct>)(await this.repo.ExecuteOperationAsync("GetProductsBySellerId", new[] { new KeyValuePair<string, object>("id", id) }));
 
             using (var productClient = new HttpClient())
             {
@@ -50,7 +50,7 @@ namespace CatalogAPI.Controllers
                 productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 foreach (var item in sellerProducts)
                 {
-                    HttpResponseMessage response = await productClient.GetAsync("/api/products/" + item);
+                    HttpResponseMessage response = await productClient.GetAsync("/api/products/" + item.ProductId);
                     if (response.IsSuccessStatusCode)
                     {
                         list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
