@@ -69,7 +69,7 @@ namespace CatalogAPI.Controllers
 
             using (var productClient = new HttpClient())
             {
-                productClient.BaseAddress = new Uri("http://localhost:5003/");
+                productClient.BaseAddress = new Uri("http://localhost:5002/");
                 productClient.DefaultRequestHeaders.Accept.Clear();
                 productClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                
