@@ -1,12 +1,74 @@
 ﻿@using System.Security.Claims;
 @{
     ViewData["Title"] = "Home Page";
-    IEnumerable<Claim> claims = (IEnumerable<Claim>)ViewData["claims"];
+   
 }
 
-@foreach (var claim in claims)
-{
-    <div class="success alert-success" role="alert">
-        <p>@claim</p>
+<link href="~/css/carousel.css" rel="stylesheet">
+<div id="myCarousel" data-interval="2000" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Our goal is to facilitate communication between our customers and sellers</h1>
+                    <p>
+                        Join us and it would be easier
+                    </p>
+                    <p><a class="btn btn-lg btn-primary" href="Account/SignUp" role="button">Sign up today</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Become one of us</h1>
+                    <p>
+                        If you sign up as customer you can easily make your choice from where to buy the product,it is easier with us
+                    </p>
+                    <p><a class="btn btn-lg btn-primary" href="Account/RegisterCustomerView" role="button">Sign up today</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Become one of ouer cellers</h1>
+                    <p>
+                        If you sign up as seller you can increase your sales volume
+                    </p>
+                    <p><a class="btn btn-lg btn-primary" href="Account/RegisterSellerView" role="button">Sign up today</a></p>
+                </div>
+            </div>
+        </div>
     </div>
-}
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div><!-- /.carousel -->
+<div class="container">
+    <h3 style="text-align:center">Bestsellers</h3>
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+            <img class="img-responsive" src="http://static.kcell.kz/page/X/iPhone-X-horizontal.png" style="width:100%" alt="img">
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <img class="img-responsive" src="https://www.euronics.lv/UserFiles/Products/Images/183747-samsung-galaxy-s9-blue-2.png" style="width:100%" alt="img">
+        </div>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>

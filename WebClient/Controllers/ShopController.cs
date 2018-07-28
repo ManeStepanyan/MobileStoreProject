@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebClient.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -52,11 +53,11 @@ namespace WebClient.Controllers
         }
 
         //[Route("home/seller/{id}")]
-        /*public async Task<IActionResult> Seller(int id)
+        public async Task<IActionResult> Index()
          {
              // ... Target page.
-             Uri idSiteUri = new Uri("http://localhost:5001/api/" + id);
-             Uri prodSiteUri = new Uri("http://localhost:5002/api/");
+             Uri idSiteUri = new Uri("http://localhost:5001/api/SellerProduct/1");
+             
              List<KeyValuePair<string, int>> product_ids = new List<KeyValuePair<string, int>>();
 
              // ... Use HttpClient.
@@ -66,27 +67,34 @@ namespace WebClient.Controllers
                  {
                      using (HttpContent content = response.Content)
                      {
-                         // ... Read the string.
-                         string result = await content.ReadAsStringAsync();
-                         product_ids = JsonConvert.DeserializeObject<List<KeyValuePair<string, int>>>(result);
+                        // ... Read the string.
+                        string result = await content.ReadAsStringAsync();
+                        product_ids = JsonConvert.DeserializeObject<List<KeyValuePair<string, int>>>(result);
+                        if(product_ids == null)
+                            Response.StatusCode = 500;
+                        string prodSiteUri = "http://localhost:5002/api/Products/";
+                        foreach(var prod in product_ids)
+                        {
+                            prodSiteUri += $"&{prod.Key}={prod.Value}";
+                        }
                         using (HttpResponseMessage res = await client.GetAsync(prodSiteUri))
                         {
-                            using (HttpContent content1 = response.Content)
+                            using (HttpContent content1 = res.Content)
                             {
-                                
-
+                                string res1 = await content1.ReadAsStringAsync();
+                                var products = JsonConvert.DeserializeObject<List<ProductModel>>(res1);
                                 if (result != null &&
                                 result.Length >= 50)
                                 {
                                     Console.WriteLine(result.Substring(0, 50) + "...");
                                 }
+                                return View(products);
                             }
                         }
                         
                      }
                  }
              }
-             return View(sellers);
-         }*/
+         }
     }   
 }

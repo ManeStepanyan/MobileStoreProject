@@ -72,6 +72,7 @@ namespace AuthenticationServer.Services
                         }
                     }
                 }
+                //return context.IssuedClaims;
             }
             catch (Exception ex)
             {

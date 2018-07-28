@@ -28,7 +28,7 @@
                 </button>
                 <a class="navbar-brand" href="/">MobileStore</a>
             </div>
-            
+
             <div class="collapse navbar-collapse row" id="bs-example-navbar-collapse-1">
                 <div class="col-lg-5 col-md-5">
                     <div class="col-lg-10 col-md-10">
@@ -39,21 +39,21 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
-                   
+
                     <ul class="nav navbar-nav navbar-right">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                        <li><a asp-area="" asp-controller="Shop" asp-action="SellerAsync">Shops</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="ProductsAsync">Products</a></li>
                         @Html.Partial("~/Views/Home/_LoginPartial.cshtml")
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+    @RenderBody()
+    <hr />
+    <div class="container-fluid ">
         <footer>
             <p>&copy; 2018 - WebClient</p>
         </footer>

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProductsAPI.Models
+namespace WebClient.Models
 {
-    public class Product
+    public class ProductModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
         public string Version { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public int RAM { get; set; }
         public int Year { get; set; }
         public decimal Display { get; set; }
