@@ -17,7 +17,7 @@
     <returnDataType>Enumerable</returnDataType>
   </operation>
   <operation name='GetProductsBySellerId'>
-    <spName>GetProductBySellerId</spName>
+    <spName>GetProductsBySellerId</spName>
     <parameters>
       <parameter>
         <parameterName>id</parameterName>

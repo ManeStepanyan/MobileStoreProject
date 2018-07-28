@@ -2,6 +2,6 @@
 	@id int
 
 AS
-	SELECT Customer_Id from CustomerOrder
-	where Order_Id=@id
+	SELECT CustomerId from CustomerOrder
+	where OrderId=@id
 go

@@ -1,5 +1,7 @@
 ﻿CREATE TABLE [dbo].[CustomerOrder] (
-    [Order_Id]    INT NOT NULL,
-    [Customer_Id] INT NOT NULL
+    [OrderId]    INT NOT NULL,
+    [CustomerId] INT NOT NULL
 );
+
+
 

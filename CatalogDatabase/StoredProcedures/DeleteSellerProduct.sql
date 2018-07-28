@@ -2,5 +2,5 @@
 	@Product_Id int
 AS
 	delete from SellerProduct 
-	where Product_Id=@Product_Id
+	where ProductId=@Product_Id
 GO
