@@ -52,6 +52,10 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>Scalar</returnDataType>
   </operation>
+  <operation name='MostSearchedProducts'>
+    <spName>MostSearchedProduct</spName>
+    <returnDataType>Enumerable</returnDataType>
+  </operation>
   <operation name='InsertHelper'>
     <spName>InsertHelper</spName>
     <parameters>
