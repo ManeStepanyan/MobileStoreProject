@@ -4,10 +4,11 @@
 	@Address VARCHAR(50), 
     @CellPhone VARBINARY(50), 
     @Quantity INT, 
-    @TotalAmount MONEY
+    @TotalAmount MONEY,
+	@CardAccount VARCHAR(50)
 AS
-	insert into Orders(Catalog_Id, [Date], [Address], CellPhone, Quantity, TotalAmount)
-	Values (@Catalog_Id, @Date, @Address, @CellPhone, @Quantity, @TotalAmount)
+	insert into Orders(Catalog_Id, [Date], [Address], CellPhone, Quantity, TotalAmount, CardAccount)
+	Values (@Catalog_Id, @Date, @Address, @CellPhone, @Quantity, @TotalAmount, @CardAccount)
 	select scope_identity()
 	return 0
 GO

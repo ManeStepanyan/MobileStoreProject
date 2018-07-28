@@ -52,10 +52,6 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <spParameterName>Date</spParameterName>
       </parameter>
       <parameter>
-        <parameterName>version</parameterName>
-        <spParameterName>Version</spParameterName>
-      </parameter>
-      <parameter>
         <parameterName>Address</parameterName>
         <spParameterName>Address</spParameterName>
       </parameter>
@@ -70,6 +66,10 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
       <parameter>
         <parameterName>TotalAmount</parameterName>
         <spParameterName>TotalAmount</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>CardAccount</parameterName>
+        <spParameterName>CardAccount</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Scalar</returnDataType>

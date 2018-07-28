@@ -6,5 +6,6 @@
     [Address] VARCHAR(50) NOT NULL, 
     [CellPhone] VARCHAR(50) NOT NULL, 
     [Quantity] INT NOT NULL, 
-    [TotalAmount] MONEY NOT NULL
+    [TotalAmount] MONEY NOT NULL,
+	[CardAccount] VARCHAR(50) NOT NULL
 )

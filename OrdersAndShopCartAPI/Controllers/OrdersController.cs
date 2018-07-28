@@ -109,6 +109,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 new KeyValuePair<string, object>("CellPhone", order.CellPhone),
                 new KeyValuePair<string, object>("Quantity", order.Quantity),
                 new KeyValuePair<string, object>("TotalAmount", order.TotalAmount),
+                new KeyValuePair<string, object>("CardAccount", order.CardAccount)
             });
             return new JsonResult(res);
         }
