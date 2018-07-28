@@ -8,20 +8,18 @@
     @Year INT =null,
     @Display decimal =null,
     @Battery int =null,
-    @Camera INT =null,
-    @Image VARCHAR(200)=null
+    @Camera INT =null
 AS
 	declare @Name1 varchar(30)
 	declare @Brand1 varchar(20)
-	declare @Version1 decimal(5, 3)
+	declare @Version1 varchar(20)
 	declare @Price1 money
 	declare @Price2 money
 	declare @RAM1 int
 	declare @Year1 int 
 	declare @Display1 int 
-	declare @Battery1 varchar(30)
+	declare @Battery1 int
 	declare @Camera1 int
-	declare @Image1 varchar(200)
 	select @Name1= iif(@Name is null, [Name], @Name)
 	from Products
 	select @Brand1= iif(@Brand is null, [Brand], @Brand)
@@ -42,8 +40,6 @@ AS
 	from Products
 	select @Camera1= iif(@Camera is null, [Camera], @Camera)
 	from Products
-	select @Image1= iif(@Image1 is null, [Image], @Image)
-	from Products
 	select * from Products
     intersect
 	select  *  from Products where [Name]=@Name1 	
@@ -63,7 +59,5 @@ AS
 	select *  from Products where [Battery]=@Battery1 
 	intersect
 	select *  from Products where [Camera]=@Camera1 
-	intersect
-	select *  from Products where [Image]=@Image1
 	order by Price
 GO

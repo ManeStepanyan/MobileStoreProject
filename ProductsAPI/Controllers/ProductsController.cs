@@ -69,8 +69,8 @@ namespace ProductAPI.Controllers
         }
 
 
-        [HttpGet("search", Name = "Search")]
-        public async Task<IActionResult> Search(Product product, double priceTo)
+        [HttpPost("search", Name = "Search")]
+        public async Task<IActionResult> Search(Product product, decimal? priceTo=null)
         {
             var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SelectProducts", new[] 
             {
@@ -83,8 +83,7 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("year", product.Year),
                 new KeyValuePair<string, object>("display", product.Display),
                 new KeyValuePair<string, object>("battery", product.Battery),
-                new KeyValuePair<string, object>("camera", product.Camera),
-                new KeyValuePair<string, object>("image", product.Image)
+                new KeyValuePair<string, object>("camera", product.Camera)               
             });
             if (products == null)
             {
