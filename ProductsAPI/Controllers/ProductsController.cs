@@ -72,7 +72,7 @@ namespace ProductAPI.Controllers
         [HttpGet("search", Name = "Search")]
         public async Task<IActionResult> Search(Product product, double priceTo)
         {
-            var res = await this.repository.ExecuteOperationAsync("SelectProducts", new[] 
+            var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SelectProducts", new[] 
             {
                 new KeyValuePair<string, object>("name", product.Name),
                 new KeyValuePair<string, object>("brand", product.Brand),
@@ -86,16 +86,28 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("camera", product.Camera),
                 new KeyValuePair<string, object>("image", product.Image)
             });
-            if (res == null)
+            if (products == null)
             {
                 return new StatusCodeResult(404);
             }
-            return new JsonResult(res);
+            foreach(var prod in products)
+            {
+                await this.repository.ExecuteOperationAsync("IncreamentCount", new[] { new KeyValuePair<string, object>("id", prod.Id) });
+                
+            }
+            return new JsonResult(products);
+        }
+        public async Task<IActionResult> GetMostSearchedProduct()
+        {
+          var products=await this.repository.ExecuteOperationAsync("MostSearchedProducts");
+            if (products == null)
+            {
+                return new StatusCodeResult(404);
+            } return new JsonResult(products);
         }
 
         // POST: api/Products
         [HttpPost]
-      //  [NonAction] /////delete
         public async Task<IActionResult> Post([FromBody]Product product)
         {
             var res = (int)await this.repository.ExecuteOperationAsync("CreateProduct", new[]

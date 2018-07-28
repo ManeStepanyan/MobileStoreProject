@@ -26,6 +26,10 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
+  <operation name='MostSearchedProducts'>
+    <spName>MostSearchedProduct</spName>
+    <returnDataType>Enumerable</returnDataType>
+  </operation>
     <operation name="UpdateCatalogId">
     <spName>UpdateCatalogIdByProductId</spName>
     <parameters>
