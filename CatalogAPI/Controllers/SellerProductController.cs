@@ -55,7 +55,7 @@ namespace CatalogAPI.Controllers
                     {
                         list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
                     }
-                    return new StatusCodeResult(404);
+               else   return new StatusCodeResult(404);
                 }
             }
 

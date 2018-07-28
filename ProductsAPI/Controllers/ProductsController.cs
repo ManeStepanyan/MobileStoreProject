@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ProductsAPI.Models;
 
 namespace ProductAPI.Controllers
@@ -42,7 +43,7 @@ namespace ProductAPI.Controllers
             return new JsonResult(res);
         }
 
-        [HttpGet("{Name}", Name = "GetProductByName")]
+        [HttpGet("name/{Name}", Name = "GetProductByName")]
         public async Task<IActionResult> Get(string name)
         {
             var res = await this.repository.ExecuteOperationAsync("GetProductByName", new[] { new KeyValuePair<string, object>("name", name) });
@@ -55,7 +56,7 @@ namespace ProductAPI.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("{Id}", Name = "GetListOfProducts")]
+        [HttpGet("list/{listOfIds}", Name = "GetListOfProducts")]
         public async Task<IActionResult> GetListOfProducts(List<int> listOfIds)
         {
             var products = new List<object>();
