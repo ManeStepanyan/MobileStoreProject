@@ -56,7 +56,7 @@ namespace ProductAPI.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("list/{listOfIds}", Name = "GetListOfProducts")]
+        [HttpGet("search/{listOfparams}", Name = "GetListOfProducts")]
         public async Task<IActionResult> GetListOfProducts(List<int> listOfIds)
         {
             var products = new List<object>();
@@ -66,6 +66,31 @@ namespace ProductAPI.Controllers
                 products.Add(res);
             }
             return new JsonResult(products);
+        }
+
+
+        [HttpGet("search", Name = "Search")]
+        public async Task<IActionResult> Search(Product product, double priceTo)
+        {
+            var res = await this.repository.ExecuteOperationAsync("SelectProducts", new[] 
+            {
+                new KeyValuePair<string, object>("name", product.Name),
+                new KeyValuePair<string, object>("brand", product.Brand),
+                new KeyValuePair<string, object>("version", product.Version),
+                new KeyValuePair<string, object>("priceFrom", product.Price),
+                new KeyValuePair<string, object>("priceTo", priceTo),
+                new KeyValuePair<string, object>("ram", product.RAM),
+                new KeyValuePair<string, object>("year", product.Year),
+                new KeyValuePair<string, object>("display", product.Display),
+                new KeyValuePair<string, object>("battery", product.Battery),
+                new KeyValuePair<string, object>("camera", product.Camera),
+                new KeyValuePair<string, object>("image", product.Image)
+            });
+            if (res == null)
+            {
+                return new StatusCodeResult(404);
+            }
+            return new JsonResult(res);
         }
 
         // POST: api/Products

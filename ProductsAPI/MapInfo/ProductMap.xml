@@ -179,7 +179,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
-  <operation name='SearchProduct'>
+  <operation name='SelectProducts'>
     <spName>SearchProduct</spName>
     <parameters>
       <parameter>
@@ -195,8 +195,12 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <spParameterName>Version</spParameterName>
       </parameter>
       <parameter>
-        <parameterName>price</parameterName>
-        <spParameterName>Price</spParameterName>
+        <parameterName>priceFrom</parameterName>
+        <spParameterName>PriceFrom</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>priceTo</parameterName>
+        <spParameterName>PriceTo</spParameterName>
       </parameter>
       <parameter>
         <parameterName>ram</parameterName>
