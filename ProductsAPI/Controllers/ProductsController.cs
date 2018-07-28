@@ -69,6 +69,7 @@ namespace ProductAPI.Controllers
 
         // POST: api/Products
         [HttpPost]
+      //  [NonAction] /////delete
         public async Task<IActionResult> Post([FromBody]Product product)
         {
             var res = (int)await this.repository.ExecuteOperationAsync("CreateProduct", new[]
