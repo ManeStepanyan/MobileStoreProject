@@ -180,7 +180,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
   <operation name='SelectProducts'>
-    <spName>SearchProduct</spName>
+    <spName>SelectProducts</spName>
     <parameters>
       <parameter>
         <parameterName>name</parameterName>
