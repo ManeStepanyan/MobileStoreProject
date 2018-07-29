@@ -9,6 +9,5 @@ namespace OrdersAndShopCartAPI.Models
     {
         public int CostumerId { get; set; }
         public int ProductId { get; set; }
-     
     }
 }

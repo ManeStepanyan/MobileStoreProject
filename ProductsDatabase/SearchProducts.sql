@@ -16,7 +16,7 @@ as
 	select * from products where @Brand is null) intersect
    (select * from products where [Version]=@Version and @Version is not null union
 	select * from products where @Version is null) intersect
-   ( select * from products where [Price] between @PriceFrom and  @PriceFrom and @PriceTo is not null and @PriceFrom is not null union
+   ( select * from products where [Price] between @PriceFrom and  @PriceTo and @PriceTo is not null and @PriceFrom is not null union
    select * from products where [Price] >= @PriceFrom and @PriceTo is null and @PriceFrom is not null union
    select * from products where [Price] <= @PriceTo and @PriceTo is not null and @PriceFrom is  null union
 	select * from products where @PriceFrom is  null) intersect
