@@ -74,6 +74,7 @@
     <Build Include="StoredProcedures\UpdateCatalogIdByProductId.sql" />
     <Build Include="StoredProcedures\increamentCount.sql" />
     <Build Include="StoredProcedures\MostSearchedProduct.sql" />
+    <Build Include="SearchProducts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProductsDatabase.refactorlog" />

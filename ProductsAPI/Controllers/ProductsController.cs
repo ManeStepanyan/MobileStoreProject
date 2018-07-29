@@ -70,9 +70,9 @@ namespace ProductAPI.Controllers
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search(Product product, decimal? priceTo=null)
+        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo=null)
         {
-            var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SelectProducts", new[] 
+            var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SearchProducts", new[] 
             {
                 new KeyValuePair<string, object>("name", product.Name),
                 new KeyValuePair<string, object>("brand", product.Brand),
