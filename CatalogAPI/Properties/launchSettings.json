@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/CatalogAPI",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:5003/",
       "sslPort": 0
@@ -17,6 +21,15 @@
       }
     },
     "ProductsAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/values",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5003/"
+    },
+    "CatalogAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

@@ -1,19 +1,139 @@
 ﻿@model List<WebClient.Models.ProductModel>
-@foreach (var prod in Model)
-{
-    <div>
-        <p data-type="id">seller's id - @prod.Id</p>
-        <p>seller's name - @prod.Name</p>
-        <p>seller's address - @prod.Brand</p>
-        <p>seller's cellphone - @prod.Version</p>
-        <p>seller's email - @prod.Price</p>
-        <p>seller's rating - @prod.RAM</p>
-        <p>seller's rating - @prod.Year</p>
-        <p>seller's rating - @prod.Display</p>
-        <p>seller's rating - @prod.Battery</p>
-        <p>seller's rating - @prod.Camera</p>
-        <p>seller's rating - @prod.Image</p>
-        <p>seller's rating - @prod.Quantity</p>
-    </div>
+<style>
+    .row {
+        margin: 0;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<div class="container-fluid">
+    <div class="row" style="margin-left: 10px;">
+        <div class="col-md-12">
+            <div class="col-md-2 col-md-offset-5">
+                <button type="button" class="btn btn-success" id="collapser" style="margin-bottom:20px">
+                    Add new Product
+                </button>
+            </div>
 
-}
+            <div id="collapsable" class="col-md-10 col-md-offset-1" style="display: none">
+                <form asp-controller="Shop" asp-action="Post" method="post">
+                    <div style="margin:5% 0;">
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-4">
+                                <input type="text" name="instance.name" id="new_products_name" class="form-control" placeholder="Product name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.brand" id="new_products_brand" class="form-control" placeholder="Product Brand" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.version" id="new_products_version" class="form-control" placeholder="Product Version" required>
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-4">
+                                <input type="text" name="instance.price" id="new_products_price" class="form-control" placeholder="Product price" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.ram" id="new_products_ram" class="form-control" placeholder="Product Ram" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.display" id="new_products_display" class="form-control" placeholder="Product Display size in inch's" required>
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+
+                            <div class="col-md-4">
+                                <input type="text" name="instance.battery" id="new_products_battery" class="form-control" placeholder="Product Battery size in mAh" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.camera" id="new_products_camera" class="form-control" placeholder="Product Camera in mp" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.year" id="new_products_yaer" class="form-control" placeholder="Product Announcmaent yaer" required>
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-4">
+                                <input type="number" name="instance.quantity" id="new_products_quantity" class="form-control" placeholder="The quantity of products in your store" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="file" class="form-control" name="instance.image" required>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-2 col-md-offset-5">
+                                <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
+                            </div>
+                        </div>
+                        <input type="hidden" name="cat_id">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="panel panel-default ">
+                <div class="panel-heading"><h2 class="text-center">Existing Products</h2></div>
+                <table cellpadding="40" class="table prod_table">
+                    <thead>
+                        <tr class="key-0">
+                            <td>Product Name</td>
+                            <td>Product Brand</td>
+                            <td>Product Version</td>
+                            <td>Product Price</td>
+                            <td>Product RAM</td>
+                            <td>Product Year</td>
+                            <td>Product Display</td>
+                            <td>Product Battery</td>
+                            <td>Product Camera</td>
+                            <td colspan="2">Product Image</td>
+                            <td>Product Quantity</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var prod in Model)
+                        {
+                            <tr>
+                                <td class="Name" data="@prod.Name">@prod.Name</td>
+                                <td class="Brand" data="@prod.Brand">@prod.Brand</td>
+                                <td class="Version" data="@prod.Version">@prod.Version</td>
+                                <td class="Price" data="@prod.Price">@prod.Price AMD</td>
+                                <td class="RAM" data="@prod.RAM">@prod.RAM GB</td>
+                                <td class="Year" data="@prod.Year">@prod.Year</td>
+                                <td class="Display" data="@prod.Display">@prod.Display inch</td>
+                                <td class="Battery" data="@prod.Battery">@prod.Battery mAh</td>
+                                <td class="Camera" data="@prod.Camera">@prod.Camera mp</td>
+                                <td class="Image" colspan="2" data="@prod.Image">@prod.Image</td>
+                                <td class="Quantity" data="@prod.Quantity">@prod.Quantity</td>
+                                <td>
+                                    <input data="@prod.Id" id="prod_id" hidden />
+                                    <input type='button' class=' btn btn-primary delete form-control action update' value='Update product'>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-offset-5 col-md-2'>
+                <a href='home.php' type='button' class=' btn btn-primary form-control'>Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("button#collapser").on('click', function () {
+            $("div#collapsable").toggle("slow");
+        });
+        $("input.update").on('click', function () {
+            var id = $(this).closest("td").find("input#prod_id").attr("data");
+            var url = '@Url.Action("UpdateViewAsync","Shop",new { id = "id" })';
+            window.location.href = url.replace("id", id);
+        });
+    });
+</script>
