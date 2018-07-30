@@ -6,7 +6,7 @@
     [Price]       MONEY         NOT NULL,
     [RAM]         INT           NOT NULL,
     [Year]        INT           NOT NULL,
-    [Display]     DECIMAL (18)  NULL,
+    [Display]     DECIMAL (3, 2)  NULL,
     [Battery]     INT           NULL,
     [Camera]      INT           NOT NULL,
     [Image]       VARCHAR (200) NOT NULL,
