@@ -1,0 +1,53 @@
+﻿@model WebClient.Models.ProductModel
+<form asp-controller="Shop" asp-action="Update" method="post">
+    <div style="margin:5% 0;">
+        <div class="row add_d" style="margin:2% 0;">
+            <div class="col-md-4">
+                <input type="text" name="instance.name" id="products_name" class="form-control" placeholder="@Model.Name" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="instance.brand" id="products_brand" class="form-control" placeholder="@Model.Brand" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="instance.version" id="products_version" class="form-control" placeholder="@Model.Version" required>
+            </div>
+        </div>
+        <div class="row add_d" style="margin:2% 0;">
+            <div class="col-md-4">
+                <input type="text" name="instance.price" id="products_price" class="form-control" placeholder="@Model.Price AMD" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="instance.ram" id="products_ram" class="form-control" placeholder="@Model.RAM GB" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="instance.display" id="products_display" class="form-control" placeholder="@Model.Display inches" required>
+            </div>
+        </div>
+        <div class="row add_d" style="margin:2% 0;">
+
+            <div class="col-md-4">
+                <input type="text" name="instance.battery" id="products_battery" class="form-control" placeholder="@Model.Battery mAh" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="instance.camera" id="products_camera" class="form-control" placeholder="@Model.Camera mp" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="instance.year" id="products_yaer" class="form-control" placeholder="@Model.Year" required>
+            </div>
+        </div>
+        <div class="row add_d" style="margin:2% 0;">
+            <div class="col-md-4">
+                <input type="number" name="instance.quantity" id="products_quantity" class="form-control" placeholder="@Model.Quantity" required>
+            </div>
+            <div class="col-md-4">
+                <input type="file" class="form-control" name="instance.image" required>
+            </div>
+        </div>
+        <div class="row add_d" style="margin:2% 0;">
+            <div class="col-md-2 col-md-offset-5">
+                <input type="submit" value="update" name="action" class="form-control btn btn-success add action">
+            </div>
+        </div>
+        <input type="hidden" name="cat_id">
+    </div>
+</form>
