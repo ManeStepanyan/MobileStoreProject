@@ -96,6 +96,7 @@ namespace ProductAPI.Controllers
             }
             return new JsonResult(products);
         }
+        [HttpGet("mostsearched")]
         public async Task<IActionResult> GetMostSearchedProduct()
         {
           var products=await this.repository.ExecuteOperationAsync("MostSearchedProducts");
