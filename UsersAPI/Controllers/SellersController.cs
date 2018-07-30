@@ -87,9 +87,7 @@ namespace UsersAPI.Controllers
         [Authorize(Policy = "Seller")]
         public async Task<IActionResult> Put(int id, [FromBody]SellerInfo seller)
         {
-            var userId = int.Parse(
-                           ((ClaimsIdentity)this.User.Identity).Claims
-                           .Where(claim => claim.Type == "user_id").First().Value);
+            var userId = GetCurrentUserId();
             if (userId == ((SellerInfo)(await this.repo.ExecuteOperationAsync("GetSeller", new[] { new KeyValuePair<string, object>("id", id) }))).UserId)
             {
                 await this.repo.ExecuteOperationAsync("UpdateSeller", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("name", seller.Name ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("cellphone", seller.CellPhone ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("address", seller.Address ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", seller.Email ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(seller.Password) ?? DBNull.Value.ToString()) });
@@ -105,12 +103,10 @@ namespace UsersAPI.Controllers
         [Authorize("Admin, Seller")]
         public async Task<IActionResult> Delete(int id)
         {
-            var role = int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "role").First().Value);
+            var role = GetCurrentUserRoleId();
             if (role == 2)
             {
-                var userId = int.Parse(
-                              ((ClaimsIdentity)this.User.Identity).Claims
-                              .Where(claim => claim.Type == "user_id").First().Value);
+                var userId = GetCurrentUserId();
                 if (((SellerInfo)await this.repo.ExecuteOperationAsync("GetSeller", new[] { new KeyValuePair<string, object>("id", id) })).UserId != userId)
                 {
                     return new StatusCodeResult(404);
@@ -125,6 +121,14 @@ namespace UsersAPI.Controllers
         {
             this.publicRepo.ExecuteOperation("RateSeller", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("rating", rating) });
 
+        }
+        public int GetCurrentUserId()
+        {
+            return int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "user_id").First().Value);
+        }
+        public int GetCurrentUserRoleId()
+        {
+            return int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "role").First().Value);
         }
     }
 }

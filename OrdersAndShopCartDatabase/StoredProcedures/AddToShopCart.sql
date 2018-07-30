@@ -6,4 +6,3 @@ AS
 	Insert into ShopCart(Customer_Id, Catalog_Id)
 	values(@Customer_Id, @Catalog_Id)
 GO
-GO

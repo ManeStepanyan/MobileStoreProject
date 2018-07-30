@@ -12,7 +12,6 @@ namespace AuthenticationServer
             {
                 new ApiResource("UserAPI"),
                   new ApiResource("OrderAPI"),
-                    new ApiResource("ProductAPI"),
                       new ApiResource("CatalogAPI"),
                         new ApiResource("WebClient")
 
@@ -35,7 +34,7 @@ namespace AuthenticationServer
                         new Secret("secret".Sha256())
                     },
                     ClientClaimsPrefix = "",
-                    AllowedScopes = { "UserAPI" ,"ProductAPI","OrderAPI","CatalogAPI","WebClient","openid"},
+                    AllowedScopes = { "UserAPI" ,"OrderAPI","CatalogAPI","WebClient","openid"},
                     UpdateAccessTokenClaimsOnRefresh = true,
                     AccessTokenLifetime = 3600
                 },

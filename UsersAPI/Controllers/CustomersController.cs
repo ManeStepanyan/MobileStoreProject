@@ -42,13 +42,11 @@ namespace UsersAPI.Controllers
         public async Task<IActionResult> Get(int id)
         {
             CustomerInfo customer = new CustomerInfo();
-            var role = int.Parse((((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "role").First().Value));
+            var role = GetCurrentUserRoleId();
             customer = (CustomerInfo)(await this.publicRepo.ExecuteOperationAsync("GetCustomer", new[] { new KeyValuePair<string, object>("id", id) }));
             if (role == 3)
             {
-                var userId = int.Parse(
-                        ((ClaimsIdentity)this.User.Identity).Claims
-                        .Where(claim => claim.Type == "user_id").First().Value);
+                var userId = GetCurrentUserId();
                 if (userId != customer.UserId || customer == null)
                 {
                     return new StatusCodeResult(404);
@@ -62,13 +60,11 @@ namespace UsersAPI.Controllers
         public async Task<IActionResult> Get(string login)
         {
             CustomerPublicInfo customer = new CustomerPublicInfo();
-            var role = int.Parse((((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "role").First().Value));
+            var role = GetCurrentUserRoleId();
             customer = (CustomerPublicInfo)(await this.publicRepo.ExecuteOperationAsync("GetCustomerByName", new[] { new KeyValuePair<string, object>("login", login) }));
             if (role == 3)
             {
-                var userId = int.Parse(
-                        ((ClaimsIdentity)this.User.Identity).Claims
-                        .Where(claim => claim.Type == "user_id").First().Value);
+                var userId = GetCurrentUserId();
                 if (userId != ((CustomerInfo)(await this.repo.ExecuteOperationAsync("GetCustomerByName", new[] { new KeyValuePair<string, object>("login", login) }))).UserId || customer == null)
                 {
                     return new StatusCodeResult(404);
@@ -104,9 +100,7 @@ namespace UsersAPI.Controllers
         [Authorize("Customer")]
         public async Task<IActionResult> Put(int id, [FromBody]CustomerInfo customer)
         {
-            var userId = int.Parse(
-                      ((ClaimsIdentity)this.User.Identity).Claims
-                      .Where(claim => claim.Type == "user_id").First().Value);
+            var userId = GetCurrentUserId();
 
             if (((CustomerInfo)(await this.repo.ExecuteOperationAsync("GetCustomer", new[] { new KeyValuePair<string, object>("id", id) }))).UserId == userId)
             {
@@ -122,11 +116,10 @@ namespace UsersAPI.Controllers
         [Authorize(Policy = "Admin, Customer")]
         public async Task<IActionResult> Delete(int id)
         {
-            var role = int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "role").First().Value);
+            var role = GetCurrentUserRoleId();
             if (role == 3)
             {
-                var userId = int.Parse(((ClaimsIdentity)this.User.Identity).Claims
-                              .Where(claim => claim.Type == "user_id").First().Value);
+                var userId = GetCurrentUserId();
                 if (((CustomerInfo)(await this.repo.ExecuteOperationAsync("GetCustomer", new[] { new KeyValuePair<string, object>("id", id) }))).UserId != userId)
                 {
                     return new StatusCodeResult(404);
@@ -135,6 +128,13 @@ namespace UsersAPI.Controllers
             await this.repo.ExecuteOperationAsync("DeleteCustomer", new[] { new KeyValuePair<string, object>("id", id) });
             return new StatusCodeResult(200);
         }
-
+        public int GetCurrentUserId()
+        {
+            return int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "user_id").First().Value);
+        }
+        public int GetCurrentUserRoleId()
+        {
+            return int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "role").First().Value);
+        }
     }
 }

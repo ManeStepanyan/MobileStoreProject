@@ -67,9 +67,7 @@ namespace UsersAPI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Post([FromBody]AdminInfo admin)
         {
-            var userName =
-               ((ClaimsIdentity)this.User.Identity).Claims
-               .Where(claim => claim.Type == "name").First().Value.ToString();
+            var userName = GetCurrentUserName();
             if (userName == "Admin888") //our super admin 
             {
                 if ((int)this.userRepo.ExecuteOperation("ExistsLogin", new[] { new KeyValuePair<string, object>("login", admin.Login) }) == 1)
@@ -86,9 +84,7 @@ namespace UsersAPI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Put(int id, [FromBody]AdminInfo admin)
         {
-            var userName =
-               ((ClaimsIdentity)this.User.Identity).Claims
-               .Where(claim => claim.Type == "name").First().Value.ToString();
+            var userName = GetCurrentUserName();
             if (userName == "Admin888")
             {
                 await this.repo.ExecuteOperationAsync("UpdateAdmin", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("name", admin.Name ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", admin.Email?? DBNull.Value.ToString()), new KeyValuePair<string, object>("password",MyCryptography.Encrypt( admin.Password) ?? DBNull.Value.ToString()) });
@@ -101,14 +97,21 @@ namespace UsersAPI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var userName = ((ClaimsIdentity)this.User.Identity).Claims
-                          .Where(claim => claim.Type == "name").First().Value.ToString();
+            var userName = GetCurrentUserName();
             if (userName == "Admin888")
             {
                 await this.repo.ExecuteOperationAsync("DeleteAdmin", new[] { new KeyValuePair<string, object>("id", id) });
                 return new StatusCodeResult(200);
             }
             return new StatusCodeResult(404);
+        }
+        public int GetCurrentUserId()
+        {
+            return int.Parse(((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "user_id").First().Value);
+        }
+        public string GetCurrentUserName()
+        {
+            return ((ClaimsIdentity)this.User.Identity).Claims.Where(claim => claim.Type == "name").First().Value.ToString();
         }
     }
 }

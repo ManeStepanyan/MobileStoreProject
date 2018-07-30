@@ -66,4 +66,3 @@ AS
 	intersect
 	select *  from Products where [Image]=@Image1
 	order by Price
-GO

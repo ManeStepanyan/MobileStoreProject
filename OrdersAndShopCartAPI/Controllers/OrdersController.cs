@@ -35,7 +35,6 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}", Name = "GetOrderByOrderId")]
-        [Authorize(Policy ="Admin")] 
         public async Task<IActionResult> GetOrderById(int id)
         {
             var res = await this.repo.ExecuteOperationAsync("GetOrderByOrderId", new[] { new KeyValuePair<string, object>("id", id) });
@@ -109,6 +108,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 new KeyValuePair<string, object>("CellPhone", order.CellPhone),
                 new KeyValuePair<string, object>("Quantity", order.Quantity),
                 new KeyValuePair<string, object>("TotalAmount", order.TotalAmount),
+                new KeyValuePair<string, object>("CardAccount", order.CardAccount)
             });
             return new JsonResult(res);
         }

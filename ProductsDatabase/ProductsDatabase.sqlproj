@@ -67,11 +67,13 @@
     <Build Include="StoredProcedures\DeleteProduct.sql" />
     <Build Include="StoredProcedures\UpdateProduct.sql" />
     <Build Include="StoredProcedures\CreateProduct.sql" />
-    <Build Include="StoredProcedures\SelectProducts.sql" />
     <Build Include="StoredProcedures\ChangeQuantity.sql" />
     <Build Include="StoredProcedures\InsertHelper.sql" />
     <Build Include="StoredProcedures\UpdateQuantity.sql" />
     <Build Include="StoredProcedures\UpdateCatalogIdByProductId.sql" />
+    <Build Include="StoredProcedures\increamentCount.sql" />
+    <Build Include="StoredProcedures\MostSearchedProduct.sql" />
+    <Build Include="SearchProducts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProductsDatabase.refactorlog" />

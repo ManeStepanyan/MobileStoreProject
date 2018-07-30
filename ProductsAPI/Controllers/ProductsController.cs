@@ -56,7 +56,7 @@ namespace ProductAPI.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("list/{listOfIds}", Name = "GetListOfProducts")]
+        [HttpGet("search/{listOfparams}", Name = "GetListOfProducts")]
         public async Task<IActionResult> GetListOfProducts(List<int> listOfIds)
         {
             var products = new List<object>();
@@ -68,9 +68,46 @@ namespace ProductAPI.Controllers
             return new JsonResult(products);
         }
 
+
+        [HttpPost("search", Name = "Search")]
+        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo=null)
+        {
+            var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SearchProducts", new[] 
+            {
+                new KeyValuePair<string, object>("name", product.Name),
+                new KeyValuePair<string, object>("brand", product.Brand),
+                new KeyValuePair<string, object>("version", product.Version),
+                new KeyValuePair<string, object>("priceFrom", product.Price),
+                new KeyValuePair<string, object>("priceTo", priceTo),
+                new KeyValuePair<string, object>("ram", product.RAM),
+                new KeyValuePair<string, object>("year", product.Year),
+                new KeyValuePair<string, object>("display", product.Display),
+                new KeyValuePair<string, object>("battery", product.Battery),
+                new KeyValuePair<string, object>("camera", product.Camera)               
+            });
+            if (products == null)
+            {
+                return new StatusCodeResult(404);
+            }
+            foreach(var prod in products)
+            {
+                await this.repository.ExecuteOperationAsync("IncreamentCount", new[] { new KeyValuePair<string, object>("id", prod.Id) });
+                
+            }
+            return new JsonResult(products);
+        }
+        [HttpGet("mostsearched")]
+        public async Task<IActionResult> GetMostSearchedProduct()
+        {
+          var products=await this.repository.ExecuteOperationAsync("MostSearchedProducts");
+            if (products == null)
+            {
+                return new StatusCodeResult(404);
+            } return new JsonResult(products);
+        }
+
         // POST: api/Products
         [HttpPost]
-      //  [NonAction] /////delete
         public async Task<IActionResult> Post([FromBody]Product product)
         {
             var res = (int)await this.repository.ExecuteOperationAsync("CreateProduct", new[]

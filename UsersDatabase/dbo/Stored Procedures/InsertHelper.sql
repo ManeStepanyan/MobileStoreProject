@@ -5,7 +5,7 @@
     @Price MONEY, 
     @RAM INT, 
     @Year INT, 
-    @Display decimal(3, 2), 
+    @Display decimal, 
     @Battery int, 
     @Camera INT, 
     @Image VARCHAR(200),

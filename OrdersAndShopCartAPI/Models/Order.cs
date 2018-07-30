@@ -14,5 +14,6 @@ namespace OrdersAndShopCartAPI.Models
         public string CellPhone { get; set; }
         public int Quantity { get; set; }
         public double TotalAmount { get; set; }
+        public string CardAccount { get; set; }
     }
 }
