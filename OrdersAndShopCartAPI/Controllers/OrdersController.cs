@@ -35,7 +35,6 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}", Name = "GetOrderByOrderId")]
-        [Authorize(Policy ="Admin")] 
         public async Task<IActionResult> GetOrderById(int id)
         {
             var res = await this.repo.ExecuteOperationAsync("GetOrderByOrderId", new[] { new KeyValuePair<string, object>("id", id) });
