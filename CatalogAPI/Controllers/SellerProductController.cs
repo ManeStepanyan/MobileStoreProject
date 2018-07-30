@@ -10,6 +10,7 @@ using CatalogAPI.Models;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
@@ -136,7 +137,34 @@ namespace CatalogAPI.Controllers
             return new StatusCodeResult(200);
         }
 
+        [HttpPut("{id}")]
+        [Authorize(Policy = "Seller")]
+        public async Task<IActionResult> Put(int id, [FromBody]JToken jsonbody)
+        {
+            var userId = GetCurrentUser();
+            var sellerId = (int)await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
+            int currentSellerId;
 
+            using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
+            {
+                HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
+                SellerPublicInfo seller = (SellerPublicInfo)((await resp.Content.ReadAsAsync(typeof(SellerPublicInfo))));
+                currentSellerId = seller.Id;
+            }
+            if (currentSellerId == sellerId)
+            {
+                using (var productClient = this.InitializeClient("http://localhost:5002/"))
+                {
+                    HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await productClient.PutAsync("/api/products/", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return new StatusCodeResult(200);
+                    }
+                }
+            }
+            return new StatusCodeResult(404);
+        }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         [Authorize(Policy = "Seller")]

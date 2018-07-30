@@ -70,8 +70,8 @@ namespace ProductAPI.Controllers
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo=null)
-        {
+        public async Task<IActionResult> Search([FromBody]Product product, [FromBody] int range, [FromBody]decimal? priceTo=null)
+        { List<Product> result = new List<Product>();
             var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SearchProducts", new[] 
             {
                 new KeyValuePair<string, object>("name", product.Name),
@@ -94,6 +94,7 @@ namespace ProductAPI.Controllers
                 await this.repository.ExecuteOperationAsync("IncreamentCount", new[] { new KeyValuePair<string, object>("id", prod.Id) });
                 
             }
+          
             return new JsonResult(products);
         }
         [HttpGet("mostsearched")]
