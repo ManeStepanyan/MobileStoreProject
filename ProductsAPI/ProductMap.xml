@@ -18,14 +18,10 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <spParameterName>Version</spParameterName>
       </parameter>
       <parameter>
-        <parameterName>quantity</parameterName>
-        <spParameterName>Quantity</spParameterName>
-      </parameter>
-              <parameter>
         <parameterName>price</parameterName>
         <spParameterName>Price</spParameterName>
       </parameter>
-                <parameter>
+      <parameter>
         <parameterName>ram</parameterName>
         <spParameterName>RAM</spParameterName>
       </parameter>
@@ -33,7 +29,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <parameterName>year</parameterName>
         <spParameterName>Year</spParameterName>
       </parameter>
-              <parameter>
+      <parameter>
         <parameterName>display</parameterName>
         <spParameterName>Display</spParameterName>
       </parameter>
@@ -48,6 +44,22 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
      <parameter>
       <parameterName>image</parameterName>
         <spParameterName>Image</spParameterName>
+     </parameter>
+       <parameter>
+        <parameterName>quantity</parameterName>
+        <spParameterName>Quantity</spParameterName>
+      </parameter>
+    <parameter>
+        <parameterName>memory</parameterName>
+        <spParameterName>Memory</spParameterName>
+      </parameter>
+     <parameter>
+        <parameterName>color</parameterName>
+        <spParameterName>Color</spParameterName>
+      </parameter>
+     <parameter>
+        <parameterName>description</parameterName>
+        <spParameterName>Description</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Scalar</returnDataType>
@@ -70,10 +82,6 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
       <parameter>
         <parameterName>version</parameterName>
         <spParameterName>Version</spParameterName>
-      </parameter>
-      <parameter>
-        <parameterName>quantity</parameterName>
-        <spParameterName>Quantity</spParameterName>
       </parameter>
       <parameter>
         <parameterName>price</parameterName>
@@ -103,12 +111,32 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <parameterName>image</parameterName>
         <spParameterName>Image</spParameterName>
       </parameter>
+      <parameter>
+        <parameterName>quantity</parameterName>
+        <spParameterName>Quantity</spParameterName>
+      </parameter>
+    <parameter>
+        <parameterName>memory</parameterName>
+        <spParameterName>Memory</spParameterName>
+      </parameter>
+     <parameter>
+        <parameterName>color</parameterName>
+        <spParameterName>Color</spParameterName>
+      </parameter>
+     <parameter>
+        <parameterName>description</parameterName>
+        <spParameterName>Description</spParameterName>
+      </parameter>
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
   
   <operation name="GetAllProducts">
     <spName>GetProducts</spName>
+    <returnDataType>Enumerable</returnDataType>
+  </operation>
+  <operation name="GetAllNames">
+    <spName>GetAllNames</spName>
     <returnDataType>Enumerable</returnDataType>
   </operation>
   <operation name="UpdateQuantity">
@@ -179,16 +207,68 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
-  <operation name='UpdateProduct'>
+   <operation name='UpdateProduct'>
     <spName>UpdateProduct</spName>
     <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>Id</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>name</parameterName>
+        <spParameterName>Name</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>brand</parameterName>
+        <spParameterName>Brand</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>version</parameterName>
+        <spParameterName>Version</spParameterName>
+      </parameter>
       <parameter>
         <parameterName>price</parameterName>
         <spParameterName>Price</spParameterName>
       </parameter>
       <parameter>
+        <parameterName>ram</parameterName>
+        <spParameterName>RAM</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>year</parameterName>
+        <spParameterName>Year</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>display</parameterName>
+        <spParameterName>Display</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>battery</parameterName>
+        <spParameterName>Battery</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>camera</parameterName>
+        <spParameterName>Camera</spParameterName>
+      </parameter>
+      <parameter>
         <parameterName>image</parameterName>
         <spParameterName>Image</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>quantity</parameterName>
+        <spParameterName>Quantity</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>memory</parameterName>
+        <spParameterName>Memory</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>color</parameterName>
+        <spParameterName>Color</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>description</parameterName>
+        <spParameterName>Description</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
@@ -239,6 +319,18 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
       <parameter>
         <parameterName>image</parameterName>
         <spParameterName>Image</spParameterName>
+      </parameter>
+       <parameter>
+        <parameterName>memory</parameterName>
+        <spParameterName>Memory</spParameterName>
+      </parameter>
+     <parameter>
+        <parameterName>color</parameterName>
+        <spParameterName>Color</spParameterName>
+      </parameter>
+     <parameter>
+        <parameterName>description</parameterName>
+        <spParameterName>Description</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Enumerable</returnDataType>
