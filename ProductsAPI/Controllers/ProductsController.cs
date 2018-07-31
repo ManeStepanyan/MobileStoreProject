@@ -16,7 +16,7 @@ namespace ProductAPI.Controllers
         private readonly Repo<Product> repository;
     
 
-        public ProductsController(Repo<Product> repository, Repo<string> repo)
+        public ProductsController(Repo<Product> repository)
         {
             this.repository = repository;
            
