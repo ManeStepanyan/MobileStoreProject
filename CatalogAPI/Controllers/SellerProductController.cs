@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -11,7 +10,6 @@ using CatalogAPI.Models;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
@@ -64,7 +62,10 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> GetProductsByCatalogId(int id)
         {
             Product product = new Product();
-            int productId = (int)(await this.repo.ExecuteOperationAsync("GetProductByCatalogId", new[] { new KeyValuePair<string, object>("catalogId", id) }));
+            int productId;
+            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetProductByCatalogId", new[] { new KeyValuePair<string, object>("catalogId", id) })).ToString(), out productId);
+            if (productId == 0)
+                return NotFound();
 
             using (var productClient = InitializeClient("http://localhost:5002/"))
             {
@@ -84,7 +85,11 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> GetSellerId(int id)
         {
             Object res;
-            var sellerId = (int)await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
+            int sellerId;
+            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) })).ToString(), out sellerId);
+            if (sellerId == 0)
+                return NotFound();
+
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
                 HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/" + sellerId);
@@ -100,7 +105,8 @@ namespace CatalogAPI.Controllers
         [HttpGet("{id}", Name = "GetCatalogIdByProductId")]
         public async Task<IActionResult> GetCatalogIdByProductId(int id)
         {
-            int catalogId = (int)await this.repo.ExecuteOperationAsync("GetByProductId", new[] { new KeyValuePair<string, object>("id", id) });
+            int catalogId;
+            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetByProductId", new[] { new KeyValuePair<string, object>("id", id) })).ToString(), out catalogId);
             if (catalogId != 0)
             {
                 return Ok(catalogId);
@@ -119,8 +125,10 @@ namespace CatalogAPI.Controllers
             using (var productClient = this.InitializeClient("http://localhost:5002/"))
             {
                 HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await productClient.PostAsync("/api/products/", content);
-                productId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+                HttpResponseMessage response = await productClient.PostAsync("/api/products/", content);;
+                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int))).ToString()), out productId);
+                if (productId == 0)
+                 return NotFound();
 
                 using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
                 {
@@ -140,8 +148,10 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> Put(int id, [FromBody]JToken jsonbody)
         {
             var userId = GetCurrentUser();
-            var sellerId = (int)await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
-            int currentSellerId;
+            int sellerId, currentSellerId;
+            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) })).ToString(),out sellerId);
+            if (sellerId == 0)
+                return NotFound();           
 
             using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
             {
@@ -168,8 +178,10 @@ namespace CatalogAPI.Controllers
         [Authorize(Policy = "Seller")]
         public async Task<IActionResult> Delete(int id)
         {
-            int currentSellerId;
-            var sellerId = (int)await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) });
+            int currentSellerId, sellerId;
+            Int32.TryParse(( await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) })).ToString(),out sellerId);
+            if (sellerId == 0)
+                return NotFound();
             var userId = GetCurrentUser();
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
