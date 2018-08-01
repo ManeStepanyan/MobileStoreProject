@@ -32,7 +32,7 @@ namespace UsersAPI.Controllers
             var result = await this.publicRepo.ExecuteOperationAsync("GetAllSellers");
             if (result == null)
                 return new StatusCodeResult(204);
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         // GET: api/Sellers/5
@@ -43,9 +43,9 @@ namespace UsersAPI.Controllers
             var seller = await this.publicRepo.ExecuteOperationAsync("GetSeller", new[] { new KeyValuePair<string, object>("id", id) });
             if (seller == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(seller);
+            return Ok(seller);
 
         }
         [HttpGet("login/{login}", Name = "GetSellerByLogin")]
@@ -54,9 +54,9 @@ namespace UsersAPI.Controllers
             var res = await this.publicRepo.ExecuteOperationAsync("GetSellerByName", new[] { new KeyValuePair<string, object>("login", login) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
         [HttpGet("users/{id}", Name = "GetSellerByUserId")]
         public async Task<IActionResult> GetByUserId(int id)
@@ -64,9 +64,9 @@ namespace UsersAPI.Controllers
             var res = await this.publicRepo.ExecuteOperationAsync("GetSellerByUserId", new[] { new KeyValuePair<string, object>("userid", id) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // POST: api/Sellers
@@ -78,7 +78,7 @@ namespace UsersAPI.Controllers
                 throw new System.Exception("Username already exists");
             }
             var res = await this.repo.ExecuteOperationAsync("CreateSeller", new[] { new KeyValuePair<string, object>("name", seller.Name), new KeyValuePair<string, object>("email", seller.Email), new KeyValuePair<string, object>("cellphone", seller.CellPhone), new KeyValuePair<string, object>("address", seller.Address), new KeyValuePair<string, object>("login", seller.Login), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(seller.Password)) });
-            return new JsonResult(res);
+            return Ok(res);
         }
 
 
@@ -93,7 +93,7 @@ namespace UsersAPI.Controllers
                 await this.repo.ExecuteOperationAsync("UpdateSeller", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("name", seller.Name ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("cellphone", seller.CellPhone ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("address", seller.Address ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", seller.Email ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(seller.Password) ?? DBNull.Value.ToString()) });
                 return await this.GetById(id);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
 
         }
 
@@ -109,7 +109,7 @@ namespace UsersAPI.Controllers
                 var userId = GetCurrentUserId();
                 if (((SellerInfo)await this.repo.ExecuteOperationAsync("GetSeller", new[] { new KeyValuePair<string, object>("id", id) })).UserId != userId)
                 {
-                    return new StatusCodeResult(404);
+                    return NotFound();
                 }
             }
             await this.repo.ExecuteOperationAsync("DeleteSeller", new[] { new KeyValuePair<string, object>("id", id) });

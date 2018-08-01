@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -32,9 +33,9 @@ namespace CatalogAPI.Controllers
         {
             var result = await this.repo.ExecuteOperationAsync("GetAllSellerProducts");
             if (result == null)
-                return new StatusCodeResult(204);
+                return NotFound();
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         // GET: api/SellerProduct/5
@@ -53,11 +54,11 @@ namespace CatalogAPI.Controllers
                     {
                         list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
                     }
-                    else return new StatusCodeResult(404);
+                    else return NotFound();
                 }
             }
 
-            return new JsonResult(list);
+            return Ok(list);
         }
         [HttpGet("catalog/{id}", Name = "GetProductByCatalogId")]
         public async Task<IActionResult> GetProductsByCatalogId(int id)
@@ -72,9 +73,9 @@ namespace CatalogAPI.Controllers
                 {
                     product = (Product)(await response.Content.ReadAsAsync(typeof(Product)));
                 }
-                else return new StatusCodeResult(404);
+                else return NotFound();
             }
-            return new JsonResult(product);
+            return Ok(product);
         }
 
         // GET: api/SellerProduct/5
@@ -91,9 +92,9 @@ namespace CatalogAPI.Controllers
             }
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         [HttpGet("{id}", Name = "GetCatalogIdByProductId")]
@@ -102,9 +103,9 @@ namespace CatalogAPI.Controllers
             int catalogId = (int)await this.repo.ExecuteOperationAsync("GetByProductId", new[] { new KeyValuePair<string, object>("id", id) });
             if (catalogId != 0)
             {
-                return new JsonResult(catalogId);
+                return Ok(catalogId);
             }
-            return new JsonResult(404);
+            return NotFound();
         }
 
 
@@ -128,13 +129,10 @@ namespace CatalogAPI.Controllers
                     sellerId = seller.Id;
                 }
                 catalogId = Convert.ToInt32(await this.repo.ExecuteOperationAsync("AddSellerProduct", new[] { new KeyValuePair<string, object>("productId", productId), new KeyValuePair<string, object>("sellerId", sellerId) }));
-                content = new FormUrlEncodedContent(new[]
-           {
-             new KeyValuePair<string, string>("catalogId", catalogId.ToString())
-        });
+                content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("catalogId", catalogId.ToString()) });
                 response = await productClient.PutAsync("/api/products/catalog/" + productId, content);
             }
-            return new StatusCodeResult(200);
+            return Ok();
         }
 
         [HttpPut("{id}")]
@@ -163,7 +161,7 @@ namespace CatalogAPI.Controllers
                     }
                 }
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
@@ -175,7 +173,7 @@ namespace CatalogAPI.Controllers
             var userId = GetCurrentUser();
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
-                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/" + userId);
+                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + userId);
                 SellerPublicInfo seller = (SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
                 currentSellerId = seller.Id;
             }
@@ -193,7 +191,7 @@ namespace CatalogAPI.Controllers
 
                 return new StatusCodeResult(200);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
 
         public HttpClient InitializeClient(string uri)

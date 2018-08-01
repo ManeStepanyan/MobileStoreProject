@@ -53,10 +53,10 @@ namespace OrdersAndShopCartAPI.Controllers
                     {
                         list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
                     }
-                    return new StatusCodeResult(404);
+                    return NotFound();
                 }
             }
-            return new JsonResult(list);
+            return Ok(list);
         }
 
         // GET: api/ShopCart/5
@@ -84,7 +84,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 currentCustomerId = customer.Id;
             }
       var res= await this.repo.ExecuteOperationAsync("AddToShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
-            if (res == null) return new StatusCodeResult(404);
+            if (res == null) return NotFound();
             return new StatusCodeResult(200);
         }
         
@@ -112,7 +112,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 currentCustomerId = customer.Id;
             }
             var res = await this.repo.ExecuteOperationAsync("DeleteFromShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
-            if (res == null) return new StatusCodeResult(404);
+            if (res == null) return NotFound();
             return new StatusCodeResult(200);
         }
     }

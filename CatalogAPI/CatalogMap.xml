@@ -126,7 +126,7 @@
         <spParameterName>Product_Id</spParameterName>
       </parameter>
     </parameters>
-    <returnDataType>Entity</returnDataType>
+    <returnDataType>Scalar</returnDataType>
   </operation>
   <operation name='GetByCatalogId'>
     <spName>GetByCatalogId</spName>

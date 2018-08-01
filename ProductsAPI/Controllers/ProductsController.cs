@@ -27,7 +27,7 @@ namespace ProductAPI.Controllers
             if (result == null)
                 return new StatusCodeResult(204);
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
 
@@ -38,9 +38,9 @@ namespace ProductAPI.Controllers
             var res = await this.repository.ExecuteOperationAsync("GetProduct", new[] { new KeyValuePair<string, object>("id", id) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         [HttpGet("name/{Name}", Name = "GetProductByName")]
@@ -50,9 +50,9 @@ namespace ProductAPI.Controllers
 
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // GET: api/Products/5
@@ -65,7 +65,7 @@ namespace ProductAPI.Controllers
                 var res = await Get(id);
                 products.Add(res);
             }
-            return new JsonResult(products);
+            return Ok(products);
         }
 
 
@@ -87,7 +87,7 @@ namespace ProductAPI.Controllers
             });
             if (products == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
             foreach(var prod in products)
             {
@@ -95,7 +95,7 @@ namespace ProductAPI.Controllers
                 
             }
           
-            return new JsonResult(products);
+            return Ok(products);
         }
         [HttpGet("mostsearched")]
         public async Task<IActionResult> GetMostSearchedProduct()
@@ -103,8 +103,8 @@ namespace ProductAPI.Controllers
           var products=await this.repository.ExecuteOperationAsync("MostSearchedProducts");
             if (products == null)
             {
-                return new StatusCodeResult(404);
-            } return new JsonResult(products);
+                return NotFound();
+            } return Ok(products);
         }
 
         // POST: api/Products
@@ -126,7 +126,7 @@ namespace ProductAPI.Controllers
               new KeyValuePair<string, object>("quantity", product.Quantity)
            });
             var temp = Newtonsoft.Json.JsonConvert.SerializeObject(res);
-            return new JsonResult(temp);
+            return Ok(temp);
         }
 
 
@@ -141,7 +141,7 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("image", Image)
             });
 
-            return new JsonResult(await this.repository.ExecuteOperationAsync("GetProduct", new[]
+            return Ok(await this.repository.ExecuteOperationAsync("GetProduct", new[]
                                   { new KeyValuePair<string, object>("Id", Id) }));
         }
         [HttpPut("quantity/{id}")]
@@ -152,7 +152,7 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("id", id),
                 new KeyValuePair<string, object>("orderedQuantity", orderedQuantity)           
             });
-            if (res == null) return new StatusCodeResult(404);
+            if (res == null) return NotFound();
             return new StatusCodeResult(200);
         }
         [HttpPut("catalog/{id}")]
@@ -163,7 +163,7 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("id", id),
                 new KeyValuePair<string, object>("catalogId", catalogId)
             });
-            if (res == null) return new StatusCodeResult(404);
+            if (res == null) return NotFound();
             return new StatusCodeResult(200);
         }
 

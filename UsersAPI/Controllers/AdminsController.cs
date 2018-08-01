@@ -35,7 +35,7 @@ namespace UsersAPI.Controllers
             if (result == null)
                 return new StatusCodeResult(204);
 
-            return new JsonResult(result);
+            return Ok(result);
 
         }
 
@@ -46,9 +46,9 @@ namespace UsersAPI.Controllers
             var res = await this.publicRepo.ExecuteOperationAsync("GetAdmin", new[] { new KeyValuePair<string, object>("id", id) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
         [HttpGet("login/{login}", Name = "GetAdminByLogin")]
 
@@ -58,9 +58,9 @@ namespace UsersAPI.Controllers
             var res = await this.publicRepo.ExecuteOperationAsync("GetAdminByName", new[] { new KeyValuePair<string, object>("login", login) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         [HttpPost]
@@ -75,9 +75,9 @@ namespace UsersAPI.Controllers
                     throw new System.Exception("Username already exists");
                 }
                 var res = await this.repo.ExecuteOperationAsync("CreateAdmin", new[] { new KeyValuePair<string, object>("name", admin.Name), new KeyValuePair<string, object>("email", admin.Email), new KeyValuePair<string, object>("login", admin.Login), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(admin.Password)) });
-                return new JsonResult(res);
+                return Ok(res);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
 
         [HttpPut]
@@ -88,9 +88,9 @@ namespace UsersAPI.Controllers
             if (userName == "Admin888")
             {
                 await this.repo.ExecuteOperationAsync("UpdateAdmin", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("name", admin.Name ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", admin.Email?? DBNull.Value.ToString()), new KeyValuePair<string, object>("password",MyCryptography.Encrypt( admin.Password) ?? DBNull.Value.ToString()) });
-                return new JsonResult(await this.repo.ExecuteOperationAsync("GetAdmin", new[] { new KeyValuePair<string, object>("id", id) }));
+                return Ok(await this.repo.ExecuteOperationAsync("GetAdmin", new[] { new KeyValuePair<string, object>("id", id) }));
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
@@ -103,7 +103,7 @@ namespace UsersAPI.Controllers
                 await this.repo.ExecuteOperationAsync("DeleteAdmin", new[] { new KeyValuePair<string, object>("id", id) });
                 return new StatusCodeResult(200);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
         public int GetCurrentUserId()
         {

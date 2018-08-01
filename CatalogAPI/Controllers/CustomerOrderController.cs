@@ -34,7 +34,7 @@ namespace CatalogAPI.Controllers
             if (result == null)
                 return new StatusCodeResult(204);
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         // GET: api/CustomerProduct/5
@@ -57,7 +57,7 @@ namespace CatalogAPI.Controllers
                 orderIds = (List<int>)await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
                 if (orderIds.Count == 0)
                 {
-                    return new JsonResult("No orders");
+                    return Ok("No orders");
                 }
                 using (var orderClient = InitializeClient("http://localhost:5005/"))
                 {
@@ -67,9 +67,9 @@ namespace CatalogAPI.Controllers
                         orders.Add((Order)((await response.Content.ReadAsAsync(typeof(Order)))));
                     }
                 }
-                return new JsonResult(orders);
+                return Ok(orders);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
         // GET: api/CustomerProduct/5
         [HttpGet("seller/{id}", Name = "GetOrdersBySellerId")]
@@ -102,9 +102,9 @@ namespace CatalogAPI.Controllers
                         }
                     }
                 }
-                return new JsonResult(orders);
+                return Ok(orders);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
         // POST: api/CustomerProduct
         [HttpPost]
@@ -141,7 +141,7 @@ namespace CatalogAPI.Controllers
             }
             await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });
 
-            return new JsonResult(200);
+            return Ok(200);
         }
 
         public HttpClient InitializeClient(string uri)
