@@ -8,7 +8,10 @@
     @Year INT =null,
     @Display decimal(3, 2) =null,
     @Battery int =null,
-    @Camera INT =null
+    @Camera INT =null,
+	@Memory DECIMAL(3,2)= null,
+	@Color VARCHAR(10)= null,
+	@Description VARCHAR(100)= null
 as
 	(select * from products where [Name]=@Name and @Name is not null union
 	select * from products where  @Name is  null) intersect
@@ -30,5 +33,11 @@ as
 	select * from products where @Battery is null) intersect
 	(select * from products where [Camera]=@Camera and @Camera is not null union
 	select * from products where @Camera is null )
+	(select * from products where [Memory]=@Memory and @Memory is not null union
+	select * from products where @Memory is null )
+	(select * from products where [Color]=@Color and @Color is not null union
+	select * from products where @Color is null )
+	(select * from products where [Description]=@Description and @Description is not null union
+	select * from products where @Description is null )
 	order by Price
 GO

@@ -19,5 +19,8 @@ namespace ProductsAPI.Models
         public int? Camera { get; set; }
         public string Image { get; set; }
         public int? Quantity { get; set; }
+        public decimal? Memory { get; set; }
+        public string Color { get; set; }
+        public string Description { get; set; }
     }
 }

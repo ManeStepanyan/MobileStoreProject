@@ -13,6 +13,9 @@
     [Quantity]    INT           NULL,
     [Catalog_Id]  INT           NULL,
     [SearchCount] INT           DEFAULT ((0)) NOT NULL,
+	[Memory] DECIMAL(3,2) NOT NULL,
+	[Color] VARCHAR(10) NOT NULL,
+	[Description] VARCHAR(100) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
