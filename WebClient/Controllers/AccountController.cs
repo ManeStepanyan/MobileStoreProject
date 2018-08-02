@@ -34,7 +34,7 @@ namespace WebClient.Controllers
             if (disco.IsError)
             {
                 Console.WriteLine(disco.Error);
-                return Ok(404);
+               // return Ok();
             }
             var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
             var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(login, password, "openid");
@@ -43,7 +43,7 @@ namespace WebClient.Controllers
             if (tokenResponse.IsError)
             {
                 Console.WriteLine(tokenResponse.Error);
-                return Ok(404);
+              //  return Ok();
             }
 
             var userInfoClient = new UserInfoClient(disco.UserInfoEndpoint);

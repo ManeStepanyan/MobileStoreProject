@@ -38,36 +38,32 @@ namespace WebClient.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public async Task<IActionResult> ShopCart()
-        {
-            return Ok();
-        }
 
-        public async Task<IActionResult> ProductsAsync()
-        {
-            Uri siteUri = new Uri("http://localhost:5002/api/Products");
-            List<ProductModel> sellers = new List<ProductModel>();
-
-            // ... Use HttpClient.
-            using (HttpClient client = new HttpClient())
+            public async Task<IActionResult> ProductsAsync()
             {
-                using (HttpResponseMessage response = await client.GetAsync(siteUri))
-                {
-                    using (HttpContent content = response.Content)
-                    {
-                        // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
-                        sellers = JsonConvert.DeserializeObject<List<ProductModel>>(result);
+                Uri siteUri = new Uri("http://localhost:5002/api/Products");
+                List<ProductModel> sellers = new List<ProductModel>();
 
-                        if (result != null &&
-                            result.Length >= 50)
+                // ... Use HttpClient.
+                using (HttpClient client = new HttpClient())
+                {
+                    using (HttpResponseMessage response = await client.GetAsync(siteUri))
+                    {
+                        using (HttpContent content = response.Content)
                         {
-                            Console.WriteLine(result.Substring(0, 50) + "...");
+                            // ... Read the string.
+                            string result = await content.ReadAsStringAsync();
+                            sellers = JsonConvert.DeserializeObject<List<ProductModel>>(result);
+
+                            if (result != null &&
+                                result.Length >= 50)
+                            {
+                                Console.WriteLine(result.Substring(0, 50) + "...");
+                            }
                         }
                     }
                 }
+                return View(sellers);
             }
-            return View(sellers);
         }
     }
-}
