@@ -22,7 +22,6 @@ namespace WebClient.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             Uri siteUri = new Uri("http://localhost:5002/api/Products");
-            List<ProductModel> sellers = new List<ProductModel>();
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
@@ -33,17 +32,16 @@ namespace WebClient.Controllers
                     {
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
-                        sellers = JsonConvert.DeserializeObject<List<ProductModel>>(result);
-
+                        var sellers = JsonConvert.DeserializeObject<List<ProductModel>>(result);
                         if (result != null &&
                             result.Length >= 50)
                         {
                             Console.WriteLine(result.Substring(0, 50) + "...");
                         }
+                        return View(sellers);
                     }
                 }
             }
-            return View(sellers);
         }
 
         public async Task<IActionResult> DetailAsync(int id)
@@ -61,7 +59,6 @@ namespace WebClient.Controllers
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
                         product = JsonConvert.DeserializeObject<ProductModel>(result);
-
                         if (result != null &&
                             result.Length >= 50)
                         {

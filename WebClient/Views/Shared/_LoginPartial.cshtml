@@ -1,9 +1,9 @@
 ﻿@using WebClient.Services
 @using Microsoft.AspNetCore.Http
 @{
-    var role = this.Context.Request.Cookies["role"];
-    var id = this.Context.Request.Cookies["id"];
-    }
+    var role = Context.Request.Cookies["role"];
+    var id = Context.Request.Cookies["id"];
+}
 @inject IAccountService AccountService
 @if (this.Context.Session.GetInt32("Is logged") == 1)
 {
