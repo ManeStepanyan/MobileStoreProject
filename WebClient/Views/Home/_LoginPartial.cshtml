@@ -1,9 +1,13 @@
 ﻿@using WebClient.Services
 @using Microsoft.AspNetCore.Http
+@{
+    var role = this.Context.Request.Cookies["role"];
+    var id = this.Context.Request.Cookies["id"];
+    }
 @inject IAccountService AccountService
 @if (this.Context.Session.GetInt32("Is logged") == 1)
 {
-    @if (this.Context.Session.GetInt32("role") == 2)
+    @if (role == "2")
     {
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Managment <span class="caret"></span></a>
@@ -14,9 +18,8 @@
             </ul>
         </li>
     }
-    @if (this.Context.Session.GetInt32("role") == 3)
+    @if (role == "3")
     {
-
         <li>
             <a href="/shopping-cart/">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> My Shopping Card

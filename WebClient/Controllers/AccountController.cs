@@ -53,6 +53,11 @@ namespace WebClient.Controllers
             HttpContext.Session.SetInt32("user_id", (int)claims["user_id"][0]);
             HttpContext.Session.SetInt32("role", (int)claims["role"][0]);
             HttpContext.Session.SetInt32("Is logged", 1);
+
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddDays(1d);
+            Response.Cookies.Append("role", (string)claims["role"][0], option);
+            Response.Cookies.Append("role", (string)claims["user_id"][0], option);
             return RedirectToAction("Index","Home");
         }
 
