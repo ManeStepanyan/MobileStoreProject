@@ -30,7 +30,7 @@ namespace OrdersAndShopCartAPI.Controllers
             if (result == null)
                 return new StatusCodeResult(204);
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         // GET: api/Orders/5
@@ -40,9 +40,9 @@ namespace OrdersAndShopCartAPI.Controllers
             var res = await this.repo.ExecuteOperationAsync("GetOrderByOrderId", new[] { new KeyValuePair<string, object>("id", id) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // GET: api/Orders/5
@@ -57,9 +57,9 @@ namespace OrdersAndShopCartAPI.Controllers
             });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
         [HttpGet("quantity/{orderId}", Name = "GetQuantityByOrderId")]
         public async Task<IActionResult> GetQuantity(int orderId)
@@ -68,8 +68,8 @@ namespace OrdersAndShopCartAPI.Controllers
             {      new KeyValuePair<string, object>("orderId", orderId) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
-            } return new JsonResult(res);
+                return NotFound();
+            } return Ok(res);
         }
         [HttpGet("catalog/{orderId}", Name = "GetCatalogByOrderId")]
         public async Task<IActionResult> GetCatalog(int orderId)
@@ -78,9 +78,9 @@ namespace OrdersAndShopCartAPI.Controllers
             {      new KeyValuePair<string, object>("id", orderId) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
         [HttpGet("{id}", Name = "GetOrderByCatalogId")]
         public async Task<IActionResult> GetOrderByCatalogId(int id)
@@ -91,9 +91,9 @@ namespace OrdersAndShopCartAPI.Controllers
             });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // POST: api/Orders
@@ -103,14 +103,14 @@ namespace OrdersAndShopCartAPI.Controllers
             var res = await this.repo.ExecuteOperationAsync("CreateOrder", new[]
             {
                 new KeyValuePair<string, object>("Catalog", order.CatalogId),
-                new KeyValuePair<string, object>("Date", order.Date),
+                new KeyValuePair<string, object>("Date", DateTime.Now),
                 new KeyValuePair<string, object>("Address", order.Address),
                 new KeyValuePair<string, object>("CellPhone", order.CellPhone),
                 new KeyValuePair<string, object>("Quantity", order.Quantity),
                 new KeyValuePair<string, object>("TotalAmount", order.TotalAmount),
                 new KeyValuePair<string, object>("CardAccount", order.CardAccount)
             });
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // DELETE: api/ApiWithActions/5

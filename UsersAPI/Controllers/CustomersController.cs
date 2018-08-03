@@ -33,7 +33,7 @@ namespace UsersAPI.Controllers
             var result = await this.publicRepo.ExecuteOperationAsync("GetAllCustomers");
             if (result == null)
                 return new StatusCodeResult(204);
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         // GET: api/Customers/5
@@ -49,10 +49,10 @@ namespace UsersAPI.Controllers
                 var userId = GetCurrentUserId();
                 if (userId != customer.UserId || customer == null)
                 {
-                    return new StatusCodeResult(404);
+                    return NotFound();
                 }
             }
-            return new JsonResult(customer);
+            return Ok(customer);
 
         }
         [HttpGet("login/{login}", Name = "GetByLogin")]
@@ -67,10 +67,10 @@ namespace UsersAPI.Controllers
                 var userId = GetCurrentUserId();
                 if (userId != ((CustomerInfo)(await this.repo.ExecuteOperationAsync("GetCustomerByName", new[] { new KeyValuePair<string, object>("login", login) }))).UserId || customer == null)
                 {
-                    return new StatusCodeResult(404);
+                    return NotFound();
                 }
             }
-            return new JsonResult(customer);
+            return Ok(customer);
         }
         [HttpGet("users/{id}", Name = "GetCustomerByUserId")]
         public async Task<IActionResult> GetByUserId(int id)
@@ -78,9 +78,9 @@ namespace UsersAPI.Controllers
             var res = await this.publicRepo.ExecuteOperationAsync("GetCustomerByUserId", new[] { new KeyValuePair<string, object>("userid", id) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
         // POST: api/Customers
         [HttpPost]
@@ -92,7 +92,7 @@ namespace UsersAPI.Controllers
                 throw new System.Exception("Username already exists");
             }
             var res = await this.repo.ExecuteOperationAsync("CreateCustomer", new[] { new KeyValuePair<string, object>("name", customer.Name), new KeyValuePair<string, object>("surname", customer.Surname), new KeyValuePair<string, object>("email", customer.Email), new KeyValuePair<string, object>("login", customer.Login), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(customer.Password)) });
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // PUT: api/Customers/5
@@ -105,9 +105,9 @@ namespace UsersAPI.Controllers
             if (((CustomerInfo)(await this.repo.ExecuteOperationAsync("GetCustomer", new[] { new KeyValuePair<string, object>("id", id) }))).UserId == userId)
             {
                 await this.repo.ExecuteOperationAsync("UpdateCustomer", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("name", customer.Name = customer.Name ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("surname", customer.Surname = customer.Surname ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", customer.Email = customer.Email ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("password", customer.Password = MyCryptography.Encrypt(customer.Password) ?? DBNull.Value.ToString()) });
-                return new JsonResult(await this.Get(id));
+                return Ok(await this.Get(id));
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
 
 
@@ -122,7 +122,7 @@ namespace UsersAPI.Controllers
                 var userId = GetCurrentUserId();
                 if (((CustomerInfo)(await this.repo.ExecuteOperationAsync("GetCustomer", new[] { new KeyValuePair<string, object>("id", id) }))).UserId != userId)
                 {
-                    return new StatusCodeResult(404);
+                    return NotFound();
                 }
             }
             await this.repo.ExecuteOperationAsync("DeleteCustomer", new[] { new KeyValuePair<string, object>("id", id) });

@@ -32,9 +32,9 @@ namespace CatalogAPI.Controllers
         {
             var result = await this.repo.ExecuteOperationAsync("GetAllCustomerOrders");
             if (result == null)
-                return new StatusCodeResult(204);
+                return NotFound();
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
         // GET: api/CustomerProduct/5
@@ -49,6 +49,7 @@ namespace CatalogAPI.Controllers
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
                 HttpResponseMessage resp = await customerClient.GetAsync("/api/customers/users/" + userId);
+                if (!resp.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await resp.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 customerId = customer.Id;
             }
@@ -57,19 +58,20 @@ namespace CatalogAPI.Controllers
                 orderIds = (List<int>)await this.repo.ExecuteOperationAsync("GetOrdersByCustomerId", new[] { new KeyValuePair<string, object>("id", id) });
                 if (orderIds.Count == 0)
                 {
-                    return new JsonResult("No orders");
+                    return Ok("No orders");
                 }
                 using (var orderClient = InitializeClient("http://localhost:5005/"))
                 {
                     foreach (var orderid in orderIds)
                     {
                         HttpResponseMessage response = await orderClient.GetAsync("/api/orders/" + orderid);
+                        if (!response.IsSuccessStatusCode) return NotFound();
                         orders.Add((Order)((await response.Content.ReadAsAsync(typeof(Order)))));
                     }
                 }
-                return new JsonResult(orders);
+                return Ok(orders);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
         // GET: api/CustomerProduct/5
         [HttpGet("seller/{id}", Name = "GetOrdersBySellerId")]
@@ -84,6 +86,7 @@ namespace CatalogAPI.Controllers
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
                 HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
+                if (!resp.IsSuccessStatusCode) return NotFound();
                 SellerPublicInfo seller = (SellerPublicInfo)((await resp.Content.ReadAsAsync(typeof(SellerPublicInfo))));
                 sellerId = seller.Id;
             }
@@ -95,6 +98,7 @@ namespace CatalogAPI.Controllers
                     foreach (var catalogid in catalogsIds)
                     {
                         HttpResponseMessage response = await orderClient.GetAsync("/api/orders/" + catalogid);
+                        if (!response.IsSuccessStatusCode) return NotFound();
                         var res = await response.Content.ReadAsAsync(typeof(Order));
                         if (res != null)
                         {
@@ -102,9 +106,9 @@ namespace CatalogAPI.Controllers
                         }
                     }
                 }
-                return new JsonResult(orders);
+                return Ok(orders);
             }
-            return new StatusCodeResult(404);
+            return NotFound();
         }
         // POST: api/CustomerProduct
         [HttpPost]
@@ -117,16 +121,21 @@ namespace CatalogAPI.Controllers
             {
                 HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await orderClient.PostAsync("/api/orders/", content);
-                orderId = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+                if (!response.IsSuccessStatusCode) return NotFound();
+                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int))).ToString()), out orderId);
+                if (orderId == 0) return NotFound();
                 response = await orderClient.GetAsync("/api/orders/quantity" + orderId);
-                quantity = int.Parse((await response.Content.ReadAsAsync(typeof(int))).ToString());
+                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int))).ToString()), out quantity);
+                if (quantity == 0) return NotFound();
                 response = await orderClient.GetAsync("/api/orders/catalog/" + orderId);
-                catalogId = (int)((await response.Content.ReadAsAsync(typeof(int))));
+                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int)))).ToString(), out catalogId);
+                if (catalogId == 0) return NotFound();
             }
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
-                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/" + userId);
+                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users/" + userId);
+                if (!response.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 customerId = customer.Id;
             }
@@ -137,11 +146,12 @@ namespace CatalogAPI.Controllers
              new KeyValuePair<string, string>("quantity", quantity.ToString())
 
         });
-                await productClient.PutAsync("/api/products/quantity/" + catalogId, content);
+                HttpResponseMessage response = await productClient.PutAsync("/api/products/quantity/" + catalogId, content);
+                if (!response.IsSuccessStatusCode) return NotFound();
             }
-            await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });
-
-            return new JsonResult(200);
+            var res = await this.repo.ExecuteOperationAsync("AddCustomerOrder", new[] { new KeyValuePair<string, object>("customerId", customerId), new KeyValuePair<string, object>("orderId", orderId) });
+            if (res == null) return NotFound();
+            return Ok(200);
         }
 
         public HttpClient InitializeClient(string uri)

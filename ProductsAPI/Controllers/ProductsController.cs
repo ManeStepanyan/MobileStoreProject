@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +14,14 @@ namespace ProductAPI.Controllers
     {
 
         private readonly Repo<Product> repository;
+    
 
         public ProductsController(Repo<Product> repository)
         {
             this.repository = repository;
+           
         }
+
 
         // GET: api/Products
         [HttpGet]
@@ -30,6 +35,7 @@ namespace ProductAPI.Controllers
             return new JsonResult(result);
         }
 
+       
 
         // GET: api/Products/5
         [HttpGet("{Id}", Name = "GetProductById")]
@@ -70,8 +76,8 @@ namespace ProductAPI.Controllers
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo=null)
-        {
+        public async Task<IActionResult> Search([FromBody]Product product, [FromBody] int range, [FromBody]decimal? priceTo=null)
+        { List<Product> result = new List<Product>();
             var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SearchProducts", new[] 
             {
                 new KeyValuePair<string, object>("name", product.Name),
@@ -83,7 +89,10 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("year", product.Year),
                 new KeyValuePair<string, object>("display", product.Display),
                 new KeyValuePair<string, object>("battery", product.Battery),
-                new KeyValuePair<string, object>("camera", product.Camera)               
+                new KeyValuePair<string, object>("camera", product.Camera),
+                new KeyValuePair<string, object>("memory", product.Memory),
+                new KeyValuePair<string, object>("color", product.Color),
+                new KeyValuePair<string, object>("desciption", product.Description)
             });
             if (products == null)
             {
@@ -94,6 +103,7 @@ namespace ProductAPI.Controllers
                 await this.repository.ExecuteOperationAsync("IncreamentCount", new[] { new KeyValuePair<string, object>("id", prod.Id) });
                 
             }
+          
             return new JsonResult(products);
         }
         [HttpGet("mostsearched")]
@@ -122,7 +132,10 @@ namespace ProductAPI.Controllers
               new KeyValuePair<string, object>("battery", product.Battery),
               new KeyValuePair<string, object>("camera", product.Camera),
               new KeyValuePair<string, object>("image", product.Image),
-              new KeyValuePair<string, object>("quantity", product.Quantity)
+              new KeyValuePair<string, object>("quantity", product.Quantity),
+              new KeyValuePair<string, object>("memory", product.Memory),
+              new KeyValuePair<string, object>("color", product.Color),
+              new KeyValuePair<string, object>("desciption", product.Description)
            });
             var temp = Newtonsoft.Json.JsonConvert.SerializeObject(res);
             return new JsonResult(temp);
@@ -131,17 +144,29 @@ namespace ProductAPI.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int Id, double Price, string Image)
+        public async Task<IActionResult> Put(int id, [FromBody]Product product)
         {
             await this.repository.ExecuteOperationAsync("UpdateProduct", new[]
             {
-                new KeyValuePair<string, object>("id", Id),
-                new KeyValuePair<string, object>("price", Price),
-                new KeyValuePair<string, object>("image", Image)
+                new KeyValuePair<string, object>("id", id),
+                new KeyValuePair<string, object>("name", product.Name),
+                new KeyValuePair<string, object>("brand", product.Brand),
+                new KeyValuePair<string, object>("version", product.Version),
+                new KeyValuePair<string, object>("price", product.Price),
+                new KeyValuePair<string, object>("ram", product.RAM),
+                new KeyValuePair<string, object>("year", product.Year),
+                new KeyValuePair<string, object>("display", product.Display),
+                new KeyValuePair<string, object>("battery", product.Battery),
+                new KeyValuePair<string, object>("camera", product.Camera),
+                new KeyValuePair<string, object>("image", product.Image),
+                new KeyValuePair<string, object>("quantity", product.Quantity),
+                new KeyValuePair<string, object>("memory", product.Memory),
+                new KeyValuePair<string, object>("color", product.Color),
+                new KeyValuePair<string, object>("desciption", product.Description)
             });
 
             return new JsonResult(await this.repository.ExecuteOperationAsync("GetProduct", new[]
-                                  { new KeyValuePair<string, object>("Id", Id) }));
+                                  { new KeyValuePair<string, object>("id", id) }));
         }
         [HttpPut("quantity/{id}")]
         public async Task<IActionResult> Put(int id, int orderedQuantity)

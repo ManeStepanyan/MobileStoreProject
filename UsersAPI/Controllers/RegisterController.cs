@@ -52,7 +52,7 @@ namespace UsersAPI.Controllers
             }
             await this.repo.ExecuteOperationAsync("CreateUser", new[] { new KeyValuePair<string, object>("name", user.Name), new KeyValuePair<string, object>("surname", user.Surname ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", (this.IsValidEmail(user.Email)) ? user.Email : throw new Exception("Invalid Email")), new KeyValuePair<string, object>("address", user.Address ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("cellphone", user.CellPhone ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("login", user.Login), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(user.Password)), new KeyValuePair<string, object>("Role_Id", user.RoleId), new KeyValuePair<string, object>("activationCode", user.ActivationCode) });
             this.SendVerificationLinkEmail(user.Email, user.ActivationCode);
-            return new JsonResult("Registration has been done,And Account activation link has been sent your email:" + user.Email);
+            return Ok("Registration has been done,And Account activation link has been sent your email:" + user.Email);
             //     return new StatusCodeResult(200);
 
 

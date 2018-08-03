@@ -9,6 +9,15 @@
     padding-right: 15px;
 }
 
+
+div.col-md-5, .col-lg-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 7px;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
