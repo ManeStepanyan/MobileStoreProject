@@ -18,7 +18,9 @@ namespace WebClient.Controllers
     {
         public IActionResult Index()
         {
-
+            var allCookies = Request.Cookies;
+            var r = Request.Cookies["role"];
+            var i = Request.Cookies["id"];
             return View();
         }
         public IActionResult About()

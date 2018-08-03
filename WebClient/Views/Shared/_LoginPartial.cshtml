@@ -3,9 +3,10 @@
 @{
     var role = Context.Request.Cookies["role"];
     var id = Context.Request.Cookies["id"];
+    var logged = Context.Request.Cookies["Is logged"];
 }
 @inject IAccountService AccountService
-@if (this.Context.Session.GetInt32("Is logged") == 1)
+@if (logged == "1")
 {
     @if (role == "2")
     {
