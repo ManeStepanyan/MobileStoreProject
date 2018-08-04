@@ -1,5 +1,8 @@
 ﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -53,6 +56,6 @@ namespace ConsoleApp2
             }
             Console.Read();
         }
-    
+   
     }
 }

@@ -35,8 +35,11 @@ namespace AuthenticationServer
                     },
                     ClientClaimsPrefix = "",
                     AllowedScopes = { "UserAPI" ,"OrderAPI","CatalogAPI","WebClient","openid"},
+                    AccessTokenLifetime = 3600,
                     UpdateAccessTokenClaimsOnRefresh = true,
-                    AccessTokenLifetime = 3600
+                    AllowOfflineAccess =true, // allow refresh token
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AbsoluteRefreshTokenLifetime = 15780000
                 },
 
             };

@@ -41,7 +41,7 @@ namespace AuthenticationServer.Services
                 // depending on the scope accessing the user data.
                 if (!string.IsNullOrEmpty(context.Subject.Identity.Name))
                 {
-                    // get user from db (in my case this is by email)
+                    // get user from db (in my case this is by login)
                     var user = await this.userRepository.FindAsync(context.Subject.Identity.Name);
                     // checking user
                     if (user != null)

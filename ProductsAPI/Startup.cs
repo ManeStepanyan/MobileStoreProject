@@ -29,9 +29,9 @@ namespace ProductAPI
             services.AddMvcCore()
                     .AddRazorViewEngine()
                     .AddJsonFormatters();
-            services.Configure<CookiePolicyOptions>(options =>
+            services.Configure<CoJsonResultiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                // This lambda determines whether user consent for non-essential coJsonResulties is needed for a given request.
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton(new Repo<Product>(
@@ -53,7 +53,7 @@ namespace ProductAPI
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseCoJsonResultiePolicy();
 
             app.UseMvc();
         }

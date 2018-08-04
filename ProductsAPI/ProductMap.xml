@@ -301,8 +301,16 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <spParameterName>RAM</spParameterName>
       </parameter>
       <parameter>
+        <parameterName>ramTo</parameterName>
+        <spParameterName>RAMTo</spParameterName>
+      </parameter>
+      <parameter>
         <parameterName>year</parameterName>
         <spParameterName>Year</spParameterName>
+      </parameter>
+      <parameter>
+        <parameterName>yearTo</parameterName>
+        <spParameterName>YearTo</spParameterName>
       </parameter>
       <parameter>
         <parameterName>display</parameterName>
@@ -313,24 +321,28 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <spParameterName>Battery</spParameterName>
       </parameter>
       <parameter>
+        <parameterName>batteryTo</parameterName>
+        <spParameterName>BatteryTo</spParameterName>
+      </parameter>
+      <parameter>
         <parameterName>camera</parameterName>
         <spParameterName>Camera</spParameterName>
       </parameter>
       <parameter>
-        <parameterName>image</parameterName>
-        <spParameterName>Image</spParameterName>
+        <parameterName>cameraTo</parameterName>
+        <spParameterName>CameraTo</spParameterName>
       </parameter>
-       <parameter>
+      <parameter>
         <parameterName>memory</parameterName>
         <spParameterName>Memory</spParameterName>
       </parameter>
-     <parameter>
+      <parameter>
+        <parameterName>memoryTo</parameterName>
+        <spParameterName>MemoryTo</spParameterName>
+      </parameter>
+      <parameter>
         <parameterName>color</parameterName>
         <spParameterName>Color</spParameterName>
-      </parameter>
-     <parameter>
-        <parameterName>description</parameterName>
-        <spParameterName>Description</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Enumerable</returnDataType>

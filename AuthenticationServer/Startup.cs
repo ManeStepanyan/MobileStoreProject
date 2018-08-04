@@ -23,7 +23,7 @@ namespace AuthenticationServer
         {
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IProfileService, ProfileService>();
+            //services.AddScoped<IProfileService, ProfileService>();
 
               services.AddMvc();       
             services.AddIdentityServer().AddDeveloperSigningCredential()

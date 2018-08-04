@@ -14,12 +14,12 @@ namespace ProductAPI.Controllers
     {
 
         private readonly Repo<Product> repository;
-    
+
 
         public ProductsController(Repo<Product> repository)
         {
             this.repository = repository;
-           
+
         }
 
 
@@ -32,10 +32,10 @@ namespace ProductAPI.Controllers
             if (result == null)
                 return new StatusCodeResult(204);
 
-            return new JsonResult(result);
+            return Ok(result);
         }
 
-       
+
 
         // GET: api/Products/5
         [HttpGet("{Id}", Name = "GetProductById")]
@@ -44,9 +44,9 @@ namespace ProductAPI.Controllers
             var res = await this.repository.ExecuteOperationAsync("GetProduct", new[] { new KeyValuePair<string, object>("id", id) });
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         [HttpGet("name/{Name}", Name = "GetProductByName")]
@@ -56,9 +56,9 @@ namespace ProductAPI.Controllers
 
             if (res == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            return new JsonResult(res);
+            return Ok(res);
         }
 
         // GET: api/Products/5
@@ -71,14 +71,15 @@ namespace ProductAPI.Controllers
                 var res = await Get(id);
                 products.Add(res);
             }
-            return new JsonResult(products);
+            return Ok(products);
         }
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search([FromBody]Product product, [FromBody] int range, [FromBody]decimal? priceTo=null)
-        { List<Product> result = new List<Product>();
-            var products =(IEnumerable<Product>) await this.repository.ExecuteOperationAsync("SearchProducts", new[] 
+        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo = null, [FromBody]int? RAMTo = null, [FromBody]int? yearTo = null, [FromBody]int? batteryTo = null, [FromBody]int? cameraTo = null, [FromBody]int? memoryTo = null)
+        {
+            List<Product> result = new List<Product>();
+            var products = (IEnumerable<Product>)await this.repository.ExecuteOperationAsync("SearchProducts", new[]
             {
                 new KeyValuePair<string, object>("name", product.Name),
                 new KeyValuePair<string, object>("brand", product.Brand),
@@ -86,34 +87,39 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("priceFrom", product.Price),
                 new KeyValuePair<string, object>("priceTo", priceTo),
                 new KeyValuePair<string, object>("ram", product.RAM),
+                new KeyValuePair<string, object>("ramTo", RAMTo),
                 new KeyValuePair<string, object>("year", product.Year),
+                new KeyValuePair<string, object>("yearTo", yearTo),
                 new KeyValuePair<string, object>("display", product.Display),
                 new KeyValuePair<string, object>("battery", product.Battery),
+                new KeyValuePair<string, object>("batteryTo",batteryTo),
                 new KeyValuePair<string, object>("camera", product.Camera),
+                new KeyValuePair<string, object>("cameraTo", cameraTo),
                 new KeyValuePair<string, object>("memory", product.Memory),
+                new KeyValuePair<string, object>("memoryTo", memoryTo),
                 new KeyValuePair<string, object>("color", product.Color),
-                new KeyValuePair<string, object>("desciption", product.Description)
             });
             if (products == null)
             {
-                return new StatusCodeResult(404);
+                return NotFound();
             }
-            foreach(var prod in products)
+            foreach (var prod in products)
             {
                 await this.repository.ExecuteOperationAsync("IncreamentCount", new[] { new KeyValuePair<string, object>("id", prod.Id) });
-                
+
             }
-          
-            return new JsonResult(products);
+
+            return Ok(products);
         }
         [HttpGet("mostsearched")]
         public async Task<IActionResult> GetMostSearchedProduct()
         {
-          var products=await this.repository.ExecuteOperationAsync("MostSearchedProducts");
+            var products = await this.repository.ExecuteOperationAsync("MostSearchedProducts");
             if (products == null)
             {
-                return new StatusCodeResult(404);
-            } return new JsonResult(products);
+                return NotFound();
+            }
+            return Ok(products);
         }
 
         // POST: api/Products
@@ -138,7 +144,7 @@ namespace ProductAPI.Controllers
               new KeyValuePair<string, object>("desciption", product.Description)
            });
             var temp = Newtonsoft.Json.JsonConvert.SerializeObject(res);
-            return new JsonResult(temp);
+            return Ok(temp);
         }
 
 
@@ -165,18 +171,18 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("desciption", product.Description)
             });
 
-            return new JsonResult(await this.repository.ExecuteOperationAsync("GetProduct", new[]
+            return Ok(await this.repository.ExecuteOperationAsync("GetProduct", new[]
                                   { new KeyValuePair<string, object>("id", id) }));
         }
         [HttpPut("quantity/{id}")]
         public async Task<IActionResult> Put(int id, int orderedQuantity)
         {
-         var res=  await this.repository.ExecuteOperationAsync("UpdateQuantity", new[]
-            {
+            var res = await this.repository.ExecuteOperationAsync("UpdateQuantity", new[]
+               {
                 new KeyValuePair<string, object>("id", id),
-                new KeyValuePair<string, object>("orderedQuantity", orderedQuantity)           
+                new KeyValuePair<string, object>("orderedQuantity", orderedQuantity)
             });
-            if (res == null) return new StatusCodeResult(404);
+            if (res == null) return NotFound();
             return new StatusCodeResult(200);
         }
         [HttpPut("catalog/{id}")]
@@ -187,7 +193,7 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("id", id),
                 new KeyValuePair<string, object>("catalogId", catalogId)
             });
-            if (res == null) return new StatusCodeResult(404);
+            if (res == null) return NotFound();
             return new StatusCodeResult(200);
         }
 
