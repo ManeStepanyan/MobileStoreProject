@@ -29,11 +29,6 @@ namespace ProductAPI
             services.AddMvcCore()
                     .AddRazorViewEngine()
                     .AddJsonFormatters();
-            services.Configure<CoJsonResultiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential coJsonResulties is needed for a given request.
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
             services.AddSingleton(new Repo<Product>(
           new MapInfo(this.Configuration["Mappers:Products"]),
           new SpExecuter(this.Configuration["ConnectionStrings:ProductsDB"])));
@@ -53,7 +48,7 @@ namespace ProductAPI
             }
 
             app.UseStaticFiles();
-            app.UseCoJsonResultiePolicy();
+
 
             app.UseMvc();
         }

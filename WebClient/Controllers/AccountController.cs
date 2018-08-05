@@ -28,8 +28,7 @@ namespace WebClient.Controllers
 
         // GET: /<controller>/
         [Route("account/login")]
-        public async Task<IActionResult> Login(string login, string password)
-        {
+        public async Task<IActionResult> Login(string login, string password) { 
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             if (disco.IsError)
             {
@@ -62,6 +61,7 @@ namespace WebClient.Controllers
             Response.Cookies.Append("id", (string)claims["user_id"][0], option);
             Response.Cookies.Append("Is logged", "1", option);
             return RedirectToAction("Index","Home");
+
         }
 
         public IActionResult SignUp()
