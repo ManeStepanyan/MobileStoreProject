@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout1">
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SellerNameTextView"
+            android:textSize="40dp"
+            android:text="Name" />
+        <RatingBar
+            android:id="@+id/SellerRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="0.0"
+            android:layout_gravity="center" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:text="Address"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/SellerAddressTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Cell Phone"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/SellerCellPhoneTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Email"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/SellerEmailTextView" />
+            </TableRow>
+        </TableLayout>
+        <LinearLayout
+            android:layout_below="@id/linearLayout1"
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout2">
+            <GridView
+                android:id="@+id/ProductListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="auto_fit"
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
+                android:gravity="center"
+                android:clipToPadding="true"
+                android:fitsSystemWindows="true"
+                android:stretchMode="columnWidth" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

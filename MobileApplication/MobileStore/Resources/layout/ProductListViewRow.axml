@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:elevation="2dp"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:layout_margin="20dp"
+    android:padding="10dp">
+    <ImageView
+        android:src="@drawable/SignIn"
+        android:id="@+id/ProductImageView"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout1"
+        android:background="#2fDEDEDE"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <TextView
+            android:text="Nokia"
+            android:id="@+id/ProductNameTextView"
+            android:textColor="#ff000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20" />
+        <ImageView
+            android:src="@drawable/ic_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/DetalsImageView"
+            android:layout_weight="80" />
+    </LinearLayout>
+</LinearLayout>

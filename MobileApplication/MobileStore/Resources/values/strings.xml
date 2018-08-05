@@ -1,0 +1,13 @@
+<resources>
+  <string name="app_name">Mobile Store</string>
+  <string name="action_settings">Settings</string>
+  <string name="sign_in">Sign in</string>
+  <string name="sign_up">Sign up</string>
+
+  <string-array name="sorte_by">
+    <item>Name</item>
+    <item>Price</item>
+    <item>Memory</item>
+    <item>RAM</item>
+  </string-array>
+</resources>
