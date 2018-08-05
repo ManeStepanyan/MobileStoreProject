@@ -1,5 +1,8 @@
 ﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -22,7 +25,9 @@ namespace ConsoleApp2
 
 
             //   var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "UserAPI");
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "CatalogAPI");
+            var tokenResponse1 = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "UserAPI offline_access");
+          var tokenResponse=  await tokenClient.RequestRefreshTokenAsync(tokenResponse1.RefreshToken);
+
 
 
             if (tokenResponse.IsError)
@@ -30,15 +35,16 @@ namespace ConsoleApp2
                 Console.WriteLine(tokenResponse.Error);
                 return;
             }
-
+            Console.WriteLine(tokenResponse1.Json);
             Console.WriteLine(tokenResponse.Json);
             Console.WriteLine("\n\n");
 
             // call api
             var client = new HttpClient();
-            client.SetBearerToken(tokenResponse.AccessToken);
+            client.SetBearerToken(tokenResponse.AccessToken); //
+          
 
-            var response = await client.GetAsync("http://localhost:5003/api/sellerproduct");
+            var response = await client.GetAsync("http://localhost:5001/api/Sellers/2");
 
 
             if (!response.IsSuccessStatusCode)
@@ -53,6 +59,6 @@ namespace ConsoleApp2
             }
             Console.Read();
         }
-    
+   
     }
 }

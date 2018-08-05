@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[CreateProduct]
     @Name VARCHAR(30), 
     @Brand VARCHAR(20), 
-    @Version varchar(20), 
+    @Version varchar(20)=null,
     @Price MONEY, 
     @RAM INT, 
     @Year INT, 

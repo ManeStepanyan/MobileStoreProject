@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -7,6 +8,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Cryptography;
 using DatabaseAccess.Repository;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UsersAPI.Models;
@@ -29,6 +32,7 @@ namespace UsersAPI.Controllers
         {
             return new string[] { "value1", "value2" };
         }
+
 
         // GET: api/Register/5
         /*   [HttpGet("{id}", Name = "GetById")]
@@ -125,4 +129,6 @@ namespace UsersAPI.Controllers
         {
         }
     }
+
+
 }

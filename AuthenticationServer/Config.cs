@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 
 namespace AuthenticationServer
@@ -34,9 +35,12 @@ namespace AuthenticationServer
                         new Secret("secret".Sha256())
                     },
                     ClientClaimsPrefix = "",
-                    AllowedScopes = { "UserAPI" ,"OrderAPI","CatalogAPI","WebClient","openid"},
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OfflineAccess, "UserAPI" ,"OrderAPI","CatalogAPI","WebClient","openid"},
+                    AccessTokenLifetime = 3600,
                     UpdateAccessTokenClaimsOnRefresh = true,
-                    AccessTokenLifetime = 3600
+                    AllowOfflineAccess =true, // allow refresh token
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AbsoluteRefreshTokenLifetime = 15780000
                 },
 
             };
