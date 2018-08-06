@@ -2469,8 +2469,8 @@ namespace MobileStore
 			// aapt resource value: 0x7f0800b3
 			public const int FilterImageView = 2131230899;
 			
-			// aapt resource value: 0x7f0800ad
-			public const int GoToCartPage = 2131230893;
+			// aapt resource value: 0x7f0800b0
+			public const int GoToCartPageImageView = 2131230896;
 			
 			// aapt resource value: 0x7f080035
 			public const int META = 2131230773;
@@ -2835,8 +2835,8 @@ namespace MobileStore
 			// aapt resource value: 0x7f0800b4
 			public const int linearLayout2 = 2131230900;
 			
-			// aapt resource value: 0x7f0800af
-			public const int linearLayout3 = 2131230895;
+			// aapt resource value: 0x7f0800ae
+			public const int linearLayout3 = 2131230894;
 			
 			// aapt resource value: 0x7f0800b1
 			public const int linearLayout4 = 2131230897;
@@ -2958,8 +2958,8 @@ namespace MobileStore
 			// aapt resource value: 0x7f080055
 			public const int scrollable = 2131230805;
 			
-			// aapt resource value: 0x7f0800b0
-			public const int searchView = 2131230896;
+			// aapt resource value: 0x7f0800af
+			public const int searchView = 2131230895;
 			
 			// aapt resource value: 0x7f080080
 			public const int search_badge = 2131230848;
@@ -3111,8 +3111,8 @@ namespace MobileStore
 			// aapt resource value: 0x7f08006f
 			public const int title_template = 2131230831;
 			
-			// aapt resource value: 0x7f0800ae
-			public const int toolbar1 = 2131230894;
+			// aapt resource value: 0x7f0800ad
+			public const int toolbar1 = 2131230893;
 			
 			// aapt resource value: 0x7f08003e
 			public const int top = 2131230782;

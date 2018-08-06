@@ -22,7 +22,7 @@ namespace MobileStore.Activitys
         private List<Product> Products;
         private ProductsLiostViewAdapter Adapter;
         private GridView ProductsGridView;
-        private FloatingActionButton GoToCartPage;
+        private ImageView GoToCartPageImageView;
         private ImageView FilterImageView;
         private Spinner SortBySpiner;
 
@@ -39,8 +39,8 @@ namespace MobileStore.Activitys
             this.ProductsGridView = FindViewById<GridView>(Resource.Id.ProductListView);
             //this.ProductsGridView.Adapter = this.Adapter;
             this.ProductsGridView.ItemClick += ProductsGridView_ItemClick;
-            this.GoToCartPage = FindViewById<FloatingActionButton>(Resource.Id.GoToCartPage);
-            this.GoToCartPage.Click += GoToCartPage_Click;
+            this.GoToCartPageImageView = FindViewById<ImageView>(Resource.Id.GoToCartPageImageView);
+            this.GoToCartPageImageView.Click += GoToCartPage_Click;
             this.FilterImageView = FindViewById<ImageView>(Resource.Id.FilterImageView);
             this.FilterImageView.Click += FilterImageView_Click;
 
