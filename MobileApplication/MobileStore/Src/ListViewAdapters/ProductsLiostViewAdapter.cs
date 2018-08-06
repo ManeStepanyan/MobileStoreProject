@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Views;
@@ -52,13 +53,17 @@ namespace MobileStore.Src.ListViewAdapters
             {
                 row = LayoutInflater.From(this.Context).Inflate(this.Layout, null, false);
                 var Image = row.FindViewById<ImageView>(Resource.Id.DetalsImageView);
+                var dialogGenericTask = new Task<ProductDescriptionDialog>(() => new ProductDescriptionDialog(this.Context));
+                dialogGenericTask.Start();
+                var transactionGenericTask = new Task<FragmentTransaction>(() => this.Activity.FragmentManager.BeginTransaction());
+                transactionGenericTask.Start();
                 Image.Click += delegate
                 {
-                    var transaction = this.Activity.FragmentManager.BeginTransaction();
-                    var dialog = new ProductDescriptionDialog(this.Context);
+                    //var transaction = this.Activity.FragmentManager.BeginTransaction();
+                    //var dialog = new ProductDescriptionDialog(this.Context);
                     var pos = position;
                     ActivityCommunication.Product = this.Products[pos];
-                    dialog.Show(transaction, "Dialog fragment");
+                    dialogGenericTask.Result.Show(transactionGenericTask.Result, "Dialog fragment");
                 };
             }
 

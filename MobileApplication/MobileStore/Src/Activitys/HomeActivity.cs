@@ -12,6 +12,7 @@ using MobileStore.Src.Dialogs;
 using System;
 using MobileStore.Src.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MobileStore.Activitys
 {
@@ -25,6 +26,10 @@ namespace MobileStore.Activitys
         private ImageView GoToCartPageImageView;
         private ImageView FilterImageView;
         private Spinner SortBySpiner;
+
+
+        private Task<Intent> ProductDescriptionActivityGenericTask;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -48,6 +53,12 @@ namespace MobileStore.Activitys
             this.SortBySpiner = FindViewById<Spinner>(Resource.Id.SortBySpiner);
             this.SortBySpiner.Adapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleExpandableListItem1, SearchByItems);
             this.SortBySpiner.ItemSelected += SortBySpiner_ItemSelected;
+
+
+
+            this.ProductDescriptionActivityGenericTask = new Task<Intent>(() => new Intent(this, typeof(ProductDescriptionActivity)));
+            this.ProductDescriptionActivityGenericTask.Start();
+            
         }
 
         private void SortBySpiner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -98,7 +109,8 @@ namespace MobileStore.Activitys
         {
             Intent intent = new Intent(this, typeof(ProductDescriptionActivity));
             ActivityCommunication.Product = this.Adapter[e.Position];
-            StartActivity(intent);
+            //StartActivity(intent);
+            StartActivity(this.ProductDescriptionActivityGenericTask.Result);
         }
 
         private void SearchView_QueryTextChange(object sender, SearchView.QueryTextChangeEventArgs e)
@@ -107,7 +119,7 @@ namespace MobileStore.Activitys
         }
 
 
-        public static string[] SearchByItems = new string[]
+        public static readonly string[] SearchByItems = new string[]
         {
             "Name",
             "Price",

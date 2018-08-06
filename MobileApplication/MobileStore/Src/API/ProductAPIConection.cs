@@ -14,7 +14,7 @@ namespace MobileStore.Src.API
         {
             IndexId = 0;
             ProductDataBase = new Dictionary<string, Product>();
-            UserAPIConection.LogOut();
+            //UserAPIConection.LogOut();
         }
 
         public static string[] GetBrands()
