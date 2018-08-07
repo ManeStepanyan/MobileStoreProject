@@ -55,13 +55,14 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="Src\Activitys\MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Activitys\ActivityCommunication.cs" />
     <Compile Include="Src\Activitys\BuyActivity.cs" />
     <Compile Include="Src\Activitys\CartActivity.cs" />
     <Compile Include="Src\Activitys\HomeActivity.cs" />
+    <Compile Include="Src\Activitys\MyAccountActivity.cs" />
     <Compile Include="Src\Activitys\ProductDescriptionActivity.cs" />
     <Compile Include="Src\Activitys\SellerDescriptionActivity.cs" />
     <Compile Include="Src\Activitys\SignInActivity.cs" />
@@ -220,6 +221,32 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\SingUpCustomerActivity.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\MyAccountActivity.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_account.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drawable\ic_cart" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\account.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\paakayttaja.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\account1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drawable\ic_singup" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_filter.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

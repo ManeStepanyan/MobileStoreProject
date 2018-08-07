@@ -1,4 +1,5 @@
 ﻿using MobileApplication.Src.Models;
+using System;
 
 namespace MobileApplication.Src.Activitys
 {
@@ -18,7 +19,7 @@ namespace MobileApplication.Src.Activitys
             {
                 if (product != null)
                 {
-                    throw new System.Exception();
+                    throw new Exception("Inadmissible situation.");
                 }
                 product = value;
             }
@@ -37,7 +38,7 @@ namespace MobileApplication.Src.Activitys
             {
                 if (seller != null)
                 {
-                    throw new System.Exception();
+                    throw new Exception("Inadmissible situation.");
                 }
                 seller = value;
             }

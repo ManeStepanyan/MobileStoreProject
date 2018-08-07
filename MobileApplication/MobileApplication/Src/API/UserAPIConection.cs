@@ -9,7 +9,7 @@ namespace MobileApplication.Src.API
     public static class UserAPIConection
     {
         /// <summary>
-        /// User anem User pair
+        /// User name, User pair
         /// </summary>
         private static Dictionary<string, UserModel> UserDataBase;
         /// <summary>
@@ -96,6 +96,10 @@ namespace MobileApplication.Src.API
             return true;
         }
 
+        public static bool UpdateCustomer(UserModel userModel)
+        {
+            return true;
+        }
 
         public static Seller GetSellerById(int id)
         {
