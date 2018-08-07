@@ -30,9 +30,9 @@ namespace MobileApplication.Src.Dialogs
         public GridView GridView;
 
         private readonly Activity context;
-        private readonly ProductsLiostViewAdapter adapter;
+        private readonly ProductsAdapter adapter;
 
-        public ProductsFilterDialog(Activity context, ProductsLiostViewAdapter adapter, GridView gridView)
+        public ProductsFilterDialog(Activity context, ProductsAdapter adapter, GridView gridView)
         {
             this.GridView = gridView;
             this.context = context;
@@ -86,7 +86,7 @@ namespace MobileApplication.Src.Dialogs
                 
             };
             var resource = ProductAPIConection.SearchProduct(searchModel);
-            this.GridView.Adapter = new ProductsLiostViewAdapter(this.context, resource, Resource.Layout.ProductListViewRow);
+            this.GridView.Adapter = new ProductsAdapter(this.context, resource, Resource.Layout.ProductAdapterItem);
             this.Dismiss();
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -11,8 +10,8 @@ namespace MobileApplication.Activitys
     [Activity(Label = "Mobile Store", Theme ="@style/AppTheme", MainLauncher = false)]
     class SignInActivity : Activity
     {
-        private TextView LogInTextView;
-        private TextView PasswordTextView;
+        private EditText LogInEditText;
+        private EditText PasswordEditText;
         private TextView LogInTitleTextView;
         private Button SignInButton;
         private Button SignUpButton;
@@ -22,8 +21,8 @@ namespace MobileApplication.Activitys
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SignInActivity);
 
-            this.LogInTextView = FindViewById<TextView>(Resource.Id.login_signin);
-            this.PasswordTextView = FindViewById<TextView>(Resource.Id.password_signin);
+            this.LogInEditText = FindViewById<EditText>(Resource.Id.login_signin);
+            this.PasswordEditText = FindViewById<EditText>(Resource.Id.password_signin);
             this.LogInTitleTextView = FindViewById<TextView>(Resource.Id.tv_login_signin);
 
             this.SignInButton = FindViewById<Button>(Resource.Id.btn_sign_in);
@@ -43,19 +42,19 @@ namespace MobileApplication.Activitys
 
         private void SignInButton_Click(object sender, EventArgs e)
         {
-            if (this.LogInTextView.Text == "" || this.PasswordTextView.Text == "")
+            if (this.LogInEditText.Text == "" || this.PasswordEditText.Text == "")
             {
                 this.LogInTitleTextView.Text = "Please enter all the fields.";
                 return;
             }
 
-            if (!UserAPIConection.SigeIn(this.LogInTextView.Text, this.PasswordTextView.Text))
+            if (!UserAPIConection.SigeIn(this.LogInEditText.Text, this.PasswordEditText.Text))
             {
                 this.LogInTitleTextView.Text = "Wrong login or password.";
                 return;
             }
 
-            var nextActivity = new Intent(this, typeof(MainActivity));
+            var nextActivity = new Intent(this, typeof(HomeActivity));
             StartActivity(nextActivity);
         }
     }

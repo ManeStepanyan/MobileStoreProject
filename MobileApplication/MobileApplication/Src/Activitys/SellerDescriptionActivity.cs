@@ -19,7 +19,7 @@ namespace MobileApplication.Src.Activitys
     [Activity(Label = "SellerDescriptionActivity", MainLauncher = false)]
     public class SellerDescriptionActivity : Activity
     {
-        private ProductsLiostViewAdapter Adapter;
+        private ProductsAdapter Adapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,7 +33,7 @@ namespace MobileApplication.Src.Activitys
             FindViewById<TextView>(Resource.Id.SellerCellPhoneTextView).Text = seller.CellPhone;
             FindViewById<TextView>(Resource.Id.SellerEmailTextView).Text = seller.Email;
             var products = CatalogAPIConection.GetProductsBySellerId(seller.Id).Select(a => ProductAPIConection.GetProductById(a));
-            this.Adapter = new ProductsLiostViewAdapter(this, products, Resource.Layout.ProductListViewRow);
+            this.Adapter = new ProductsAdapter(this, products, Resource.Layout.ProductAdapterItem);
             var ProductsGridView = FindViewById<GridView>(Resource.Id.ProductListView);
             ProductsGridView.Adapter = Adapter;
             ProductsGridView.ItemClick += ProductsGridView_ItemClick;

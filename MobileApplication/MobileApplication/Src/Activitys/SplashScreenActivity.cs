@@ -20,7 +20,7 @@ namespace MobileApplication.Src.Activitys
             base.OnResume();
             Task startupWork = new Task(() => {
                 UserAPIConection.LogOut();
-                StartActivity(typeof(MainActivity));
+                StartActivity(typeof(HomeActivity));
             });
             startupWork.Start();
         }

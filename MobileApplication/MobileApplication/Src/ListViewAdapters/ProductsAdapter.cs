@@ -14,7 +14,7 @@ using MobileApplication.Src.Models;
 
 namespace MobileApplication.Src.ListViewAdapters
 {
-    public partial class ProductsLiostViewAdapter : BaseAdapter<Product>
+    public partial class ProductsAdapter : BaseAdapter<Product>
     {
         protected List<Product> Products;
 
@@ -25,7 +25,7 @@ namespace MobileApplication.Src.ListViewAdapters
         private Activity Activity;
         protected Context Context;
 
-        public ProductsLiostViewAdapter(Activity context, IEnumerable<Product> products, int layout)
+        public ProductsAdapter(Activity context, IEnumerable<Product> products, int layout)
         {
             this.Activity = context;
             this.Context = context;

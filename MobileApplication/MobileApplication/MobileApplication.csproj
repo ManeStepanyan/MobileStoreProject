@@ -58,13 +58,12 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Src\Activitys\MainActivity.cs" />
+    <Compile Include="Src\Activitys\HomeActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Activitys\ActivityCommunication.cs" />
     <Compile Include="Src\Activitys\BuyActivity.cs" />
     <Compile Include="Src\Activitys\CartActivity.cs" />
-    <Compile Include="Src\Activitys\HomeActivity.cs" />
     <Compile Include="Src\Activitys\MyAccountActivity.cs" />
     <Compile Include="Src\Activitys\ProductDescriptionActivity.cs" />
     <Compile Include="Src\Activitys\SellerDescriptionActivity.cs" />
@@ -79,7 +78,7 @@
     <Compile Include="Src\Dialogs\ProductsFilterDialog.cs" />
     <Compile Include="Src\ListViewAdapters\CartListViewAdapter.cs" />
     <Compile Include="Src\ListViewAdapters\Filters\ProductsFilter.cs" />
-    <Compile Include="Src\ListViewAdapters\ProductsLiostViewAdapter.cs" />
+    <Compile Include="Src\ListViewAdapters\ProductsAdapter.cs" />
     <Compile Include="Src\Models\Product.cs" />
     <Compile Include="Src\Models\SearchProductModel.cs" />
     <Compile Include="Src\Models\Seller.cs" />
@@ -214,7 +213,7 @@
     <AndroidResource Include="Resources\layout\ProductFilterDialog.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\ProductListViewRow.axml" />
+    <AndroidResource Include="Resources\layout\ProductAdapterItem.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\SellerDescriptionActivity.axml" />

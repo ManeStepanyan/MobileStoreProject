@@ -1,52 +1,56 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
+using Android.Widget;
 using Android.OS;
 using Android.Support.V7.App;
-using Android.Widget;
+using Android.Views;
+using System.Collections.Generic;
 using MobileApplication.Src.ListViewAdapters;
+using System.Threading.Tasks;
+using Android.Content;
+using MobileApplication.Src.Models;
+using MobileApplication.Src.Dialogs;
 using MobileApplication.Src.API;
 using MobileApplication.Src.Activitys;
-using Android.Content;
+using MobileApplication.Activitys;
 using SearchView = Android.Support.V7.Widget.SearchView;
 using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
-using MobileApplication.Src.Dialogs;
-using System;
-using MobileApplication.Src.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MobileApplication;
 
-namespace MobileApplication.Activitys
+
+namespace MobileApplication
 {
-    [Activity(Label = "Mobile Store", MainLauncher = false)]
-    class HomeActivity : Activity
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = false)]
+    public class HomeActivity : AppCompatActivity
     {
         private SearchView SearchView;
         private List<Product> Products;
-        private ProductsLiostViewAdapter Adapter;
+        private ProductsAdapter Adapter;
         private GridView ProductsGridView;
-        private ImageView GoToCartPageImageView;
         private ImageView FilterImageView;
         private Spinner SortBySpiner;
 
 
         private Task<Intent> ProductDescriptionActivityGenericTask;
 
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.HomeActivity);
+            SetContentView(Resource.Layout.activity_main);
+
+            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(toolbar);
+
+            var GoTocartPageFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.GoToCartPageButton);
+            GoTocartPageFloatingActionButton.Click += GoToCartPage_Click;
+
 
             this.SearchView = FindViewById<SearchView>(Resource.Id.searchView);
             this.SearchView.QueryTextChange += SearchView_QueryTextChange;
             this.Products = ProductAPIConection.GetProducts();
-            this.Adapter = new ProductsLiostViewAdapter(this, this.Products, Resource.Layout.ProductListViewRow);
+            this.Adapter = new ProductsAdapter(this, this.Products, Resource.Layout.ProductAdapterItem);
             this.ProductsGridView = FindViewById<GridView>(Resource.Id.ProductListView);
-            //this.ProductsGridView.Adapter = this.Adapter;
             this.ProductsGridView.ItemClick += ProductsGridView_ItemClick;
-            this.GoToCartPageImageView = FindViewById<ImageView>(Resource.Id.GoToCartPageImageView);
-            this.GoToCartPageImageView.Click += GoToCartPage_Click;
             this.FilterImageView = FindViewById<ImageView>(Resource.Id.FilterImageView);
             this.FilterImageView.Click += FilterImageView_Click;
 
@@ -59,7 +63,40 @@ namespace MobileApplication.Activitys
 
             this.ProductDescriptionActivityGenericTask = new Task<Intent>(() => new Intent(this, typeof(ProductDescriptionActivity)));
             this.ProductDescriptionActivityGenericTask.Start();
-            
+            this.CartActivityGenericTask = new Task<Intent>(() => new Intent(this, typeof(CartActivity)));
+            this.CartActivityGenericTask.Start();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            int id = item.ItemId;
+            switch (item.ItemId)
+            {
+                case Resource.Id.action_cart:
+                    {
+                        var newActivity = new Intent(this,
+                                (UserAPIConection.SessionActivity()) ? typeof(CartActivity) : typeof(SignInActivity));
+                        StartActivity(newActivity);
+                        break;
+                    }
+                case Resource.Id.action_account:
+                    {
+                        var newActivity = new Intent(this,
+                                (UserAPIConection.SessionActivity()) ? typeof(MyAccountActivity) : typeof(SignInActivity));
+                        StartActivity(newActivity);
+                        break;
+                    }
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
+
+            return true;
         }
 
         private void SortBySpiner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -86,9 +123,9 @@ namespace MobileApplication.Activitys
             }
 
             this.Products.Sort(compare);
-            this.Adapter = new ProductsLiostViewAdapter(this, this.Products, Resource.Layout.ProductListViewRow);
+            this.Adapter = new ProductsAdapter(this, this.Products, Resource.Layout.ProductAdapterItem);
             this.ProductsGridView.Adapter = this.Adapter;
-            
+
             Console.WriteLine("==============");
         }
 
@@ -101,16 +138,14 @@ namespace MobileApplication.Activitys
 
         private void GoToCartPage_Click(object sender, System.EventArgs e)
         {
-            var newActivity = new Intent(this,
-                (UserAPIConection.SessionActivity()) ? typeof(CartActivity) : typeof(SignInActivity));
+            var newActivity = (UserAPIConection.SessionActivity()) ? this.CartActivityGenericTask.Result :
+                new Intent(this, typeof(SignInActivity));
             StartActivity(newActivity);
         }
 
         private void ProductsGridView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            Intent intent = new Intent(this, typeof(ProductDescriptionActivity));
             ActivityCommunication.Product = this.Adapter[e.Position];
-            //StartActivity(intent);
             StartActivity(this.ProductDescriptionActivityGenericTask.Result);
         }
 
@@ -128,5 +163,7 @@ namespace MobileApplication.Activitys
             "RAM"
         };
 
+        public Task<Intent> CartActivityGenericTask { get; private set; }
     }
 }
+
