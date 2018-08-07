@@ -2,5 +2,5 @@
 	@Customer_Id int
 AS
 	select *  from ShopCart
-	where Customer_Id=@Customer_Id
+	where CustomerId=@Customer_Id
 	go

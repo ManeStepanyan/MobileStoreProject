@@ -3,5 +3,5 @@
 	@Customer_Id int
 AS
 	delete from ShopCart
-	where Catalog_Id=@Catalog_Id and Customer_Id=@Customer_Id
+	where CatalogId=@Catalog_Id and CustomerId=@Customer_Id
 GO
