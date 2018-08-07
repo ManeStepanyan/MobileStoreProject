@@ -3,6 +3,6 @@
 	@Catalog_Id int
 	
 AS
-	Insert into ShopCart(Customer_Id, Catalog_Id)
+	Insert into ShopCart(CustomerId, CatalogId)
 	values(@Customer_Id, @Catalog_Id)
 GO

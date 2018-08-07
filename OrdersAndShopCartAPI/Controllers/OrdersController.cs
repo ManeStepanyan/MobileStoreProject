@@ -102,7 +102,7 @@ namespace OrdersAndShopCartAPI.Controllers
         {
             var res = await this.repo.ExecuteOperationAsync("CreateOrder", new[]
             {
-                new KeyValuePair<string, object>("Catalog", order.CatalogId),
+                new KeyValuePair<string, object>("catalogId", order.CatalogId),
                 new KeyValuePair<string, object>("Date", DateTime.Now),
                 new KeyValuePair<string, object>("Address", order.Address),
                 new KeyValuePair<string, object>("CellPhone", order.CellPhone),
