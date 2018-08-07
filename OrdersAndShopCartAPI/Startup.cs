@@ -28,7 +28,7 @@ namespace OrdersAndShopCart
         public void ConfigureServices(IServiceCollection services)
         {  // adding MVC Core,authorization and JSON formatting
             services.AddMvcCore()
-                    //  .AddRazorViewEngine()
+                    .AddRazorViewEngine()
                     .AddAuthorization()
                     .AddJsonFormatters();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

@@ -72,6 +72,7 @@ namespace UsersAPI.Controllers
             }
             return Ok(customer);
         }
+        [Authorize(Policy = "Customer")] ///////////////
         [HttpGet("users/{id}", Name = "GetCustomerByUserId")]
         public async Task<IActionResult> GetByUserId(int id)
         {

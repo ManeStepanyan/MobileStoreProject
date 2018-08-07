@@ -25,8 +25,8 @@ namespace ConsoleApp2
 
 
             //   var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("admin888", "administrator11", "UserAPI");
-            var tokenResponse1 = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "UserAPI offline_access");
-          var tokenResponse=  await tokenClient.RequestRefreshTokenAsync(tokenResponse1.RefreshToken);
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("example11", "erkinq", "CatalogAPI");
+           await tokenClient.RequestRefreshTokenAsync(tokenResponse.RefreshToken);
 
 
 
@@ -35,7 +35,6 @@ namespace ConsoleApp2
                 Console.WriteLine(tokenResponse.Error);
                 return;
             }
-            Console.WriteLine(tokenResponse1.Json);
             Console.WriteLine(tokenResponse.Json);
             Console.WriteLine("\n\n");
 
@@ -44,7 +43,7 @@ namespace ConsoleApp2
             client.SetBearerToken(tokenResponse.AccessToken); //
           
 
-            var response = await client.GetAsync("http://localhost:5001/api/Sellers/2");
+            var response = await client.GetAsync("http://localhost:5003/api/customerorder/");
 
 
             if (!response.IsSuccessStatusCode)

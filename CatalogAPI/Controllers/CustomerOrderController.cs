@@ -15,7 +15,8 @@ using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Route("api/customerorder")]
     public class CustomerOrderController : Controller
     {
         private readonly Repo<CustomerOrder> repo;
@@ -48,6 +49,7 @@ namespace CatalogAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
+                
                 HttpResponseMessage resp = await customerClient.GetAsync("/api/customers/users/" + userId);
                 if (!resp.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await resp.Content.ReadAsAsync(typeof(CustomerPublicInfo))));

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using OrdersAndShopCartAPI.Models;
 
 namespace OrdersAndShopCartAPI.Controllers
@@ -65,7 +66,7 @@ namespace OrdersAndShopCartAPI.Controllers
         // POST: api/ShopCart
         [HttpPost]
         [Authorize(Policy = "Customer")]
-        public async Task<IActionResult> Post([FromBody]int catalogId)
+        public async Task<IActionResult> Post([FromBody]JToken catalogId)
         {
             int currentCustomerId;
             var userId = GetCurrentUser();
@@ -89,7 +90,7 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int catalogId)
+        public async Task<IActionResult> Delete([FromBody]JToken  catalogId)
         {
             int currentCustomerId;
             var userId = GetCurrentUser();
