@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CatalogAPI.Models;
 using DatabaseAccess.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -18,10 +19,12 @@ namespace CatalogAPI.Controllers
     [Route("api/sellerproduct")]
     public class SellerProductController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
         private readonly Repo<SellerProduct> repo;
 
-        public SellerProductController(Repo<SellerProduct> repo)
+        public SellerProductController(Repo<SellerProduct> repo, IHttpContextAccessor httpContextAccessor)
         {
+            this._httpContextAccessor = httpContextAccessor;
             this.repo = repo;
         }
 
@@ -212,6 +215,9 @@ namespace CatalogAPI.Controllers
             {
                 BaseAddress = new Uri(uri)
             };
+            var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
+            var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
+            client.SetBearerToken(token);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;

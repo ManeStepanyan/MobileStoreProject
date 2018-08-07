@@ -51,6 +51,9 @@ namespace OrdersAndShopCart
             services.AddSingleton(new Repo<ShopCart>(
                new MapInfo(this.Configuration["Mappers:OrdersAndShopCart"]),
                new SpExecuter(this.Configuration["ConnectionStrings:OrdersAndShopCartDB"])));
+            services.AddSingleton(new Repo<Order>(
+               new MapInfo(this.Configuration["Mappers:OrdersAndShopCart"]),
+               new SpExecuter(this.Configuration["ConnectionStrings:OrdersAndShopCartDB"])));
         }
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             public void Configure(IApplicationBuilder app, IHostingEnvironment env)

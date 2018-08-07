@@ -19,10 +19,12 @@ namespace CatalogAPI.Controllers
     [Route("api/customerorder")]
     public class CustomerOrderController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
         private readonly Repo<CustomerOrder> repo;
 
-        public CustomerOrderController(Repo<CustomerOrder> repo)
+        public CustomerOrderController(Repo<CustomerOrder> repo, IHttpContextAccessor httpContextAccessor)
         {
+            this._httpContextAccessor = httpContextAccessor;
             this.repo = repo;
         }
 
@@ -162,6 +164,9 @@ namespace CatalogAPI.Controllers
             {
                 BaseAddress = new Uri(uri)
             };
+            var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
+            var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
+            client.SetBearerToken(token);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
