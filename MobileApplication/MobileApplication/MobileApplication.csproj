@@ -223,7 +223,7 @@
     <AndroidResource Include="Resources\layout\SignInActivity.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\SingUpCustomerActivity.axml" />
+    <AndroidResource Include="Resources\layout\SignUpCustomerActivity.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MyAccountActivity.axml">
@@ -246,7 +246,7 @@
     <AndroidResource Include="Resources\drawable\account1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\drawable\ic_singup" />
+    <Content Include="Resources\drawable\ic_signup.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_filter.png" />

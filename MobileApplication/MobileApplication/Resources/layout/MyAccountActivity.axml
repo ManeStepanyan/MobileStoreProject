@@ -64,6 +64,14 @@
             android:text="Password"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp" />
+        <TextView
+            android:id="@+id/PasswordErrorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textColor="#cc0000"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp" />
         <EditText
             android:id="@+id/password_client"
             style="@style/LoginEditText"
