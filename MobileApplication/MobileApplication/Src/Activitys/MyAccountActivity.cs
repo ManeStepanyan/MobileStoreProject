@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using MobileApplication.Src.API;
@@ -23,6 +24,7 @@ namespace MobileApplication.Src.Activitys
         private TextView PasswordTextView;
         private TextView PasswordTextView2;
         private Button SaveUpButton;
+        private TextView PasswordErrorTextView;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -38,14 +40,35 @@ namespace MobileApplication.Src.Activitys
             this.EmailTextView.Hint = user.Email;
             this.PasswordTextView = FindViewById<TextView>(Resource.Id.password_client);
             this.PasswordTextView2 = FindViewById<TextView>(Resource.Id.password_client2);
-
+            this.PasswordTextView.TextChanged += PasswordTextView_TextChanged;
+            this.PasswordTextView2.TextChanged += PasswordTextView_TextChanged;
             this.SaveUpButton = FindViewById<Button>(Resource.Id.SaveButton);
             this.SaveUpButton.Click += SaveUpButton_Click;
+            this.PasswordErrorTextView = FindViewById<TextView>(Resource.Id.PasswordErrorTextView);
+        }
 
+        private void PasswordTextView_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
+        {
+            if (this.PasswordTextView.Text != this.PasswordTextView2.Text)
+            {
+                this.PasswordErrorTextView.Text = "Passwords do not match.";
+            }
+            else
+            {
+                this.PasswordErrorTextView.Text = "";
+            }
         }
 
         private void SaveUpButton_Click(object sender, EventArgs e)
         {
+            if (this.PasswordTextView.Text != this.PasswordTextView2.Text)
+            {
+                View view = (View)sender;
+                Snackbar.Make(view, "Passwords do not match.", Snackbar.LengthLong)
+                    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+                return;
+            }
+
             var user = UserAPIConection.User;
             var newUser = new UserModel(
                 user.Name, this.SureNameTextView.Text,

@@ -13,7 +13,7 @@
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/SignIn"
+            android:src="@drawable/account"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
@@ -75,8 +75,27 @@
             android:text="Password"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp" />
+        <TextView
+            android:id="@+id/PasswordErrorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textColor="#cc0000"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp" />
         <EditText
             android:id="@+id/password_client"
+            style="@style/LoginEditText"
+            android:ems="10"
+            android:inputType="textPassword" />
+        <TextView
+            android:id="@+id/tv_password_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Confirm password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/password_client1"
             style="@style/LoginEditText"
             android:ems="10"
             android:inputType="textPassword" />
