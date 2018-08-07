@@ -31,6 +31,7 @@ namespace OrdersAndShopCartAPI.Controllers
         [Authorize(Policy = "Customer")]
         public async Task<IActionResult> Get()
         {
+            List<int> catalogIds = new List<int>();
             int currentCustomerId;
             List<Product> list = new List<Product>();
             var userId = GetCurrentUser();
@@ -40,7 +41,12 @@ namespace OrdersAndShopCartAPI.Controllers
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
-            var catalogIds = (IEnumerable<int>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
+            var info = (IEnumerable<ShopCart>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
+            foreach(var item in info)
+            {
+                catalogIds.Add(item.CatalogId);
+
+            }
             if (catalogIds != null)
             {
                 using (var catalogClient = InitializeClient("http://localhost:5003/"))

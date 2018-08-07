@@ -85,7 +85,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
   <operation name='GetCatalogsByCustomerId'>
-    <spName>GetShopCartById</spName>
+    <spName>GetCatalogsByCustomerId</spName>
     <parameters>
       <parameter>
         <parameterName>id</parameterName>
