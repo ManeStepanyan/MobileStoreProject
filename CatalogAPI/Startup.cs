@@ -48,6 +48,9 @@ namespace CatalogAPI
                 services.AddSingleton(new Repo<SellerProduct>(
                new MapInfo(this.Configuration["Mappers:Catalog"]),
                new SpExecuter(this.Configuration["ConnectionStrings:CatalogDB"])));
+            services.AddSingleton(new Repo<CustomerOrder>(
+            new MapInfo(this.Configuration["Mappers:Catalog"]),
+            new SpExecuter(this.Configuration["ConnectionStrings:CatalogDB"])));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

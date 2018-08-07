@@ -28,7 +28,7 @@ namespace OrdersAndShopCart
         public void ConfigureServices(IServiceCollection services)
         {  // adding MVC Core,authorization and JSON formatting
             services.AddMvcCore()
-                    //  .AddRazorViewEngine()
+                    .AddRazorViewEngine()
                     .AddAuthorization()
                     .AddJsonFormatters();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -49,6 +49,9 @@ namespace OrdersAndShopCart
             // adding singletons
             ///ordery kavelacnes
             services.AddSingleton(new Repo<ShopCart>(
+               new MapInfo(this.Configuration["Mappers:OrdersAndShopCart"]),
+               new SpExecuter(this.Configuration["ConnectionStrings:OrdersAndShopCartDB"])));
+            services.AddSingleton(new Repo<Order>(
                new MapInfo(this.Configuration["Mappers:OrdersAndShopCart"]),
                new SpExecuter(this.Configuration["ConnectionStrings:OrdersAndShopCartDB"])));
         }

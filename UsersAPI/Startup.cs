@@ -35,7 +35,7 @@ namespace SecurityAPI
                     {
                         options.Authority = "http://localhost:5000";
                         options.RequireHttpsMetadata = false;
-                        options.ApiName = "UserAPI";
+                        options.ApiName = "UserAPI"; 
                     });
             // adding policies
             services.AddAuthorization(options => options.AddPolicy("Admin", policy => policy.RequireClaim("role", "1")));

@@ -6,8 +6,11 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DatabaseAccess.Repository;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using OrdersAndShopCartAPI.Models;
 
 namespace OrdersAndShopCartAPI.Controllers
@@ -17,15 +20,18 @@ namespace OrdersAndShopCartAPI.Controllers
     public class ShopCartController : Controller
     {
         private readonly Repo<ShopCart> repo;
-        public ShopCartController(Repo<ShopCart> repo)
+        private IHttpContextAccessor _httpContextAccessor;
+        public ShopCartController(Repo<ShopCart> repo, IHttpContextAccessor httpContextAccessor)
         {
             this.repo = repo;
+            _httpContextAccessor = httpContextAccessor;
         }
         // GET: api/ShopCart
         [HttpGet]
         [Authorize(Policy = "Customer")]
         public async Task<IActionResult> Get()
         {
+            List<int> catalogIds = new List<int>();
             int currentCustomerId;
             List<Product> list = new List<Product>();
             var userId = GetCurrentUser();
@@ -35,7 +41,12 @@ namespace OrdersAndShopCartAPI.Controllers
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
-            var catalogIds = (IEnumerable<int>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
+            var info = (IEnumerable<ShopCart>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
+            foreach(var item in info)
+            {
+                catalogIds.Add(item.CatalogId);
+
+            }
             if (catalogIds != null)
             {
                 using (var catalogClient = InitializeClient("http://localhost:5003/"))
@@ -71,14 +82,14 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
-                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users" + userId);
+                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users/" + userId);
                 if (!response.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
             var res = await this.repo.ExecuteOperationAsync("AddToShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
             if (res == null) return NotFound();
-            return new StatusCodeResult(200);
+            return Ok();
         }
 
         // PUT: api/ShopCart/5
@@ -89,7 +100,7 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int catalogId)
+        public async Task<IActionResult> Delete([FromBody]JToken  catalogId)
         {
             int currentCustomerId;
             var userId = GetCurrentUser();
@@ -109,6 +120,9 @@ namespace OrdersAndShopCartAPI.Controllers
             {
                 BaseAddress = new Uri(uri)
             };
+            var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
+            var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
+            client.SetBearerToken(token);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;

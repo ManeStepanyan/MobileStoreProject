@@ -85,7 +85,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
   <operation name='GetCatalogsByCustomerId'>
-    <spName>GetShopCartById</spName>
+    <spName>GetCatalogsByCustomerId</spName>
     <parameters>
       <parameter>
         <parameterName>id</parameterName>
@@ -98,11 +98,11 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <spName>AddToShopCart</spName>
     <parameters>
       <parameter>
-        <parameterName>CostumerId</parameterName>
+        <parameterName>CustomerId</parameterName>
         <spParameterName>Customer_Id</spParameterName>
       </parameter>
       <parameter>
-        <parameterName>catalogId</parameterName>
+        <parameterName>CatalogId</parameterName>
         <spParameterName>Catalog_Id</spParameterName>
       </parameter>
     </parameters>
@@ -142,3 +142,4 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>Scalar</returnDataType>
   </operation>
+</operations>

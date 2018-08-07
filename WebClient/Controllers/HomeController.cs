@@ -11,16 +11,23 @@ using WebClient.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
+        public HomeController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         public IActionResult Index()
         {
             var allCookies = Request.Cookies;
-            var r = Request.Cookies["role"];
-            var i = Request.Cookies["id"];
+            var r = _httpContextAccessor.HttpContext.Request.Cookies["role"];
+            var i = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            var t = _httpContextAccessor.HttpContext.Request.Cookies["token"];
             return View();
         }
         public IActionResult About()

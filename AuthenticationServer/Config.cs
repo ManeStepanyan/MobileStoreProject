@@ -35,12 +35,8 @@ namespace AuthenticationServer
                         new Secret("secret".Sha256())
                     },
                     ClientClaimsPrefix = "",
-                    AllowedScopes = { IdentityServerConstants.StandardScopes.OfflineAccess, "UserAPI" ,"OrderAPI","CatalogAPI","WebClient","openid"},
+                    AllowedScopes = { "UserAPI" ,"OrderAPI","CatalogAPI","WebClient","openid"},
                     AccessTokenLifetime = 3600,
-                    UpdateAccessTokenClaimsOnRefresh = true,
-                    AllowOfflineAccess =true, // allow refresh token
-                    RefreshTokenUsage = TokenUsage.ReUse,
-                    AbsoluteRefreshTokenLifetime = 15780000
                 },
 
             };

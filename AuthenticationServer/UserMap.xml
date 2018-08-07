@@ -16,6 +16,16 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>Entity</returnDataType>
   </operation>
+  <operation name='GetAdmin'>
+    <spName>GetAdminById</spName>
+    <parameters>
+      <parameter>
+        <parameterName>id</parameterName>
+        <spParameterName>Id</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Entity</returnDataType>
+  </operation>
   <operation name='GetSellerByUserId'>
     <spName>GetSellerByUserId</spName>
     <parameters>
@@ -27,7 +37,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <returnDataType>Entity</returnDataType>
   </operation>
   <operation name='GetCustomerByUserId'>
-    <spName>GetSellerByUserId</spName>
+    <spName>GetCustomerByUserId</spName>
     <parameters>
       <parameter>
         <parameterName>userid</parameterName>
@@ -36,8 +46,8 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>Entity</returnDataType>
   </operation>
-  <operation name='GetAdmin'>
-    <spName>GetAdminById</spName>
+  <operation name='GetSeller'>
+    <spName>GetSellerById</spName>
     <parameters>
       <parameter>
         <parameterName>id</parameterName>
@@ -52,16 +62,6 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
       <parameter>
         <parameterName>login</parameterName>
         <spParameterName>Login</spParameterName>
-      </parameter>
-    </parameters>
-    <returnDataType>Entity</returnDataType>
-  </operation>
-  <operation name='GetSeller'>
-    <spName>GetSellerById</spName>
-    <parameters>
-      <parameter>
-        <parameterName>id</parameterName>
-        <spParameterName>Id</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Entity</returnDataType>
@@ -282,6 +282,16 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     </parameters>
     <returnDataType>NoReturnValue</returnDataType>
   </operation>
+  <operation name="ExistsEmail">
+    <spName>EmailExists</spName>
+    <parameters>
+      <parameter>
+        <parameterName>email</parameterName>
+        <spParameterName>Email</spParameterName>
+      </parameter>
+    </parameters>
+    <returnDataType>Scalar</returnDataType>
+  </operation>
   <operation name="UpdateSeller">
     <spName>UpdateSeller</spName>
     <parameters>
@@ -430,16 +440,6 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
       <parameter>
         <parameterName>login</parameterName>
         <spParameterName>Login</spParameterName>
-      </parameter>
-    </parameters>
-    <returnDataType>Scalar</returnDataType>
-  </operation>
-  <operation name="ExistsEmail">
-    <spName>EmailExists</spName>
-    <parameters>
-      <parameter>
-        <parameterName>email</parameterName>
-        <spParameterName>Email</spParameterName>
       </parameter>
     </parameters>
     <returnDataType>Scalar</returnDataType>
