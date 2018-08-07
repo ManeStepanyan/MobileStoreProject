@@ -78,7 +78,7 @@ namespace OrdersAndShopCartAPI.Controllers
             }
             var res = await this.repo.ExecuteOperationAsync("AddToShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
             if (res == null) return NotFound();
-            return new StatusCodeResult(200);
+            return Ok();
         }
 
         // PUT: api/ShopCart/5
