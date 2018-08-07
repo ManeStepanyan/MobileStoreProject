@@ -76,8 +76,6 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
-               
-                var a1 = _httpContextAccessor.HttpContext.Request.Cookies;
                 HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users/" + userId);
                 if (!response.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
