@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CatalogAPI.Models;
 using DatabaseAccess.Repository;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
