@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:minWidth="300dp"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/signup_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Filter"
+            android:minWidth="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp" />
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Price"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Min."
+                android:id="@+id/PriceMinEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+            <EditText
+                android:hint="Max."
+                android:id="@+id/PriceMaxEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Brand"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <AutoCompleteTextView
+            android:hint="example : Samsung"
+            style="@style/SigneUpTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/BrandAutoCompleteTextView" />
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Memory"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Min."
+                android:id="@+id/MemoryMinEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+            <EditText
+                android:hint="Max."
+                android:id="@+id/MemoryMaxEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="RAM"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Min."
+                android:id="@+id/RAMMinEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+            <EditText
+                android:hint="Max."
+                android:id="@+id/RAMMaxEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Year"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Min."
+                android:id="@+id/YearMinEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+            <EditText
+                android:hint="Max."
+                android:id="@+id/YearMaxEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Battery"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Min."
+                android:id="@+id/BatteryMinEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+            <EditText
+                android:hint="Max."
+                android:id="@+id/BatteryMaxEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Camera"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Min."
+                android:id="@+id/CameraMinEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+            <EditText
+                android:hint="Max."
+                android:id="@+id/CameraMaxEditText"
+                style="@style/LoginEditText"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/DoneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="Done"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
+    </LinearLayout>
+</ScrollView>

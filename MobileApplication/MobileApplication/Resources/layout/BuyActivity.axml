@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_buy1"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:id="@+id/tv_login_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:textColor="#cc0000"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="15sp" />
+    <EditText
+        android:id="@+id/login_signin"
+        android:hint="Address"
+        android:inputType="textPersonName"
+        android:textSize="16dp"
+        android:layout_marginBottom="35dp"
+        android:layout_above="@+id/editText2"
+        style="@style/LoginEditText" />
+    <EditText
+        android:id="@+id/password_signin"
+        android:hint="Card account"
+        android:inputType="textPassword"
+        android:layout_marginBottom="130dp"
+        style="@style/LoginEditText" />
+</LinearLayout>

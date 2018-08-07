@@ -117,8 +117,10 @@ namespace OrdersAndShopCartAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.repo.ExecuteOperationAsync("DeleteOrder", new[] { new KeyValuePair<string, object>("id", id) });
-            return new StatusCodeResult(200);
+           var res= await this.repo.ExecuteOperationAsync("DeleteOrder", new[] { new KeyValuePair<string, object>("id", id) });
+            if(res!=null)
+            return Ok();
+            return NotFound();
         }
     }
 }

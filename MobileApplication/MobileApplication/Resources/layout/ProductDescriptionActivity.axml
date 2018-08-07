@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ProductImageView" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ProductNameTextView" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:text="Brand"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductBrandTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Version"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductVersionTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Price"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductPriceTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="RAM"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductRAMTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Year"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductYearTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Display"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductDisplayTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Battery"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductBatteryTextView" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Camra"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductCameraTextView" />
+            </TableRow>
+        </TableLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/SellerDescriptionLinearLayout">
+            <TextView
+                android:text="Seller"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1">
+                <TableRow>
+                    <TextView
+                        android:text="Name"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="---"
+                        android:gravity="right"
+                        android:padding="3dip"
+                        android:id="@+id/SellerNameTextView" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="Cell Phone"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="---"
+                        android:gravity="right"
+                        android:padding="3dip"
+                        android:id="@+id/SellerCellPhoneTextView" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="Address"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="---"
+                        android:gravity="right"
+                        android:padding="3dip"
+                        android:id="@+id/SellerAddressTextView" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:drawable/bottom_bar"
+            android:gravity="center_vertical">
+            <Button
+                android:id="@+id/BuyNowButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="BUY NEW" />
+            <Button
+                android:id="@+id/AddToCartButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="ADD TO CART" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

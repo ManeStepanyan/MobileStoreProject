@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ProductImageView" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ProductNameTextView" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1"
+            android:id="@+id/tableLayout2">
+            <TableRow
+                android:id="@+id/tableRow4">
+                <TextView
+                    android:text="Brand"
+                    android:padding="3dip"
+                    android:id="@+id/textView5" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductBrandTextView" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRow6">
+                <TextView
+                    android:text="Price"
+                    android:padding="3dip"
+                    android:id="@+id/textView7" />
+                <TextView
+                    android:text="---"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:id="@+id/ProductPriceTextView" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRow6">
+                <Button
+                    android:id="@+id/BuyNowButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="BUY NEW" />
+                <Button
+                    android:id="@+id/AddToCartButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="ADD TO CART" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</LinearLayout>
