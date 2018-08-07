@@ -34,7 +34,7 @@
         <spParameterName>Catalog_Id</spParameterName>
       </parameter>
     </parameters>
-    <returnDataType>Enumerable</returnDataType>
+    <returnDataType>Scalar</returnDataType>
   </operation>
   <operation name='GetCustomerIdByOderId'>
     <spName>GetCustomerIdByOderId</spName>

@@ -37,7 +37,7 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
-                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users" + userId);
+                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users/" + userId);
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
@@ -58,7 +58,7 @@ namespace OrdersAndShopCartAPI.Controllers
                         {
                             list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
                         }
-                        return NotFound();
+                       else return NotFound();
                     }
                 }
                 return Ok(list);

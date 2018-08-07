@@ -30,7 +30,8 @@ namespace WebClient.Controllers
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
-                client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
+                var t = _httpContextAccessor.HttpContext.Request.Cookies["token"];
+                client.SetBearerToken(t);
                 using (HttpResponseMessage response = await client.GetAsync(Uri))
                 {
                     using (HttpContent content = response.Content)
@@ -66,6 +67,7 @@ namespace WebClient.Controllers
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
+                client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
                 using (HttpResponseMessage response = await client.GetAsync(Uri))
                 {
                     using (HttpContent content = response.Content)
