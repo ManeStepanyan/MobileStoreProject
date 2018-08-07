@@ -6,7 +6,9 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DatabaseAccess.Repository;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using OrdersAndShopCartAPI.Models;
@@ -18,9 +20,11 @@ namespace OrdersAndShopCartAPI.Controllers
     public class ShopCartController : Controller
     {
         private readonly Repo<ShopCart> repo;
-        public ShopCartController(Repo<ShopCart> repo)
+        private IHttpContextAccessor _httpContextAccessor;
+        public ShopCartController(Repo<ShopCart> repo, IHttpContextAccessor httpContextAccessor)
         {
             this.repo = repo;
+            _httpContextAccessor = httpContextAccessor;
         }
         // GET: api/ShopCart
         [HttpGet]
@@ -72,6 +76,8 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
+               
+                var a1 = _httpContextAccessor.HttpContext.Request.Cookies;
                 HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users" + userId);
                 if (!response.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
@@ -110,6 +116,9 @@ namespace OrdersAndShopCartAPI.Controllers
             {
                 BaseAddress = new Uri(uri)
             };
+            var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
+            var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
+            client.SetBearerToken(token);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;

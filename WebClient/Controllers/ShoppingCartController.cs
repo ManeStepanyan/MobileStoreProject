@@ -16,8 +16,13 @@ namespace WebClient.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
+        public ShoppingCartController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         // GET: /<controller>/
-     //  [Authorize(Policy = "Customer")]
+        //  [Authorize(Policy = "Customer")]
         public async Task<bool> AddAsync(int id)
         {
             var Uri = new Uri("http://localhost:5003/api/sellerproduct/" + id);
@@ -25,8 +30,7 @@ namespace WebClient.Controllers
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
-                var temp = Request.Cookies["token"];
-                client.SetBearerToken(temp);
+                client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
                 using (HttpResponseMessage response = await client.GetAsync(Uri))
                 {
                     using (HttpContent content = response.Content)
