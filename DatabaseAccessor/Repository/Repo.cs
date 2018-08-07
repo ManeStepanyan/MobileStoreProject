@@ -119,9 +119,9 @@ namespace DatabaseAccess.Repository
         /// <returns>parameters</returns>
         private IEnumerable<KeyValuePair<string, object>> ConstructParameters(
             Dictionary<string, string> mapInfo, IEnumerable<KeyValuePair<string, object>> parameters)
-        {
-            return parameters.Select(kv =>
-                    new KeyValuePair<string, object>(mapInfo[kv.Key], kv.Value));
+        { var t= parameters.Select(kv =>
+                     new KeyValuePair<string, object>(mapInfo[kv.Key], kv.Value));
+            return t;
         }
 
         /// <summary>

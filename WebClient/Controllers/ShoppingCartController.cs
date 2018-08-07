@@ -43,7 +43,8 @@ namespace WebClient.Controllers
                         byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                         var UriToAdd = new Uri("http://localhost:5005/api/ShopCart/");
 
-                        using (HttpResponseMessage res = await client.PostAsync(UriToAdd, byteContent))
+                        using (
+                            HttpResponseMessage res = await client.PostAsync(UriToAdd, byteContent))
                         {
                             using (HttpContent content1 = res.Content)
                             {

@@ -57,8 +57,7 @@ namespace WebClient.Controllers
 
             CookieOptions option = new CookieOptions
             {
-                Expires = DateTime.Now.AddDays(1d),
-                Domain = "cook"
+                Expires = DateTime.Now.AddDays(1d)
                 
             };
             Response.Cookies.Append("role", (string)claims["role"][0], option);

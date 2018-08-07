@@ -70,7 +70,7 @@ namespace OrdersAndShopCartAPI.Controllers
         // POST: api/ShopCart
         [HttpPost]
         [Authorize(Policy = "Customer")]
-        public async Task<IActionResult> Post([FromBody]JToken catalogId)
+        public async Task<IActionResult> Post([FromBody]int catalogId)
         {
             int currentCustomerId;
             var userId = GetCurrentUser();
@@ -78,7 +78,7 @@ namespace OrdersAndShopCartAPI.Controllers
             {
                
                 var a1 = _httpContextAccessor.HttpContext.Request.Cookies;
-                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users" + userId);
+                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users/" + userId);
                 if (!response.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;

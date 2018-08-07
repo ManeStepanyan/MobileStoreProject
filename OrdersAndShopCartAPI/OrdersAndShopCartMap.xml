@@ -98,11 +98,11 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
     <spName>AddToShopCart</spName>
     <parameters>
       <parameter>
-        <parameterName>CostumerId</parameterName>
+        <parameterName>CustomerId</parameterName>
         <spParameterName>Customer_Id</spParameterName>
       </parameter>
       <parameter>
-        <parameterName>catalogId</parameterName>
+        <parameterName>CatalogId</parameterName>
         <spParameterName>Catalog_Id</spParameterName>
       </parameter>
     </parameters>

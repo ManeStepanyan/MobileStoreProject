@@ -38,7 +38,6 @@ namespace WebClient
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
            
             services.AddAuthentication("Bearer")
-                .AddCookie(options => options.CookieDomain = "cook")
                     .AddIdentityServerAuthentication(options =>
                     {
                         options.Authority = "http://localhost:5000";

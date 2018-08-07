@@ -31,7 +31,6 @@ namespace SecurityAPI
                     .AddJsonFormatters();
 
             services.AddAuthentication("Bearer")
-                .AddCookie(options => options.CookieDomain = "cook")
                     .AddIdentityServerAuthentication(options =>
                     {
                         options.Authority = "http://localhost:5000";

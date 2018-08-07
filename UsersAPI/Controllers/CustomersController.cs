@@ -72,8 +72,8 @@ namespace UsersAPI.Controllers
             }
             return Ok(customer);
         }
-        [Authorize(Policy = "Customer")] ///////////////
         [HttpGet("users/{id}", Name = "GetCustomerByUserId")]
+      //  [Authorize(Policy = "Customer")] /////////////// կջնջես
         public async Task<IActionResult> GetByUserId(int id)
         {
             var res = await this.publicRepo.ExecuteOperationAsync("GetCustomerByUserId", new[] { new KeyValuePair<string, object>("userid", id) });
