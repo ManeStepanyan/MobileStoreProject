@@ -20,9 +20,9 @@ using FloatingActionButton = Android.Support.Design.Widget.FloatingActionButton;
 
 namespace MobileApplication
 {
-	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = false)]
-	public class MainActivity : AppCompatActivity
-	{
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = false)]
+    public class MainActivity : AppCompatActivity
+    {
         private SearchView SearchView;
         private List<Product> Products;
         private ProductsLiostViewAdapter Adapter;
@@ -35,16 +35,16 @@ namespace MobileApplication
         private Task<Intent> ProductDescriptionActivityGenericTask;
 
         protected override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
+        {
+            base.OnCreate(savedInstanceState);
 
-			SetContentView(Resource.Layout.activity_main);
+            SetContentView(Resource.Layout.activity_main);
 
-			Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-			FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
+            var GoTocartPageFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.GoToCartPageButton);
+            GoTocartPageFloatingActionButton.Click += GoToCartPage_Click;
 
 
             this.SearchView = FindViewById<SearchView>(Resource.Id.searchView);
@@ -70,7 +70,7 @@ namespace MobileApplication
             this.ProductDescriptionActivityGenericTask.Start();
         }
 
-		public override bool OnCreateOptionsMenu(IMenu menu)
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
@@ -79,19 +79,34 @@ namespace MobileApplication
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
-            if (id == Resource.Id.action_settings)
+            switch (item.ItemId)
             {
-                return true;
+                case Resource.Id.action_cart:
+                    {
+                        var newActivity = new Intent(this,
+                                (UserAPIConection.SessionActivity()) ? typeof(CartActivity) : typeof(SignInActivity));
+                        StartActivity(newActivity);
+                        break;
+                    }
+                case Resource.Id.action_account:
+                    {
+                        var newActivity = new Intent(this,
+                                (UserAPIConection.SessionActivity()) ? typeof(MyAccountActivity) : typeof(SignInActivity));
+                        StartActivity(newActivity);
+                        break;
+                    }
+                default:
+                    return base.OnOptionsItemSelected(item);
             }
 
-            return base.OnOptionsItemSelected(item);
+            return true;
         }
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+            //View view = (View)sender;
+            //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
+            //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
         private void SortBySpiner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)

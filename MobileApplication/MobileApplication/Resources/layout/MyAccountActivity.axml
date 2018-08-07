@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/gradient">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_account"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/signup_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textColor="#cc0000"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_name_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/name_client"
+            style="@style/LoginEditText"
+            android:ems="10"
+            android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/tv_sname_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Surname"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/sname_client"
+            style="@style/LoginEditText"
+            android:ems="10"
+            android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/tv_email_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="E-Mail"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/email_client"
+            style="@style/LoginEditText"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+        <TextView
+            android:id="@+id/tv_password_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/password_client"
+            style="@style/LoginEditText"
+            android:ems="10"
+            android:inputType="textPassword" />
+        <TextView
+            android:id="@+id/tv_password_client"
+            style="@style/SigneUpTitleTextView"
+            android:text="Confirm password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/password_client2"
+            style="@style/LoginEditText"
+            android:ems="10"
+            android:inputType="textPassword" />
+        <Button
+            android:id="@+id/SaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="Save" />
+    </LinearLayout>
+</ScrollView>

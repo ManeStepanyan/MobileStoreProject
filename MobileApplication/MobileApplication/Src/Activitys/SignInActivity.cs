@@ -55,7 +55,7 @@ namespace MobileApplication.Activitys
                 return;
             }
 
-            var nextActivity = new Intent(this, typeof(HomeActivity));
+            var nextActivity = new Intent(this, typeof(MainActivity));
             StartActivity(nextActivity);
         }
     }

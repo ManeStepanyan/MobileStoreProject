@@ -58,8 +58,9 @@ namespace MobileApplication.Activitys
                 this.NameTitleTextView.Text = "This login already exists.";
             }
 
-            var nextActivity = new Intent(this, typeof(HomeActivity));
-            StartActivity(nextActivity);
+            //var nextActivity = new Intent(this, typeof(HomeActivity));
+            //StartActivity(nextActivity);
+            StartActivity(typeof(MainActivity));
         }
     }
 }

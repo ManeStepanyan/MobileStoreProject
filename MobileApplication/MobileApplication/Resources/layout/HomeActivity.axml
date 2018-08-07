@@ -50,7 +50,7 @@
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:id="@+id/linearLayout4">
             <Spinner
                 android:id="@+id/SortBySpiner"
@@ -58,8 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="20" />
             <ImageView
-                android:src="@drawable/filter"
+                android:src="@drawable/ic_filter"
                 android:id="@+id/FilterImageView"
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="80" />
