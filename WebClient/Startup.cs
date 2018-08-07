@@ -44,6 +44,12 @@ namespace WebClient
                         options.RequireHttpsMetadata = false;
                         options.ApiName = "WebClient";
                     });
+
+            services.AddAuthorization(options => options.AddPolicy("Admin", policy => policy.RequireClaim("role", "1")));
+            services.AddAuthorization(options => options.AddPolicy("Seller", policy => policy.RequireClaim("role", "2")));
+            services.AddAuthorization(options => options.AddPolicy("Customer", policy => policy.RequireClaim("role", "3")));
+            services.AddAuthorization(options => options.AddPolicy("Admin, Seller", policy => policy.RequireClaim("role", "1", "2")));
+            services.AddAuthorization(options => options.AddPolicy("Admin, Customer", policy => policy.RequireClaim("role", "1", "3")));
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.

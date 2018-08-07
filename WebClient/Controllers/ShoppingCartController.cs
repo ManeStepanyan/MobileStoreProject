@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebClient.Models;
@@ -14,10 +17,10 @@ namespace WebClient.Controllers
     public class ShoppingCartController : Controller
     {
         // GET: /<controller>/
+        [Authorize(Policy = "Customer")]
         public async Task<bool> AddAsync(int id)
         {
-            var Uri = new Uri("http://localhost:5003/api/SellerProduct/GetCatalogIdByProductId/" + id);
-
+            var Uri = new Uri("http://localhost:5003/api/sellerproduct/" + id);
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
@@ -28,9 +31,13 @@ namespace WebClient.Controllers
                     {
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
-                        var catid = JsonConvert.DeserializeObject<KeyValuePair<string, int>>(result);
-                        var UriToAdd = new Uri("http://localhost:5005/api/ShopCart/" + catid.Value);
-                        using (HttpResponseMessage res = await client.GetAsync(UriToAdd))
+                        var cont = JsonConvert.SerializeObject(result);
+                        var buffer = System.Text.Encoding.UTF8.GetBytes(result);
+                        var byteContent = new ByteArrayContent(buffer);
+                        byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                        var UriToAdd = new Uri("http://localhost:5005/api/ShopCart/");
+
+                        using (HttpResponseMessage res = await client.PostAsync(UriToAdd, byteContent))
                         {
                             using (HttpContent content1 = res.Content)
                             {

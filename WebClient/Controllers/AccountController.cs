@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using WebClient.Models;
 using WebClient.Services;
 using System.Web;
+using Microsoft.AspNetCore.Authentication;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebClient.Controllers
@@ -20,7 +21,12 @@ namespace WebClient.Controllers
 
     public class AccountController : Controller
     {
-        AccountService _accountService;
+        private AccountService _accountService;
+        private IHttpContextAccessor _httpContextAccessor;
+        public AccountController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         public IActionResult LoginView()
         {
             return View();
@@ -49,10 +55,6 @@ namespace WebClient.Controllers
             var identityClaims = await userInfoClient.GetAsync(tokenResponse.AccessToken);
             var claims = JsonConvert.DeserializeObject<Dictionary<string,dynamic>>(identityClaims.Json.ToString());
 
-            HttpContext.Session.SetInt32("user_id", (int)claims["user_id"][0]);
-            HttpContext.Session.SetInt32("role", (int)claims["role"][0]);
-            HttpContext.Session.SetInt32("Is logged", 1);
-
             CookieOptions option = new CookieOptions
             {
                 Expires = DateTime.Now.AddDays(1d)
@@ -60,6 +62,7 @@ namespace WebClient.Controllers
             Response.Cookies.Append("role", (string)claims["role"][0], option);
             Response.Cookies.Append("id", (string)claims["user_id"][0], option);
             Response.Cookies.Append("Is logged", "1", option);
+            Response.Cookies.Append("token", tokenResponse.AccessToken);
             return RedirectToAction("Index","Home");
 
         }
