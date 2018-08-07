@@ -34,6 +34,7 @@ namespace OrdersAndShopCart
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             // adding authentication info
             services.AddAuthentication("Bearer")
+                .AddCookie(options=>options.CookieDomain="cook")
                    .AddIdentityServerAuthentication(options =>
                    {
                        options.Authority = "http://localhost:5000";

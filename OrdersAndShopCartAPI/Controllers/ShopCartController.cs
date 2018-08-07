@@ -68,10 +68,13 @@ namespace OrdersAndShopCartAPI.Controllers
         [Authorize(Policy = "Customer")]
         public async Task<IActionResult> Post([FromBody]JToken catalogId)
         {
+            var jnj = Request.Cookies;
+            var temp = Request.Cookies["token"];
             int currentCustomerId;
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
+                customerClient.SetBearerToken(temp);
                 HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users" + userId);
                 if (!response.IsSuccessStatusCode) return NotFound();
                 CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
