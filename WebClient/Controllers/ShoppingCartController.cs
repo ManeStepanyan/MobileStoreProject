@@ -16,16 +16,21 @@ namespace WebClient.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
+        public ShoppingCartController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         // GET: /<controller>/
-     //  [Authorize(Policy = "Customer")]
+        //  [Authorize(Policy = "Customer")]
         public async Task<bool> AddAsync(int id)
         {
             var Uri = new Uri("http://localhost:5003/api/sellerproduct/" + id);
-            var temp = Request.Cookies["token"];
+
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
-            {              
-                client.SetBearerToken(temp);
+            {
+                client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
                 using (HttpResponseMessage response = await client.GetAsync(Uri))
                 {
                     using (HttpContent content = response.Content)
@@ -37,6 +42,7 @@ namespace WebClient.Controllers
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                         var UriToAdd = new Uri("http://localhost:5005/api/ShopCart/");
+
                         using (HttpResponseMessage res = await client.PostAsync(UriToAdd, byteContent))
                         {
                             using (HttpContent content1 = res.Content)
