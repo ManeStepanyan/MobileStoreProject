@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <Toolbar
+        android:minWidth="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar1"
+        android:background="#2fDEDEDE">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:id="@+id/linearLayout3">
+            <android.support.v7.widget.SearchView
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:id="@+id/searchView"
+                android:layout_width="213.5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0.0dp"
+                android:tooltipText="Search"
+                android:pointerIcon="alias"
+                android:layout_weight="20" />
+            <ImageView
+                android:id="@+id/GoToCartPageImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cart"
+                android:layout_weight="80" />
+        </LinearLayout>
+    </Toolbar>
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout4">
+            <Spinner
+                android:id="@+id/SortBySpiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20" />
+            <ImageView
+                android:src="@drawable/filter"
+                android:id="@+id/FilterImageView"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="80" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/linearLayout1"
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout2">
+        <GridView
+            android:id="@+id/ProductListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:numColumns="auto_fit" />
+    </LinearLayout>
+</LinearLayout>
