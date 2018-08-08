@@ -52,10 +52,17 @@ namespace WebClient.Controllers
         }
 
         //[Route("home/seller/{id}")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string msg = null, bool flag = true)
          {
-             // ... Target page.
-             Uri idSiteUri = new Uri("http://localhost:5003/api/SellerProduct/products/" + _httpContextAccessor.HttpContext.Request.Cookies["seller_id"]);
+            if(msg != null)
+            {
+                if(flag == true)
+                    ViewBag["success_msg"] = msg;
+                else ViewBag["warning_msg"] = msg;
+            }
+
+            // ... Target page.
+            Uri idSiteUri = new Uri("http://localhost:5003/api/SellerProduct/products/" + _httpContextAccessor.HttpContext.Request.Cookies["seller_id"]);
              
 
              // ... Use HttpClient.
@@ -68,27 +75,6 @@ namespace WebClient.Controllers
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
                         var products = JsonConvert.DeserializeObject<List<ProductModel>>(result);
-                        //this.currentProducts = products;
-                        /*if(product_ids == null)
-                            Response.StatusCode = 500;
-                        string prodSiteUri = "http://localhost:5002/api/Products/";
-                        foreach(var prod in product_ids)
-                        {
-                            prodSiteUri += $"&{prod.Key}={prod.Value}";
-                        }
-                        using (HttpResponseMessage res = await client.GetAsync(prodSiteUri))
-                        {
-                            using (HttpContent content1 = res.Content)
-                            {
-                                string res1 = await content1.ReadAsStringAsync();
-                                var products = JsonConvert.DeserializeObject<List<ProductModel>>(res1);
-                                if (result != null &&
-                                result.Length >= 50)
-                                {
-                                    Console.WriteLine(result.Substring(0, 50) + "...");
-                                }
-                            }
-                        }*/
                         return View(products);
 
                     }
@@ -97,7 +83,29 @@ namespace WebClient.Controllers
          }
         public async Task<IActionResult> Post(ProductModel instance)
         {
-            return View();
+            Uri siteUri = new Uri("http://localhost:5003/api/SellerProduct");
+
+            // ... Use HttpClient.
+            using (HttpClient client = new HttpClient())
+            {
+                client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
+                var content = JsonConvert.SerializeObject(instance);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                using (HttpResponseMessage response = await client.PostAsync(
+                siteUri, byteContent))
+                {
+                    if(response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index", "Shop", new { succes_msg = "The product was successfuly added" , flag = true});
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Shop", new { warning_msg = "The product was successfuly added", flag = false });
+                    }
+                }
+            }   
         }
 
         public async Task<IActionResult> UpdateViewAsync(int id)
