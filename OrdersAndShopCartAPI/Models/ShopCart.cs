@@ -9,5 +9,6 @@ namespace OrdersAndShopCartAPI.Models
     {
         public int CustomerId { get; set; }
         public int CatalogId { get; set; }
+        public int Quantity { get; set; }
     }
 }
