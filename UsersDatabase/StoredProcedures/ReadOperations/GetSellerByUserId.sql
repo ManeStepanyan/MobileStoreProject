@@ -2,7 +2,7 @@
 	@userid int
 AS
 begin
-	SELECT * from Sellers
+	SELECT Sellers.Id from Sellers
 	inner join Users on Sellers.UserId=Users.Id
 	where Sellers.UserId=@userid
 end

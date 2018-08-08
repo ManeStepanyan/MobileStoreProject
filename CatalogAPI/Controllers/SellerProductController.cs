@@ -43,9 +43,18 @@ namespace CatalogAPI.Controllers
         // GET: api/SellerProduct/5
         [HttpGet("products/{id}", Name = "GetProductsBySellerId")]
         public async Task<IActionResult> GetProductsBySellerId(int id)
-        {
+        { int selid = 0;
             List<Product> list = new List<Product>();
-            var sellerProducts = (IEnumerable<SellerProduct>)(await this.repo.ExecuteOperationAsync("GetProductsBySellerId", new[] { new KeyValuePair<string, object>("id", id) }));
+            using (var sellerClient = InitializeClient("http://localhost:5001/"))
+            {
+                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                    Int32.TryParse((await response.Content.ReadAsAsync(typeof(int))).ToString(), out selid);
+                }
+            }
+                if (selid == 0) return NotFound();
+            var sellerProducts = (IEnumerable<SellerProduct>)(await this.repo.ExecuteOperationAsync("GetProductsBySellerId", new[] { new KeyValuePair<string, object>("id", selid) }));
             if (sellerProducts == null) return NotFound();
             using (var productClient = InitializeClient("http://localhost:5002/"))
             {

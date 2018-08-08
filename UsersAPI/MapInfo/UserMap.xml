@@ -34,7 +34,7 @@ xsi:noNamespaceSchemaLocation="MapSchema.xsd">
         <spParameterName>userid</spParameterName>
       </parameter>
     </parameters>
-    <returnDataType>Entity</returnDataType>
+    <returnDataType>Scalar</returnDataType>
   </operation>
   <operation name='GetCustomerByUserId'>
     <spName>GetCustomerByUserId</spName>
