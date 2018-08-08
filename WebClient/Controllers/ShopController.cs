@@ -68,6 +68,7 @@ namespace WebClient.Controllers
              // ... Use HttpClient.
              using (HttpClient client = new HttpClient())
              {
+                 client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
                  using (HttpResponseMessage response = await client.GetAsync(idSiteUri))
                     {
                      using (HttpContent content = response.Content)
