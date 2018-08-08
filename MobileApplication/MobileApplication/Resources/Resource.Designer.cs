@@ -3695,17 +3695,17 @@ namespace MobileApplication
 			// aapt resource value: 0x7f0a015f
 			public const int Animation_Design_BottomSheetDialog = 2131362143;
 			
-			// aapt resource value: 0x7f0a0185
-			public const int AppTheme = 2131362181;
-			
-			// aapt resource value: 0x7f0a0187
-			public const int AppTheme_AppBarOverlay = 2131362183;
-			
 			// aapt resource value: 0x7f0a0186
-			public const int AppTheme_NoActionBar = 2131362182;
+			public const int AppTheme = 2131362182;
 			
 			// aapt resource value: 0x7f0a0188
-			public const int AppTheme_PopupOverlay = 2131362184;
+			public const int AppTheme_AppBarOverlay = 2131362184;
+			
+			// aapt resource value: 0x7f0a0187
+			public const int AppTheme_NoActionBar = 2131362183;
+			
+			// aapt resource value: 0x7f0a0189
+			public const int AppTheme_PopupOverlay = 2131362185;
 			
 			// aapt resource value: 0x7f0a009a
 			public const int Base_AlertDialog_AppCompat = 2131361946;
@@ -4196,6 +4196,9 @@ namespace MobileApplication
 			// aapt resource value: 0x7f0a0161
 			public const int Base_Widget_Design_TabLayout = 2131362145;
 			
+			// aapt resource value: 0x7f0a0184
+			public const int ButtonStyle = 2131362180;
+			
 			// aapt resource value: 0x7f0a0181
 			public const int DialogAnimation = 2131362177;
 			
@@ -4286,8 +4289,8 @@ namespace MobileApplication
 			// aapt resource value: 0x7f0a0038
 			public const int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = 2131361848;
 			
-			// aapt resource value: 0x7f0a0184
-			public const int SigneUpTitleTextView = 2131362180;
+			// aapt resource value: 0x7f0a0185
+			public const int SigneUpTitleTextView = 2131362181;
 			
 			// aapt resource value: 0x7f0a00c7
 			public const int TextAppearance_AppCompat = 2131361991;
