@@ -119,9 +119,9 @@ namespace WebClient.Controllers
             }
         }
 
-        public async Task<IActionResult> RegisterCustomerAsync(string name, string surename, string login, string email, string password)
+        public async Task<IActionResult> RegisterCustomerAsync(string name, string surname, string login, string email, string password)
         {
-            var model = new UserModel(name, surename, null, null, login, password, email, 3);
+            var model = new UserModel(name, surname, null, null, login, password, email, 3);
 
             // ... Target page.
             Uri siteUri = new Uri("http://localhost:5001/api/Register");

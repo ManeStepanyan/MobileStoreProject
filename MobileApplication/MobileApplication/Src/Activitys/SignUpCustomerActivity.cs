@@ -13,7 +13,7 @@ namespace MobileApplication.Activitys
     {
         private TextView ErrorTextView;
         private EditText NameEditText;
-        private EditText SureNameEditText;
+        private EditText SurNameEditText;
         private EditText LoginEditText;
         private EditText EmailEditText;
         private EditText PasswordEditText;
@@ -29,7 +29,7 @@ namespace MobileApplication.Activitys
             this.ErrorTextView = FindViewById<TextView>(Resource.Id.signup_client);
 
             this.NameEditText = FindViewById<EditText>(Resource.Id.name_client);
-            this.SureNameEditText = FindViewById<EditText>(Resource.Id.sname_client);
+            this.SurNameEditText = FindViewById<EditText>(Resource.Id.sname_client);
             this.LoginEditText = FindViewById<EditText>(Resource.Id.login_client);
             this.EmailEditText = FindViewById<EditText>(Resource.Id.email_client);
             this.PasswordEditText = FindViewById<EditText>(Resource.Id.password_client);
@@ -65,7 +65,7 @@ namespace MobileApplication.Activitys
 
             if (
                 this.NameEditText.Text == "" ||
-                this.SureNameEditText.Text == "" ||
+                this.SurNameEditText.Text == "" ||
                 this.LoginEditText.Text == "" ||
                 this.EmailEditText.Text == "" ||
                 this.PasswordEditText.Text == "")
@@ -75,7 +75,7 @@ namespace MobileApplication.Activitys
 
             if (!UserAPIConection.RegisterCustomer(
                 this.NameEditText.Text,
-                this.SureNameEditText.Text,
+                this.SurNameEditText.Text,
                 this.LoginEditText.Text,
                 this.EmailEditText.Text,
                 this.PasswordEditText.Text))

@@ -12,11 +12,11 @@
         public string Email { get; set; }
         public int? RoleId { get; set; }
         public string ActivationCode { get; set; }
-        public UserModel(string name, string surename, string cellphone, string address, string login, string password, string email, int? roleid)
+        public UserModel(string name, string surname, string cellphone, string address, string login, string password, string email, int? roleid)
         {
             this.RoleId = roleid;
             this.Name = name;
-            this.Surname = surename;
+            this.Surname = surname;
             this.CellPhone = cellphone;
             this.Address = address;
             this.Login = login;

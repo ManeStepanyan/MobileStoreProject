@@ -20,11 +20,11 @@
                 <input type="text" name="Name" id="Name" class="form-control">
             </div>
             <div class="form-group">
-                <label for="Surename">Your Surename</label>
-                <input type="text" name="Surename" id="Surename" class="form-control">
+                <label for="Surname">Your Surname</label>
+                <input type="text" name="Surname" id="Surname" class="form-control">
             </div>
             <div class="form-group">
-                <label for="Login">Choose Login for your accaount</label>
+                <label for="Login">Choose Login for your account</label>
                 <input type="text" name="Login" id="Login" class="form-control">
             </div>
             <div class="form-group">
@@ -43,7 +43,7 @@
 
 <script>
     var name = $("input#Name").val();
-    var surename = $("input#Surename").val();
+    var surname = $("input#Surname").val();
     var login = $("input#Login").val();
     var email = $("input#Email").val();
     var password = $("input#Password").val();
@@ -54,7 +54,7 @@
                     dataType: "Json",
                     url: '@Url.Action("RegisterCustomerAsync", "Account")',
                     async: false,
-                    data: { name: name, surename: surename, login: login, email: email, password: password },
+                    data: { name: name, surname: surname, login: login, email: email, password: password },
                     success: function (data) {
 
                     }
