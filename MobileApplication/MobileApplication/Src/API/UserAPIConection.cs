@@ -21,17 +21,23 @@ namespace MobileApplication.Src.API
         static UserAPIConection()
         {
             var ran = new Random();
-            var bitMap = GetImageBitmapFromUrl(@"https://images.samsung.com/is/image/samsung/p5/ru/smartphones/PCD_Purple.png?$ORIGIN_PNG$");
+            var bitMaps = new List<Bitmap>() {
+                GetImageBitmapFromUrl(@"https://images.samsung.com/is/image/samsung/p5/ru/smartphones/PCD_Purple.png?$ORIGIN_PNG$"),
+                GetImageBitmapFromUrl(@"https://drop.ndtv.com/TECH/product_database/images/6142017123101PM_635_htc_desire_628_dual_sIM.jpeg"),
+                GetImageBitmapFromUrl(@"https://akket.com/wp-content/uploads/2018/04/Nokia-9-42.jpg"),
+                GetImageBitmapFromUrl(@"https://3dnews.ru/assets/external/illustrations/2018/03/16/967085/sm.x1.750.jpg")
+            };
             var Products = new List<Product>();
+            var brannds = ProductAPIConection.GetBrands();
             foreach (var item in items)
             {
                 var product = new Product()
                 {
-                    Name = item,
+                    Name = brannds[ran.Next(0, 4)] + " " + item,
                     Price = ran.Next(1000, 10000),
-                    Image = bitMap,
+                    Image = bitMaps[ran.Next(0, 4)],
                     Quantity = 5,
-                    Brand = "Nokia"
+                    Brand = item
                 };
                 Products.Add(product);
             }

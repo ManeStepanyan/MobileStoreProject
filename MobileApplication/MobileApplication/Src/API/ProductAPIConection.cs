@@ -1,7 +1,11 @@
-﻿using System;
+﻿#define APISIM
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using MobileApplication.Src.Models;
+using Newtonsoft.Json;
 
 namespace MobileApplication.Src.API
 {
@@ -17,13 +21,12 @@ namespace MobileApplication.Src.API
             //UserAPIConection.LogOut();
         }
 
-        public static string[] GetBrands()
+        public static List<string> GetBrands()
         {
-            return new String[]
+            return new List<string>() 
             {
                 "Nokia",
                 "Samsung",
-                "Huwa",
                 "HTC",
                 "HUAWEI",
                 "LG",
@@ -80,9 +83,36 @@ namespace MobileApplication.Src.API
                     ((model.Brand == "") || (product.Brand.IndexOf(model.Brand) != -1))
                     ;
         }
-
+#if (APISIM)
         public static List<Product> GetProducts() => ProductDataBase.Select(a => a.Value).ToList();
+#else
+        public static async Task<List<Product>> GetProducts()
+        {
+            Uri siteUri = new Uri("http://localhost:5002/api/Products");
 
+            // ... Use HttpClient.
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.GetAsync(siteUri))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        // ... Read the string.
+                        string result = await content.ReadAsStringAsync();
+                        var sellers = JsonConvert.DeserializeObject<List<Product>>(result);
+                        if (result != null &&
+                            result.Length >= 50)
+                        {
+                            Console.WriteLine(result.Substring(0, 50) + "...");
+
+                        }
+                        return sellers;
+                    }
+                }
+            }
+        }
+
+#endif
         public static List<Product> GetProductsById(int id)
         {
             return ProductDataBase.Select(a => a.Value).Where(a => a.Id == id).ToList();
