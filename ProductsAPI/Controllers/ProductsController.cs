@@ -9,6 +9,7 @@ using ProductsAPI.Models;
 
 namespace ProductAPI.Controllers
 {
+    [Produces("application/json")]
     [Route("api/products")]
     public class ProductsController : Controller
     {

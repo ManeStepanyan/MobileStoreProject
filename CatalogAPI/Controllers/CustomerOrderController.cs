@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
@@ -92,7 +93,8 @@ namespace CatalogAPI.Controllers
             {
                 HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
                 if (!resp.IsSuccessStatusCode) return NotFound();
-                Int32.TryParse((await resp.Content.ReadAsAsync(typeof(int))).ToString(), out sellerId);
+                var temp = JsonConvert.DeserializeObject<int>(await resp.Content.ReadAsStringAsync());
+                Int32.TryParse(temp.ToString(), out sellerId);
                 if (sellerId == 0) return NotFound();
             }
             if (id == sellerId)
@@ -127,13 +129,16 @@ namespace CatalogAPI.Controllers
                 HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await orderClient.PostAsync("/api/orders/", content);
                 if (!response.IsSuccessStatusCode) return NotFound();
-                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int))).ToString()), out orderId);
+                var temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+                Int32.TryParse(temp.ToString(), out orderId);
                 if (orderId == 0) return NotFound();
-                response = await orderClient.GetAsync("/api/orders/quantity" + orderId);
-                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int))).ToString()), out quantity);
+                response = await orderClient.GetAsync("/api/orders/quantity/" + orderId);
+                 temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+                Int32.TryParse(temp.ToString(), out quantity);
                 if (quantity == 0) return NotFound();
                 response = await orderClient.GetAsync("/api/orders/catalog/" + orderId);
-                Int32.TryParse(((await response.Content.ReadAsAsync(typeof(int)))).ToString(), out catalogId);
+                 temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+                Int32.TryParse(temp.ToString(), out catalogId);
                 if (catalogId == 0) return NotFound();
             }
             var userId = GetCurrentUser();
