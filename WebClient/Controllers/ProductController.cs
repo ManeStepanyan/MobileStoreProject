@@ -11,6 +11,7 @@ using WebClient.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +19,11 @@ namespace WebClient.Controllers
 {
     public class ProductController : Controller
     {
+        private IHttpContextAccessor _httpContextAccessor;
+        public ProductController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
         // GET: /<controller>/
         public async Task<IActionResult> IndexAsync()
         {
@@ -37,6 +43,7 @@ namespace WebClient.Controllers
                             result.Length >= 50)
                         {
                             Console.WriteLine(result.Substring(0, 50) + "...");
+
                         }
                         return View(sellers);
                     }

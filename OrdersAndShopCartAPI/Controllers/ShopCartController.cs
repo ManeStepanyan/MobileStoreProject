@@ -53,7 +53,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 {
                     foreach (var id in catalogIdsAndQuantites)
                     {
-                        HttpResponseMessage response = await catalogClient.GetAsync("/api/sellerproduct/catalog/" + id);
+                        HttpResponseMessage response = await catalogClient.GetAsync("/api/sellerproduct/catalog/" + id.Key);
                         if (response.IsSuccessStatusCode)
                         {
                             list.Add(new KeyValuePair<Product, int>((Product)(await response.Content.ReadAsAsync(typeof(Product))),id.Value));

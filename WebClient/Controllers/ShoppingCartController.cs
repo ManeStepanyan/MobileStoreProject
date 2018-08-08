@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,8 @@ namespace WebClient.Controllers
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
+                var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
+                var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
                 var t = _httpContextAccessor.HttpContext.Request.Cookies["token"];
                 client.SetBearerToken(t);
                 using (HttpResponseMessage response = await client.GetAsync(Uri))
@@ -76,7 +79,7 @@ namespace WebClient.Controllers
                     {
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
-                        var products = JsonConvert.DeserializeObject<List<ProductModel>>(result);
+                        var products = JsonConvert.DeserializeObject<List<KeyValuePair<ProductModel,int>>>(result);
                         return View(products);
                     }
                 }

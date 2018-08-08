@@ -1,21 +1,22 @@
-﻿@model List<WebClient.Models.ProductModel>
+﻿@using Newtonsoft.Json;
+@model List<WebClient.Models.ProductModel>
 <div class="row">
     <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
         <div id="success" class="alert alert-success" hidden>
         </div>
     </div>
 </div>
-<link rel="stylesheet" href="~/css/Hover.css"/>
+<link rel="stylesheet" href="~/css/Hover.css" />
 
 <script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <div class="container product-container">
 
     @foreach (var product in Model)
     {
-        @if(Model.IndexOf(product) % 3 == 0)
+        @if (Model.IndexOf(product) % 3 == 0)
         {
             @:<div class="row">
-}
+            }
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="hovereffect">
                 <img class="img-responsive" src="@product.Image" alt="">
@@ -32,33 +33,10 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-sm-6 col-md-4">
-             <div class="thumbnail anim">
-                 <img src="@product.Image" alt="..." class="img-responsive">
-                 <div class="caption">
-                     <h3>@product.Name</h3>
-                     <p class="description">Brand - @product.Brand</p>
-                     <p class="description">Year of anouncment - @product.Year</p>
-                     <p class="description">Ram - @product.RAM GB</p>
-                     <p class="description">Display - @product.Display</p>
-                     <p class="description">Camera - @product.Camera px</p>
-                     <p class="description">Battery - @product.Battery mAh</p>
-                     <div class="clearfix">
-                         <div class="price pull-left">@product.Price AMD</div>
-                         <div class="pull-right actions">
-                             <input type="text" data="@product.Id" hidden id="prod_id" />
-                             <button class="btn btn-primary change-color add-to-cart">Add to Shopping Cart</button>
-                             <button class="btn btn-primary change-color product-details">Details</button>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
-         -->
         @if (Model.IndexOf(product) % 3 == 1)
         {
         @:</div>
-        }
+    }
     }
 </div>
 
@@ -92,35 +70,40 @@
                 window.location.href = url.replace("_id_", id);
             }
             else if (that.hasClass('add-to-cart')) {
-                @if(Context.Request.Cookies["Is logged"] == "1")
+                @if (Context.Request.Cookies["Is logged"] == "1")
                 {
+                    var quantity = 0;
+                    Int32.TryParse(Context.Request.Cookies["cart_quantity"],out quantity);
+                    quantity += 1;
+                    Context.Response.Cookies.Append("cart_quantity", quantity.ToString());
                     <text>
-                        var id = if;
+                        var id = $('button.add-to-cart').closest("div").find("input#prod_id").attr("data");
                         $.ajax
                             ({
-                                type: "POST",
+                        type: "POST",
                                 dataType: "Json",
                                 url: '@Url.Action("AddAsync", "ShoppingCart")',
                                 data: { id : id },
                                 async: false,
                                 success: function (data) {
-
-                                },
+                            },
                                 error: function () {
-                                    ErrorMessage("", '');
-                                }
-                        })
+                            ErrorMessage("", '');
+                            }
+                    })
+                   $("body").find(".navbar .navbar-collapse .navbar-nav li a .badge").html(@quantity);
+
                    </text>
                 }
                 else
-                { 
+                {
                     <text>
                 $(".product-container").prepend(`<div class="alert alert-danger">
                         Please <a href='@Url.Action("LoginView","Account")'>sign in</a> to add products to cart
                     </div>`)
                     </text>
                 }
-            }
+                        }
         })
     })
 </script>

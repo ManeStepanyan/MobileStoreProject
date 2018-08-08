@@ -34,7 +34,8 @@ namespace WebClient.Controllers
 
         // GET: /<controller>/
         [Route("account/login")]
-        public async Task<IActionResult> Login(string login, string password) { 
+        public async Task<IActionResult> Login(string login, string password) {
+
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             if (disco.IsError)
             {
@@ -60,8 +61,12 @@ namespace WebClient.Controllers
                 Expires = DateTime.Now.AddDays(1d)
                 
             };
+            if(claims["role"][0] == 2)
+                Response.Cookies.Append("seller_id", (string)claims["user_id"][0], option);
+            else if(claims["role"][0] == 3)
+                Response.Cookies.Append("customer_id", (string)claims["user_id"][0], option);
+
             Response.Cookies.Append("role", (string)claims["role"][0], option);
-            Response.Cookies.Append("id", (string)claims["user_id"][0], option);
             Response.Cookies.Append("Is logged", "1", option);
             Response.Cookies.Append("token", tokenResponse.AccessToken);
             return RedirectToAction("Index","Home");

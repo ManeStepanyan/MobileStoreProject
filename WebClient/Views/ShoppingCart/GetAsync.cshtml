@@ -1,4 +1,4 @@
-﻿@model List<WebClient.Models.ProductModel>
+﻿@model List<KeyValuePair<WebClient.Models.ProductModel,int>>
 @{decimal? total = 0; }
 @if (Model != null)
 {
@@ -8,16 +8,16 @@
                 @foreach (var product in Model)
                 {
                 <li class="list-group-item">
-                    <span class="badge">@product.Quantity</span>
-                    <strong>@product.Name</strong>
-                    <img src="@product.Image" class="img-responsive" style="max-width:40%;display:inline-block;" alt="Alternate Text" />
-                    <span class="label label-success">@product.Price AMD</span>
-                    @{total += @product.Price;}
+                    <span class="badge">@product.Value</span>
+                    <strong>@product.Key.Name</strong>
+                    <img src="@product.Key.Image" class="img-responsive" style="max-width:40%;display:inline-block;" alt="Alternate Text" />
+                    <span class="label label-success">@product.Key.Price AMD</span>
+                    @{total += product.Key.Price*product.Value;}
                     <div class="btn-group">
                         <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="/reduce/@product.Id">Reduce by 1</a></li>
-                            <li><a href="/remove/@product.Id">Remove All</a></li>
+                            <li><a href="/reduce/@product.Key.Id">Reduce by 1</a></li>
+                            <li><a href="/remove/@product.Key.Id">Remove All</a></li>
                         </ul>
                     </div>
                 </li>

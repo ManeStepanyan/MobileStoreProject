@@ -24,7 +24,7 @@
         <li>
             <a href="/ShoppingCart/GetAsync">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> My Shopping Card
-                <span class="badge">@AccountService.Quantity</span>
+                <span class="badge">@Context.Request.Cookies["cart_quantity"]</span>
             </a>
         </li>
         <li class="dropdown">
