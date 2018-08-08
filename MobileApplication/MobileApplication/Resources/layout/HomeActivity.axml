@@ -18,25 +18,8 @@
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:id="@+id/linearLayout3">
-            <android.support.v7.widget.SearchView
-                android:minWidth="25px"
-                android:minHeight="25px"
-                android:id="@+id/searchView"
-                android:layout_width="213.5dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="0.0dp"
-                android:tooltipText="Search"
-                android:pointerIcon="alias"
-                android:layout_weight="20" />
-            <ImageView
-                android:id="@+id/GoToCartPageImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_cart"
-                android:layout_weight="80" />
-        </LinearLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/linearLayout3" />
     </Toolbar>
     <LinearLayout
         android:orientation="vertical"
@@ -79,6 +62,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:clickable="true"
-            android:numColumns="auto_fit" />
+            android:numColumns="auto_fit"
+            android:horizontalSpacing="1dp" />
     </LinearLayout>
 </LinearLayout>

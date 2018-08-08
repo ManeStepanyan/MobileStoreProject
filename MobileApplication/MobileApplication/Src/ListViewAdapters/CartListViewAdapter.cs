@@ -8,7 +8,7 @@ using MobileApplication.Src.Models;
 
 namespace MobileApplication.Src.ListViewAdapters
 {
-    public class CartListViewAdapter : ProductsLiostViewAdapter
+    public class CartListViewAdapter : ProductsAdapter
     {
         private Dictionary<int, int> ProductCount;
 

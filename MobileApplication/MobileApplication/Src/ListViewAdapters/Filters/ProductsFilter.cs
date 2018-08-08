@@ -10,12 +10,12 @@ using Object = Java.Lang.Object;
 
 namespace MobileApplication.Src.ListViewAdapters
 {
-    public partial class ProductsLiostViewAdapter : BaseAdapter<Product>
+    public partial class ProductsAdapter : BaseAdapter<Product>
     {
         public class ProductFilter : Filter
         {
-            private readonly ProductsLiostViewAdapter _adapter;
-            public ProductFilter(ProductsLiostViewAdapter adapter)
+            private readonly ProductsAdapter _adapter;
+            public ProductFilter(ProductsAdapter adapter)
             {
                 _adapter = adapter;
             }

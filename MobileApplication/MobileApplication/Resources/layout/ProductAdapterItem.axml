@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:elevation="2dp"
-    android:background="@android:drawable/dialog_holo_light_frame"
-    android:layout_margin="20dp"
-    android:padding="10dp">
+    android:background="@drawable/shadow"
+    android:layout_margin="40dp"
+    android:padding="5dp">
     <ImageView
         android:src="@drawable/SignIn"
         android:id="@+id/ProductImageView"
@@ -19,7 +19,7 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:id="@+id/linearLayout1"
         android:background="#2fDEDEDE"
         android:paddingTop="10dp"
@@ -29,7 +29,7 @@
         <TextView
             android:text="Nokia"
             android:id="@+id/ProductNameTextView"
-            android:textColor="#ff000000"
+            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20" />

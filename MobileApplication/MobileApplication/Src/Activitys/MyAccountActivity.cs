@@ -18,11 +18,11 @@ namespace MobileApplication.Src.Activitys
     [Activity(Label = "MyAccountActivity")]
     public class MyAccountActivity : Activity
     {
-        private TextView NameTextView;
-        private TextView SureNameTextView;
-        private TextView EmailTextView;
-        private TextView PasswordTextView;
-        private TextView PasswordTextView2;
+        private EditText NameEditText;
+        private EditText SureNameEditText;
+        private EditText EmailEditText;
+        private EditText PasswordEditText;
+        private EditText PasswordEditText2;
         private Button SaveUpButton;
         private TextView PasswordErrorTextView;
 
@@ -32,16 +32,16 @@ namespace MobileApplication.Src.Activitys
             SetContentView(Resource.Layout.MyAccountActivity);
 
             var user = UserAPIConection.User;
-            this.NameTextView = FindViewById<TextView>(Resource.Id.name_client);
-            this.NameTextView.Hint = user.Name;
-            this.SureNameTextView = FindViewById<TextView>(Resource.Id.sname_client);
-            this.SureNameTextView.Hint = user.Surname;
-            this.EmailTextView = FindViewById<TextView>(Resource.Id.email_client);
-            this.EmailTextView.Hint = user.Email;
-            this.PasswordTextView = FindViewById<TextView>(Resource.Id.password_client);
-            this.PasswordTextView2 = FindViewById<TextView>(Resource.Id.password_client2);
-            this.PasswordTextView.TextChanged += PasswordTextView_TextChanged;
-            this.PasswordTextView2.TextChanged += PasswordTextView_TextChanged;
+            this.NameEditText = FindViewById<EditText>(Resource.Id.name_client);
+            this.NameEditText.Hint = user.Name;
+            this.SureNameEditText = FindViewById<EditText>(Resource.Id.sname_client);
+            this.SureNameEditText.Hint = user.Surname;
+            this.EmailEditText = FindViewById<EditText>(Resource.Id.email_client);
+            this.EmailEditText.Hint = user.Email;
+            this.PasswordEditText = FindViewById<EditText>(Resource.Id.password_client);
+            this.PasswordEditText2 = FindViewById<EditText>(Resource.Id.password_client2);
+            this.PasswordEditText.TextChanged += PasswordTextView_TextChanged;
+            this.PasswordEditText2.TextChanged += PasswordTextView_TextChanged;
             this.SaveUpButton = FindViewById<Button>(Resource.Id.SaveButton);
             this.SaveUpButton.Click += SaveUpButton_Click;
             this.PasswordErrorTextView = FindViewById<TextView>(Resource.Id.PasswordErrorTextView);
@@ -49,7 +49,7 @@ namespace MobileApplication.Src.Activitys
 
         private void PasswordTextView_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
         {
-            if (this.PasswordTextView.Text != this.PasswordTextView2.Text)
+            if (this.PasswordEditText.Text != this.PasswordEditText2.Text)
             {
                 this.PasswordErrorTextView.Text = "Passwords do not match.";
             }
@@ -61,7 +61,7 @@ namespace MobileApplication.Src.Activitys
 
         private void SaveUpButton_Click(object sender, EventArgs e)
         {
-            if (this.PasswordTextView.Text != this.PasswordTextView2.Text)
+            if (this.PasswordEditText.Text != this.PasswordEditText2.Text)
             {
                 View view = (View)sender;
                 Snackbar.Make(view, "Passwords do not match.", Snackbar.LengthLong)
@@ -71,16 +71,16 @@ namespace MobileApplication.Src.Activitys
 
             var user = UserAPIConection.User;
             var newUser = new UserModel(
-                user.Name, this.SureNameTextView.Text,
+                user.Name, this.SureNameEditText.Text,
                 null,
                 null,
                 user.Login,
-                this.PasswordTextView.Text,
+                this.PasswordEditText.Text,
                 null,
                 null);
 
             UserAPIConection.UpdateCustomer(newUser);
-            StartActivity(typeof(MainActivity));
+            StartActivity(typeof(HomeActivity));
         }
     }
 }
