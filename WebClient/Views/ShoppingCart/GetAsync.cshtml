@@ -10,6 +10,7 @@
                 <li class="list-group-item">
                     <span class="badge">@product.Quantity</span>
                     <strong>@product.Name</strong>
+                    <img src="@product.Image" class="img-responsive" style="max-width:40%;display:inline-block;" alt="Alternate Text" />
                     <span class="label label-success">@product.Price AMD</span>
                     @{total += @product.Price;}
                     <div class="btn-group">
@@ -27,13 +28,13 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <strong>Total: @total</strong>
+            <strong>Total: @total AMD</strong>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <a href="~/Controllers/OrderController/Get" type="button" class="btn btn-success">Checkout</a>
+            <a href='@Url.Action("Index","Order")' type="button" class="btn btn-success">Checkout</a>
         </div>
     </div>
 }

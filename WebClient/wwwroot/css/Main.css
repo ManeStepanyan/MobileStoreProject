@@ -1,0 +1,48 @@
+﻿body {
+    padding-top: 60px;
+    background-image: url(../images/ProductsBackground.png);
+    color:white;
+}
+.site-navbar, .site-footer, .site-navbar .navbar-collapse .navbar-nav > li.open>a, .site-navbar .navbar-collapse .navbar-nav > li.dropdown > ul {
+    background-color:rgba(14, 64, 182,0.5);
+    border-color: rgb(15, 68, 213);
+}
+.site-navbar .navbar-header > a, .site-navbar .navbar-collapse .navbar-nav > li.open> a, .site-navbar .navbar-collapse .navbar-nav > li.dropdown > ul>li>a {
+    color: white;
+}
+.site-footer .navbar-header a,.site-footer .navbar-collapse ul>li>a{
+    color:white;
+}
+.affix-top .navbar-collapse .navbar-nav > li.dropdown > ul > li > a:hover{
+    background:transparent;
+}
+.affix {
+    -webkit-transition: padding 0.2s ease-out;
+    -moz-transition: padding 0.2s ease-out;
+    -o-transition: padding 0.2s ease-out;
+    transition: padding 0.2s ease-out;
+}
+
+.affix-top, .affix-top .navbar-collapse .navbar-nav > li.dropdown > ul, .affix-top .navbar-collapse .navbar-nav > li > a {
+    /* navbar style at top */
+    background: transparent;
+    border-color: transparent;
+    padding: 15px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.affix-top .navbar-collapse .navbar-nav > li > a, .affix-top .navbar-collapse .navbar-nav > li.dropdown > ul > li > a {
+    color: white;
+}
+
+.affix-top .navbar-collapse {
+    border-color: transparent;
+    box-shadow: initial;
+}
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
