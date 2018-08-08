@@ -14,12 +14,12 @@ namespace ProductsAPI.Models
         public decimal? Price { get; set; }
         public int? RAM { get; set; }
         public int? Year { get; set; }
-        public float? Display { get; set; }
+        public double? Display { get; set; }
         public int? Battery { get; set; }
         public int? Camera { get; set; }
         public string Image { get; set; }
         public int? Quantity { get; set; }
-        public float? Memory { get; set; }
+        public double? Memory { get; set; }
         public string Color { get; set; }
         public string Description { get; set; }
     }
