@@ -31,9 +31,9 @@ namespace OrdersAndShopCartAPI.Controllers
         [Authorize(Policy = "Customer")]
         public async Task<IActionResult> Get()
         {
-            List<int> catalogIds = new List<int>();
+            List<KeyValuePair<int,int>> catalogIdsAndQuantites = new List<KeyValuePair<int,int>>();
             int currentCustomerId;
-            List<Product> list = new List<Product>();
+            List<KeyValuePair<Product,int>> list = new List<KeyValuePair<Product,int>>();
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
@@ -44,19 +44,19 @@ namespace OrdersAndShopCartAPI.Controllers
             var info = (IEnumerable<ShopCart>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
             foreach(var item in info)
             {
-                catalogIds.Add(item.CatalogId);
+                catalogIdsAndQuantites.Add(new KeyValuePair<int, int>(item.CatalogId,item.Quantity));
 
             }
-            if (catalogIds != null)
+            if (catalogIdsAndQuantites != null)
             {
                 using (var catalogClient = InitializeClient("http://localhost:5003/"))
                 {
-                    foreach (var id in catalogIds)
+                    foreach (var id in catalogIdsAndQuantites)
                     {
                         HttpResponseMessage response = await catalogClient.GetAsync("/api/sellerproduct/catalog/" + id);
                         if (response.IsSuccessStatusCode)
                         {
-                            list.Add((Product)(await response.Content.ReadAsAsync(typeof(Product))));
+                            list.Add(new KeyValuePair<Product, int>((Product)(await response.Content.ReadAsAsync(typeof(Product))),id.Value));
                         }
                        else return NotFound();
                     }
