@@ -18,17 +18,15 @@ namespace WebClient.Controllers
 {
     public class ShopController : Controller
     {
-        //List<ProductModel> currentProducts = new List<ProductModel>();
-        // GET: /<controller>/
-      /*  public IActionResult Index()
+        private IHttpContextAccessor _httpContextAccessor;
+        public ShopController(IHttpContextAccessor httpContextAccessor)
         {
-            return View();
-        } */
-
+            _httpContextAccessor = httpContextAccessor;
+        }
         public async Task<IActionResult> SellerAsync()
         {
             // ... Target page.
-            Uri siteUri = new Uri("http://localhost:5001/api/sellers");
+            Uri siteUri = new Uri("http://localhost:5001/api/sellers")  ;
             List<SellerModel> sellers = new List<SellerModel>();
 
             // ... Use HttpClient.
@@ -57,7 +55,7 @@ namespace WebClient.Controllers
         public async Task<IActionResult> Index()
          {
              // ... Target page.
-             Uri idSiteUri = new Uri("http://localhost:5003/api/SellerProduct/products/1");
+             Uri idSiteUri = new Uri("http://localhost:5003/api/SellerProduct/products/" + _httpContextAccessor.HttpContext.Request.Cookies["seller_id"]);
              
 
              // ... Use HttpClient.

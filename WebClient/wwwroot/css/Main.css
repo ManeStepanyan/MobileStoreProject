@@ -7,14 +7,14 @@
     background-color:rgba(14, 64, 182,0.5);
     border-color: rgb(15, 68, 213);
 }
-.site-navbar .navbar-header > a, .site-navbar .navbar-collapse .navbar-nav > li.open> a, .site-navbar .navbar-collapse .navbar-nav > li.dropdown > ul>li>a {
-    color: white;
-}
+    .site-navbar .navbar-header > a, .site-navbar .navbar-collapse .navbar-nav > li > a, .site-navbar .navbar-collapse .navbar-nav > li.open > a, .site-navbar .navbar-collapse .navbar-nav > li.dropdown > ul > li > a {
+        color: white;
+    }
 .site-footer .navbar-header a,.site-footer .navbar-collapse ul>li>a{
     color:white;
 }
-.affix-top .navbar-collapse .navbar-nav > li.dropdown > ul > li > a:hover{
-    background:transparent;
+.site-navbar .navbar-collapse .navbar-nav > li.open > ul > li > a:hover {
+    background: transparent;
 }
 .affix {
     -webkit-transition: padding 0.2s ease-out;
