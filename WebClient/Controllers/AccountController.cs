@@ -109,12 +109,12 @@ namespace WebClient.Controllers
                 siteUri, byteContent))
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
-                    var json = JsonConvert.SerializeObject(responseString);
-                    var responseStr = JsonConvert.DeserializeObject<string>(json);
+                    var responseStr = JsonConvert.DeserializeObject<string>(responseString);
                     if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
-                        return RedirectToAction("Index", "Home", new { msg = responseStr.ToString() });
+                        return View();
+
                     else
-                        return RedirectToAction("RegisterSellerView", "Account", new { ErrorMsg = responseStr.ToString() });
+                        return RedirectToAction("RegisterSellerView", "Account");
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace WebClient.Controllers
                     var responseString = await response.Content.ReadAsStringAsync();
                     var responseStr = JsonConvert.DeserializeObject<String>(responseString);
                     if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
-                        return RedirectToAction("Index", "Home");
+                        return View();
                     else
                         return RedirectToAction("RegisterCustomerView", "Account");
                 }
