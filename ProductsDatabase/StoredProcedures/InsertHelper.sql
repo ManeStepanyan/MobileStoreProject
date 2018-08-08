@@ -5,12 +5,12 @@
     @Price MONEY, 
     @RAM INT, 
     @Year INT, 
-    @Display decimal(3, 2), 
+    @Display float, 
     @Battery int, 
     @Camera INT, 
     @Image VARCHAR(200),
 	@Quantity int, 
-	@Memory DECIMAL(3,2),
+	@Memory float,
 	@Color VARCHAR(10),
 	@Description VARCHAR(100)
 AS

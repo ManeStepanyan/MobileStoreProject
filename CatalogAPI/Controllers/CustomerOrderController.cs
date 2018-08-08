@@ -92,8 +92,8 @@ namespace CatalogAPI.Controllers
             {
                 HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
                 if (!resp.IsSuccessStatusCode) return NotFound();
-                SellerPublicInfo seller = (SellerPublicInfo)((await resp.Content.ReadAsAsync(typeof(SellerPublicInfo))));
-                sellerId = seller.Id;
+                Int32.TryParse((await resp.Content.ReadAsAsync(typeof(int))).ToString(), out sellerId);
+                if (sellerId == 0) return NotFound();
             }
             if (id == sellerId)
             {

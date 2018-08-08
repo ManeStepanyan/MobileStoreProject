@@ -6,18 +6,22 @@
     [Price]       MONEY         NOT NULL,
     [RAM]         INT           NOT NULL,
     [Year]        INT           NOT NULL,
-    [Display]     DECIMAL (3, 2)  NULL,
+    [Display]     FLOAT (53)    NULL,
     [Battery]     INT           NULL,
     [Camera]      INT           NOT NULL,
     [Image]       VARCHAR (200) NOT NULL,
     [Quantity]    INT           NULL,
     [Catalog_Id]  INT           NULL,
     [SearchCount] INT           DEFAULT ((0)) NOT NULL,
-	[Memory] DECIMAL(3,2) NOT NULL,
-	[Color] VARCHAR(10) NOT NULL,
-	[Description] VARCHAR(100) NOT NULL,
+    [Memory]      FLOAT (53)    NULL,
+    [Color]       VARCHAR (10)  NOT NULL,
+    [Description] VARCHAR (100) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
+
+
 
 
 

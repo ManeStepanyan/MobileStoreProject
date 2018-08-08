@@ -44,15 +44,18 @@ namespace UsersAPI.Controllers
         // POST: api/Register
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]UserInformation user)
-        {
+        { int ex1 = 0, ex2 = 0;
             user.ActivationCode = Guid.NewGuid().ToString();
-            if ((int)this.repo.ExecuteOperation("ExistsLogin", new[] { new KeyValuePair<string, object>("login", user.Login) }) == 1)
+         Int32.TryParse(this.repo.ExecuteOperation("ExistsLogin", new[] { new KeyValuePair<string, object>("login", user.Login) }).ToString(),out ex1);
+            if (ex1!=2)
             {
-                throw new Exception("Such an username exists");
+                throw new Exception("Such an username exists or can't parse");
             }
-            if ((int)this.repo.ExecuteOperation("ExistsEmail", new[] { new KeyValuePair<string, object>("email", user.Email) }) == 1)
+
+            Int32.TryParse(this.repo.ExecuteOperation("ExistsEmail", new[] { new KeyValuePair<string, object>("email", user.Email) }).ToString(), out ex2);
+            if (ex2!=2)
             {
-                throw new Exception("Such an email is already registrated");
+                throw new Exception("Such an email exists or can't parse");
             }
             await this.repo.ExecuteOperationAsync("CreateUser", new[] { new KeyValuePair<string, object>("name", user.Name), new KeyValuePair<string, object>("surname", user.Surname ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", (this.IsValidEmail(user.Email)) ? user.Email : throw new Exception("Invalid Email")), new KeyValuePair<string, object>("address", user.Address ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("cellphone", user.CellPhone ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("login", user.Login), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(user.Password)), new KeyValuePair<string, object>("Role_Id", user.RoleId), new KeyValuePair<string, object>("activationCode", user.ActivationCode) });
             this.SendVerificationLinkEmail(user.Email, user.ActivationCode);

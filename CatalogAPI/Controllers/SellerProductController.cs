@@ -146,8 +146,8 @@ namespace CatalogAPI.Controllers
                 using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
                 {
                     HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                    SellerPublicInfo seller = (SellerPublicInfo)((await resp.Content.ReadAsAsync(typeof(SellerPublicInfo))));
-                    sellerId = seller.Id;
+                    Int32.TryParse((await response.Content.ReadAsAsync(typeof(int))).ToString(), out sellerId);
+                    if (sellerId == 0) return NotFound();
                 }
                 catalogId = Convert.ToInt32(await this.repo.ExecuteOperationAsync("AddSellerProduct", new[] { new KeyValuePair<string, object>("productId", productId), new KeyValuePair<string, object>("sellerId", sellerId) }));
                 content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("catalogId", catalogId.ToString()) });
@@ -161,7 +161,7 @@ namespace CatalogAPI.Controllers
         public async Task<IActionResult> Put(int id, [FromBody]JToken jsonbody)
         {
             var userId = GetCurrentUser();
-            int sellerId, currentSellerId;
+            int sellerId = 0, currentSellerId = 0;
             Int32.TryParse((await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) })).ToString(),out sellerId);
             if (sellerId == 0)
                 return NotFound();           
@@ -169,8 +169,8 @@ namespace CatalogAPI.Controllers
             using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
             {
                 HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                SellerPublicInfo seller = (SellerPublicInfo)((await resp.Content.ReadAsAsync(typeof(SellerPublicInfo))));
-                currentSellerId = seller.Id;
+                Int32.TryParse((await resp.Content.ReadAsAsync(typeof(int))).ToString(),out currentSellerId);
+                if (currentSellerId == 0) return NotFound();
             }
             if (currentSellerId == sellerId)
             {
@@ -199,8 +199,8 @@ namespace CatalogAPI.Controllers
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
                 HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                SellerPublicInfo seller = (SellerPublicInfo)((await response.Content.ReadAsAsync(typeof(SellerPublicInfo))));
-                currentSellerId = seller.Id;
+                Int32.TryParse((await response.Content.ReadAsAsync(typeof(int))).ToString(), out currentSellerId);
+                if (currentSellerId == 0) return NotFound();
             }
             if (currentSellerId == sellerId)
             {
@@ -214,7 +214,7 @@ namespace CatalogAPI.Controllers
                     await productClient.DeleteAsync("/api/products/" + id);
                 }
 
-                return new StatusCodeResult(200);
+                return Ok();
             }
             return NotFound();
         }

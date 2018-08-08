@@ -139,9 +139,9 @@ namespace WebClient.Controllers
                     var responseString = await response.Content.ReadAsStringAsync();
                     var responseStr = JsonConvert.DeserializeObject<String>(responseString);
                     if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
-                        return RedirectToAction("Index", "Home", new { msg = responseStr });
+                        return RedirectToAction("Index", "Home");
                     else
-                        return RedirectToAction("RegisterCustomerView", "Account", new { ErrorMsg = responseStr });
+                        return RedirectToAction("RegisterCustomerView", "Account");
                 }
             }
         }

@@ -8,12 +8,12 @@
 	@RAMTo INT=NULL,
     @Year INT =null,
 	@YearTo int=null,
-    @Display decimal(3, 2) =null,
+    @Display float =null,
     @Battery int =null,
 	@BatteryTo int=null,
     @Camera INT =null,
 	@CameraTo int=null,
-	@Memory DECIMAL(3,2)= null,
+	@Memory float= null,
 	@MemoryTo DECIMAL(3,2)= null,
 	@Color VARCHAR(10)= null
 as
