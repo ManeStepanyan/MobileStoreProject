@@ -46,7 +46,7 @@ namespace CatalogAPI.Controllers
         {
             List<Product> list = new List<Product>();
             var sellerProducts = (IEnumerable<SellerProduct>)(await this.repo.ExecuteOperationAsync("GetProductsBySellerId", new[] { new KeyValuePair<string, object>("id", id) }));
-
+            if (sellerProducts == null) return NotFound();
             using (var productClient = InitializeClient("http://localhost:5002/"))
             {
                 foreach (var item in sellerProducts)
@@ -217,8 +217,12 @@ namespace CatalogAPI.Controllers
                 BaseAddress = new Uri(uri)
             };
             var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
-            var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
-            client.SetBearerToken(token);
+            if (authInfo.Result.Properties != null)
+            {
+                var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
+
+                client.SetBearerToken(token);
+            }
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
