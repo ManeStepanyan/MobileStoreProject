@@ -84,14 +84,14 @@ namespace MobileApplication.Src.API
             return true;
         }
 
-        public static bool RegisterCustomer(string name, string surename, string login, string email, string password)
+        public static bool RegisterCustomer(string name, string surname, string login, string email, string password)
         {
             if (UserDataBase.ContainsKey(login))
             {
                 return false;
             }
 
-            UserDataBase.Add(login, new UserModel(name, surename, null, null, login, password, email, 2));
+            UserDataBase.Add(login, new UserModel(name, surname, null, null, login, password, email, 2));
             User = UserDataBase[login];
             return true;
         }

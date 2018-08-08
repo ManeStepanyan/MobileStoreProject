@@ -19,7 +19,7 @@ namespace MobileApplication.Src.Activitys
     public class MyAccountActivity : Activity
     {
         private EditText NameEditText;
-        private EditText SureNameEditText;
+        private EditText SurNameEditText;
         private EditText EmailEditText;
         private EditText PasswordEditText;
         private EditText PasswordEditText2;
@@ -34,8 +34,8 @@ namespace MobileApplication.Src.Activitys
             var user = UserAPIConection.User;
             this.NameEditText = FindViewById<EditText>(Resource.Id.name_client);
             this.NameEditText.Hint = user.Name;
-            this.SureNameEditText = FindViewById<EditText>(Resource.Id.sname_client);
-            this.SureNameEditText.Hint = user.Surname;
+            this.SurNameEditText = FindViewById<EditText>(Resource.Id.sname_client);
+            this.SurNameEditText.Hint = user.Surname;
             this.EmailEditText = FindViewById<EditText>(Resource.Id.email_client);
             this.EmailEditText.Hint = user.Email;
             this.PasswordEditText = FindViewById<EditText>(Resource.Id.password_client);
@@ -71,7 +71,7 @@ namespace MobileApplication.Src.Activitys
 
             var user = UserAPIConection.User;
             var newUser = new UserModel(
-                user.Name, this.SureNameEditText.Text,
+                user.Name, this.SurNameEditText.Text,
                 null,
                 null,
                 user.Login,
