@@ -11,6 +11,7 @@ using Android.Widget;
 using MobileApplication;
 using MobileApplication.Src.Activitys;
 using MobileApplication.Src.API;
+using MobileApplication.Src.Cache;
 using MobileApplication.Src.Dialogs;
 using MobileApplication.Src.Models;
 
@@ -19,7 +20,7 @@ namespace MobileApplication.Src.ListViewAdapters
     public partial class ProductsAdapter : BaseAdapter<Product>
     {
         protected List<Product> Products;
-        protected static Dictionary<string, Bitmap> ImageCache = new Dictionary<string, Bitmap>();
+        
         public int Layout;
         public Filter Filter { get; private set; }
 
@@ -73,15 +74,15 @@ namespace MobileApplication.Src.ListViewAdapters
             var ImageView = row.FindViewById<ImageView>(Resource.Id.ProductImageView);
             new Task(() => {
                 var ulr = this.Products[position].Image;
-                if (ImageCache.ContainsKey(ulr))
+                if (ImageCache.Cache.ContainsKey(ulr))
                 {
-                    ImageView.SetImageBitmap(ImageCache[ulr]);
+                    ImageView.SetImageBitmap(ImageCache.Cache[ulr]);
                 }
                 else
                 {
                     var image = GetImageBitmapFromUrl(ulr);
                     ImageView.SetImageBitmap(image);
-                    ImageCache.Add(ulr, image);
+                    ImageCache.Cache.Add(ulr, image);
                 } 
                 }).Start();
             var NameTextView = row.FindViewById<TextView>(Resource.Id.ProductNameTextView);

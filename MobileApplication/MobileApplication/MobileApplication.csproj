@@ -74,8 +74,10 @@
     <Compile Include="Src\API\OrdersAndShopCartAPIConection.cs" />
     <Compile Include="Src\API\ProductAPIConection.cs" />
     <Compile Include="Src\API\UserAPIConection.cs" />
+    <Compile Include="Src\Cache\ImageCache.cs" />
     <Compile Include="Src\Dialogs\ProductDescriptionDialog.cs" />
     <Compile Include="Src\Dialogs\ProductsFilterDialog.cs" />
+    <Compile Include="Src\Download\ImageDownload.cs" />
     <Compile Include="Src\ListViewAdapters\CartListViewAdapter.cs" />
     <Compile Include="Src\ListViewAdapters\Filters\ProductsFilter.cs" />
     <Compile Include="Src\ListViewAdapters\ProductsAdapter.cs" />
