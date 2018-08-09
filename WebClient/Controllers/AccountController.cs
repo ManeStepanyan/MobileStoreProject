@@ -78,17 +78,31 @@ namespace WebClient.Controllers
             return View();
         }
         // GET: /<controller>/
-        public IActionResult RegisterCustomerView(string ErrorMsg = null)
-        {
-            ViewData["ErrorMessage"] = ErrorMsg;
+        public IActionResult RegisterCustomerView(string msg = null , bool flag = true)
+        { 
+            if(msg != null)
+            {
+                if (flag == true)
+                    ViewData["SuccessMessage"] = msg;
+                else
+                    ViewData["ErrorMessage"] = msg;
+
+            }
             return View();
         }
 
 
-        public IActionResult RegisterSellerView(string ErrorMsg = null)
+        public IActionResult RegisterSellerView(string msg = null, bool flag = true)
         {
 
-            ViewData["ErrorMessage"] = ErrorMsg;
+            if (msg != null)
+            {
+                if (flag == true)
+                    ViewData["SuccessMessage"] = msg;
+                else
+                    ViewData["ErrorMessage"] = msg;
+
+            }
             return View();
         }
 
@@ -108,21 +122,20 @@ namespace WebClient.Controllers
                 using (HttpResponseMessage response = await client.PostAsync(
                 siteUri, byteContent))
                 {
-                    var responseString = await response.Content.ReadAsStringAsync();
-                    var responseStr = JsonConvert.DeserializeObject<string>(responseString);
-                    if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
-                        return View();
-
-                    else
-                        return RedirectToAction("RegisterSellerView", "Account");
+                    if (response.IsSuccessStatusCode)
+                        return RedirectToAction("RegisterSellerView", "Account", new { msg = "Registration has been done,And Account activation link has been sent to your email:"+email+ " please open the link in message to verify your account and use it", flag = true });
+                    if ((int)response.StatusCode == 412)
+                        return RedirectToAction("RegisterSellerView", "Account", new { msg = "Such an username already exist's please change it", flag = false });
+                    if ((int)response.StatusCode == 416)
+                        return RedirectToAction("RegisterSellerView", "Account", new { msg = "Such an email exist's please try change it", flag = false });
                 }
+                return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Some data was incorrect please try again", flag = false });
             }
         }
 
         public async Task<IActionResult> RegisterCustomerAsync(string name, string surname, string login, string email, string password)
         {
             var model = new UserModel(name, surname, null, null, login, password, email, 3);
-
             // ... Target page.
             Uri siteUri = new Uri("http://localhost:5001/api/Register");
             CustomerModel customer = new CustomerModel();
@@ -130,19 +143,20 @@ namespace WebClient.Controllers
             using (HttpClient client = new HttpClient())
             {
                 var content = JsonConvert.SerializeObject(model);
-                var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+                var buffer = Encoding.UTF8.GetBytes(content);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 using (HttpResponseMessage response = await client.PostAsync(
                 siteUri, byteContent))
                 {
-                    var responseString = await response.Content.ReadAsStringAsync();
-                    var responseStr = JsonConvert.DeserializeObject<String>(responseString);
-                    if (responseStr == "Registration has been done,And Account activation link has been sent your email:" + email)
-                        return View();
-                    else
-                        return RedirectToAction("RegisterCustomerView", "Account");
+                    if (response.IsSuccessStatusCode)
+                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Registration has been done,And Account activation link has been sent to your email:" + email + " please open the link in message to verify your account and use it", flag = true });
+                    if ((int)response.StatusCode == 412)
+                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Such an username already exist's please change it", flag = false });
+                    if ((int)response.StatusCode == 416)
+                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Such an email exist's please try change it", flag = false });
                 }
+                return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Some data was incorrect please try again", flag = false });
             }
         }
 
