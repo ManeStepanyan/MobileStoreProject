@@ -22,12 +22,10 @@ namespace WebClient.Controllers
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public IActionResult Index()
+        public IActionResult Index(string msg)
         {
-            var allCookies = Request.Cookies;
-            var r = _httpContextAccessor.HttpContext.Request.Cookies["role"];
-            var i = _httpContextAccessor.HttpContext.Request.Cookies["id"];
-            var t = _httpContextAccessor.HttpContext.Request.Cookies["token"];
+            if (msg != null)
+               ViewData["msg"] = msg;
             return View();
         }
         public IActionResult About()

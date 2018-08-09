@@ -150,7 +150,7 @@ namespace CatalogAPI.Controllers
                 using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
                 {
                     HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                     temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+                     temp = JsonConvert.DeserializeObject<int>(await resp.Content.ReadAsStringAsync());
                     Int32.TryParse(temp.ToString(), out sellerId);
                     if (sellerId == 0) return NotFound();
                 }

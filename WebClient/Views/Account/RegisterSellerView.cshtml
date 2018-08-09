@@ -1,16 +1,23 @@
 ﻿@model WebClient.Models.SellerCreateModel
 @{
     ViewData["Title"] = "RegisterCustomerView";
-    var errmsg = ViewData["ErrorMessage"];
+    var successMsg = ViewData["SuccessMessage"];
+    var errorMsg = ViewData["ErrorMessage"];
 }
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <h1>Sign Up</h1>
-        @if (errmsg != null) 
+        @if (successMsg != null)
+        {
+            <div class="alert alert-success">
+                <p>@successMsg</p>
+            </div>
+        }
+        else if (errorMsg != null)
         {
             <div class="alert alert-danger">
-                <p>@errmsg</p>
+                <p>@errorMsg</p>
             </div>
         }
 
