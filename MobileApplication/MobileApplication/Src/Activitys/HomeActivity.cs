@@ -47,7 +47,7 @@ namespace MobileApplication
 
             this.SearchView = FindViewById<SearchView>(Resource.Id.searchView);
             this.SearchView.QueryTextChange += SearchView_QueryTextChange;
-            this.Products = ProductAPIConection.GetProducts();
+            this.Products = ProductAPIConection.GetProducts().Result;
             this.Adapter = new ProductsAdapter(this, this.Products, Resource.Layout.ProductAdapterItem);
             this.ProductsGridView = FindViewById<GridView>(Resource.Id.ProductListView);
             this.ProductsGridView.ItemClick += ProductsGridView_ItemClick;

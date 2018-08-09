@@ -1,4 +1,4 @@
-﻿#define APISIM
+﻿//#define APISIM
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +88,7 @@ namespace MobileApplication.Src.API
 #else
         public static async Task<List<Product>> GetProducts()
         {
-            Uri siteUri = new Uri("http://localhost:5002/api/Products");
+            Uri siteUri = new Uri("http://192.168.1.31:5002/api/Products");
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())

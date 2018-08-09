@@ -134,10 +134,10 @@ namespace MobileApplication.Src.API
 
         private static List<string> items = new List<string>()
                     {
-                            "Afghanistan","Albania","Algeria","American Samoa","Andorra",
-                            "Angola","Anguilla","Antarctica","Antigua and Barbuda","Argentina",
-                            "Armenia","Aruba","Australia","Austria","Azerbaijan",
-                            "Bahrain","Bangladesh","Barbados","Belarus","Belgium",
+                            "A1","A2","A3","A4","A5",
+                            "A6","A7","A8","A9","A10",
+                            "A11","A12","A13","A14","B1",
+                            "B2","B3","B4","B5","B6"
                     };
     }
 }
