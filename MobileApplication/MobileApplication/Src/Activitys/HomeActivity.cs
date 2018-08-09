@@ -110,13 +110,13 @@ namespace MobileApplication
                     compare = (a, b) => a.Name.CompareTo(b.Name);
                     break;
                 case 1:
-                    compare = (a, b) => a.Price.CompareTo(b.Price);
+                    compare = (a, b) => ((decimal)a.Price).CompareTo((decimal)b.Price);
                     break;
                 case 2:
-                    compare = (a, b) => a.Memory.CompareTo(b.Memory);
+                    compare = (a, b) => ((double)a.Memory).CompareTo((double)b.Memory);
                     break;
                 case 3:
-                    compare = (a, b) => a.RAM.CompareTo(b.RAM);
+                    compare = (a, b) => ((double)a.RAM).CompareTo((double)b.RAM);
                     break;
                 default:
                     throw new Exception("Inadmissible situation.");

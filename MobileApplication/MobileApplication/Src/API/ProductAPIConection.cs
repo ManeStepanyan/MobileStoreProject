@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using MobileApplication.Src.Models;
 using Newtonsoft.Json;
@@ -23,7 +24,7 @@ namespace MobileApplication.Src.API
 
         public static List<string> GetBrands()
         {
-            return new List<string>() 
+            return new List<string>()
             {
                 "Nokia",
                 "Samsung",
@@ -68,8 +69,8 @@ namespace MobileApplication.Src.API
 
         private static bool ChechSerach(SearchProductModel model, Product product)
         {
-            return ((model.MinPrice == null) || (model.MinPrice < product.Price)) &&
-                    ((model.MaxPrice == null) || (model.MaxPrice > product.Price)) &&
+            return (//(model.MinPrice == null) || (model.MinPrice < product.Price)) &&
+                    //((model.MaxPrice == null) || (model.MaxPrice > product.Price)) &&
                     ((model.MinRAM == null) || (model.MinRAM < product.RAM)) &&
                     ((model.MaxRAM == null) || (model.MaxRAM > product.RAM)) &&
                     ((model.MinYear == null) || (model.MinYear < product.Price)) &&
@@ -80,36 +81,47 @@ namespace MobileApplication.Src.API
                     ((model.MaxCamera == null) || (model.MaxCamera < product.Price)) &&
                     ((model.MinMemory == null) || (model.MinMemory > product.Price)) &&
                     ((model.MaxMemory == null) || (model.MaxMemory < product.Price)) &&
-                    ((model.Brand == "") || (product.Brand.IndexOf(model.Brand) != -1))
-                    ;
+                    ((model.Brand == "") || (product.Brand.IndexOf(model.Brand) != -1)));
         }
 #if (APISIM)
-        public static List<Product> GetProducts() => ProductDataBase.Select(a => a.Value).ToList();
+        public static Task<List<Product>> GetProducts() => new Task<List<Product>>(() =>  ProductDataBase.Select(a => a.Value).ToList());
 #else
         public static async Task<List<Product>> GetProducts()
         {
-            Uri siteUri = new Uri("http://192.168.1.31:5002/api/Products");
+            Uri siteUri = new Uri("http://192.168.6.30:5002/api/Products");
+            var client = new HttpClient();
 
-            // ... Use HttpClient.
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.GetAsync(siteUri))
-                {
-                    using (HttpContent content = response.Content)
-                    {
-                        // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
-                        var sellers = JsonConvert.DeserializeObject<List<Product>>(result);
-                        if (result != null &&
-                            result.Length >= 50)
-                        {
-                            Console.WriteLine(result.Substring(0, 50) + "...");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = client.GetAsync(string.Format("http://192.168.6.30:5002/api/Products", 8)).Result;
+            var res = response.Content.ReadAsStringAsync().Result;
+            var sellers = JsonConvert.DeserializeObject<List<Product>>(res);
 
-                        }
-                        return sellers;
-                    }
-                }
-            }
+
+            Console.WriteLine(sellers);
+
+
+            return sellers;
+            //var content = response.Content.ReadAsStringAsync().Result;
+            //// ... Use HttpClient.
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    byte[] response = await client.GetByteArrayAsync(siteUri);
+            //    throw new ExecutionEngineException();
+                //using (HttpContent content = response.Content)
+                //{
+                //    // ... Read the string.
+                //    string result = await content.ReadAsStringAsync();
+                //    var sellers = JsonConvert.DeserializeObject<List<Product>>(result);
+                //    if (result != null &&
+                //        result.Length >= 50)
+                //    {
+                //        Console.WriteLine(result.Substring(0, 50) + "...");
+
+                //    }
+                //    return sellers;
+                //}
+
+            //}
         }
 
 #endif
