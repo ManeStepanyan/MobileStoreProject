@@ -28,7 +28,6 @@ namespace WebClient.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             Uri siteUri = new Uri("http://localhost:5002/api/Products");
-
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
