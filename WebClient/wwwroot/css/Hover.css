@@ -1,4 +1,17 @@
-﻿
+﻿.form-control {
+    max-width: 85%;
+    margin: 2% 0 2% 7.5%;
+}
+
+fieldset .collapse label {
+    display: block;
+    text-align: center;
+}
+
+legend span {
+    font-size: 15px;
+}
+
 .hovereffect {
     width: 100%;
     height: 100%;

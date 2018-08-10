@@ -25,31 +25,33 @@ namespace WebClient.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
         // GET: /<controller>/
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(string matchedProducts)
         {
-            Uri siteUri = new Uri("http://localhost:5002/api/Products");
-            // ... Use HttpClient.
-            using (HttpClient client = new HttpClient())
+            if (matchedProducts == null)
             {
-                using (HttpResponseMessage response = await client.GetAsync(siteUri))
+                Uri siteUri = new Uri("http://localhost:5002/api/Products");
+                // ... Use HttpClient.
+                using (HttpClient client = new HttpClient())
                 {
-                    using (HttpContent content = response.Content)
+                    using (HttpResponseMessage response = await client.GetAsync(siteUri))
                     {
-                        // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
-                        var sellers = JsonConvert.DeserializeObject<List<ProductModel>>(result);
-                        if (result != null &&
-                            result.Length >= 50)
+                        using (HttpContent content = response.Content)
                         {
-                            Console.WriteLine(result.Substring(0, 50) + "...");
-
+                            // ... Read the string.
+                            string result = await content.ReadAsStringAsync();
+                            var product = JsonConvert.DeserializeObject<List<ProductModel>>(result);
+                            return View(product);
                         }
-                        return View(sellers);
                     }
                 }
             }
-        }
+            else
+            {
+                var products = JsonConvert.DeserializeObject<List<ProductModel>>(matchedProducts);
+                return View(products);
 
+            }
+        }
         public async Task<IActionResult> DetailAsync(int id)
         {
             Uri siteUri = new Uri("http://localhost:5002/api/Products/"+id);
@@ -65,31 +67,19 @@ namespace WebClient.Controllers
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
                         product = JsonConvert.DeserializeObject<ProductModel>(result);
-                        if (result != null &&
-                            result.Length >= 50)
-                        {
-                            Console.WriteLine(result.Substring(0, 50) + "...");
-                        }
+                        return View(product);
                     }
                 }
             }
-            return View(product);
         }
 
-        public async Task<IActionResult> Search(SearchModel instance//,decimal? priceTo = null,int? RAMTo = null,int? yearTo = null,int? batteryTo = null,int? cameraTo = null,int? memoryTo = null)
+        public async Task<IActionResult> Search(SearchModel instance)
         {
-            Uri siteUri = new Uri("http://localhost:5002/api/Products/Search/");
+            Uri siteUri = new Uri("http://localhost:5002/api/Products/Search");
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
-                client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
                 var content = JsonConvert.SerializeObject(instance);
-                /*content += JsonConvert.SerializeObject(new { priceTo });
-                content += JsonConvert.SerializeObject(new { RAMTo });
-                content += JsonConvert.SerializeObject(new { yearTo });
-                content += JsonConvert.SerializeObject(new { batteryTo });
-                content += JsonConvert.SerializeObject(new { cameraTo });
-                content += JsonConvert.SerializeObject(new { memoryTo });*/
                 var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                 var byteContent = new ByteArrayContent(buffer);
                 using (HttpResponseMessage response = await client.PostAsync(
@@ -100,7 +90,7 @@ namespace WebClient.Controllers
                         // ... Read the string.
                         string result = await cont.ReadAsStringAsync();
                         var products = JsonConvert.DeserializeObject<List<ProductModel>>(result);
-                        return View("~/Views/Product/IndexAsync", products);
+                        return RedirectToAction("IndexAsync", new { matchedProducts = result });
                     }
                 }
             }
