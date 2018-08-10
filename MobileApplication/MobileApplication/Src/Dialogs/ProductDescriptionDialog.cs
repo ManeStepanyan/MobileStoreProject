@@ -23,7 +23,7 @@ namespace MobileApplication.Src.Dialogs
             this.product = ActivityCommunication.Product;
             var view = inflater.Inflate(Resource.Layout.ProductDescriptionDialog, container, false);
             var ImageView = view.FindViewById<ImageView>(Resource.Id.ProductImageView);
-            ImageView.SetImageBitmap(this.product.Image);
+            //ImageView.SetImageBitmap(this.product.Image);
             var NameTextView = view.FindViewById<TextView>(Resource.Id.ProductNameTextView);
             NameTextView.Text = this.product.Name;
             var BrandTextView = view.FindViewById<TextView>(Resource.Id.ProductBrandTextView);

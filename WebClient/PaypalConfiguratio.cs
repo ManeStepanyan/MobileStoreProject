@@ -8,7 +8,7 @@ namespace WebClient
 {
     public class PaypalConfiguratio
     {
-        public static class PaypalConfiguration
+  /*      public static class PaypalConfiguration
         {
             //Variables for storing the clientID and clientSecret key  
             public readonly static string ClientId;
@@ -38,6 +38,6 @@ namespace WebClient
                 apiContext.Config = GetConfig();
                 return apiContext;
             }
-        }
+        }*/
     }
 }

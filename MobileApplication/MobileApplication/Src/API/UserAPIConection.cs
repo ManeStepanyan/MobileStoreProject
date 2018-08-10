@@ -21,11 +21,11 @@ namespace MobileApplication.Src.API
         static UserAPIConection()
         {
             var ran = new Random();
-            var bitMaps = new List<Bitmap>() {
-                GetImageBitmapFromUrl(@"https://images.samsung.com/is/image/samsung/p5/ru/smartphones/PCD_Purple.png?$ORIGIN_PNG$"),
-                GetImageBitmapFromUrl(@"https://drop.ndtv.com/TECH/product_database/images/6142017123101PM_635_htc_desire_628_dual_sIM.jpeg"),
-                GetImageBitmapFromUrl(@"https://akket.com/wp-content/uploads/2018/04/Nokia-9-42.jpg"),
-                GetImageBitmapFromUrl(@"https://3dnews.ru/assets/external/illustrations/2018/03/16/967085/sm.x1.750.jpg")
+            var images = new List<string>() {
+                @"https://images.samsung.com/is/image/samsung/p5/ru/smartphones/PCD_Purple.png?$ORIGIN_PNG$",
+                @"https://drop.ndtv.com/TECH/product_database/images/6142017123101PM_635_htc_desire_628_dual_sIM.jpeg",
+                @"https://akket.com/wp-content/uploads/2018/04/Nokia-9-42.jpg",
+                @"https://3dnews.ru/assets/external/illustrations/2018/03/16/967085/sm.x1.750.jpg"
             };
             var Products = new List<Product>();
             var brannds = ProductAPIConection.GetBrands();
@@ -35,7 +35,7 @@ namespace MobileApplication.Src.API
                 {
                     Name = brannds[ran.Next(0, 4)] + " " + item,
                     Price = ran.Next(1000, 10000),
-                    Image = bitMaps[ran.Next(0, 4)],
+                    //Image = images[ran.Next(0, 4)],
                     Quantity = 5,
                     Brand = item
                 };
@@ -116,28 +116,12 @@ namespace MobileApplication.Src.API
             return SellerDataBase[id];
         }
 
-        private static Bitmap GetImageBitmapFromUrl(string url)
-        {
-            Bitmap imageBitmap = null;
-
-            using (var webClient = new WebClient())
-            {
-                var imageBytes = webClient.DownloadData(url);
-                if (imageBytes != null && imageBytes.Length > 0)
-                {
-                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
-                }
-            }
-
-            return imageBitmap;
-        }
-
         private static List<string> items = new List<string>()
                     {
-                            "Afghanistan","Albania","Algeria","American Samoa","Andorra",
-                            "Angola","Anguilla","Antarctica","Antigua and Barbuda","Argentina",
-                            "Armenia","Aruba","Australia","Austria","Azerbaijan",
-                            "Bahrain","Bangladesh","Barbados","Belarus","Belgium",
+                            "A1","A2","A3","A4","A5",
+                            "A6","A7","A8","A9","A10",
+                            "A11","A12","A13","A14","B1",
+                            "B2","B3","B4","B5","B6"
                     };
     }
 }
