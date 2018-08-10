@@ -30,7 +30,7 @@ namespace MobileApplication.Src.ListViewAdapters
                 row = LayoutInflater.From(this.Context).Inflate(this.Layout, null, false);
             }
             var ImageView = row.FindViewById<ImageView>(Resource.Id.ProductImageView);
-            ImageView.SetImageBitmap(this.Products[position].Image);
+            //ImageView.SetImageBitmap(this.Products[position].Image);
             var NameTextView = row.FindViewById<TextView>(Resource.Id.ProductNameTextView);
             NameTextView.Text = this.Products[position].Name;
             var PriceTextView = row.FindViewById<TextView>(Resource.Id.ProductPriceTextView);

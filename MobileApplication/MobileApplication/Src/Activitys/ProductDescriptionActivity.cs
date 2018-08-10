@@ -1,10 +1,12 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Widget;
 using MobileApplication.Activitys;
 using MobileApplication.Src.API;
 using MobileApplication.Src.Models;
+using System.Net;
 
 namespace MobileApplication.Src.Activitys
 {
@@ -34,7 +36,7 @@ namespace MobileApplication.Src.Activitys
             SetContentView(Resource.Layout.ProductDescriptionActivity);
 
             this.ProductImageView = FindViewById<ImageView>(Resource.Id.ProductImageView);
-            this.ProductImageView.SetImageBitmap(this.product.Image);
+            //this.ProductImageView.SetImageBitmap(GetImageBitmapFromUrl(this.product.Image));
             this.NameTextView = FindViewById<TextView>(Resource.Id.ProductNameTextView);
             this.NameTextView.Text = this.product.Name;
             this.BarndTextView = FindViewById<TextView>(Resource.Id.ProductBrandTextView);
@@ -92,6 +94,22 @@ namespace MobileApplication.Src.Activitys
                 var newActivity = new Intent(this, typeof(SignInActivity));
                 StartActivity(newActivity);
             }
+        }
+
+        private static Bitmap GetImageBitmapFromUrl(string url)
+        {
+            Bitmap imageBitmap = null;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(url);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                }
+            }
+
+            return imageBitmap;
         }
     }
 }

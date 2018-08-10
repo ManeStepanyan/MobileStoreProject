@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 using MobileApplication;
@@ -17,7 +19,7 @@ namespace MobileApplication.Src.ListViewAdapters
     public partial class ProductsAdapter : BaseAdapter<Product>
     {
         protected List<Product> Products;
-
+        protected static Dictionary<string, Bitmap> ImageCache = new Dictionary<string, Bitmap>();
         public int Layout;
         public Filter Filter { get; private set; }
 
@@ -69,7 +71,19 @@ namespace MobileApplication.Src.ListViewAdapters
             }
 
             var ImageView = row.FindViewById<ImageView>(Resource.Id.ProductImageView);
-            ImageView.SetImageBitmap(this.Products[position].Image);
+            new Task(() => {
+                var ulr = this.Products[position].Image;
+                if (ImageCache.ContainsKey(ulr))
+                {
+                    ImageView.SetImageBitmap(ImageCache[ulr]);
+                }
+                else
+                {
+                    var image = GetImageBitmapFromUrl(ulr);
+                    ImageView.SetImageBitmap(image);
+                    ImageCache.Add(ulr, image);
+                } 
+                }).Start();
             var NameTextView = row.FindViewById<TextView>(Resource.Id.ProductNameTextView);
             NameTextView.Text = this.Products[position].Name;
 
@@ -86,6 +100,22 @@ namespace MobileApplication.Src.ListViewAdapters
         public override void NotifyDataSetChanged()
         {
             base.NotifyDataSetChanged();
+        }
+
+        private static Bitmap GetImageBitmapFromUrl(string url)
+        {
+            Bitmap imageBitmap = null;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(url);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                }
+            }
+
+            return imageBitmap;
         }
     }
 }
