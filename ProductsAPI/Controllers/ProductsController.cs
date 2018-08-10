@@ -77,7 +77,7 @@ namespace ProductAPI.Controllers
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo = null, [FromBody]int? RAMTo = null, [FromBody]int? yearTo = null, [FromBody]int? batteryTo = null, [FromBody]int? cameraTo = null, [FromBody]int? memoryTo = null)
+        public async Task<IActionResult> Search([FromBody]SearchProduct product)
         {
             List<Product> result = new List<Product>();
             var products = (IEnumerable<Product>)await this.repository.ExecuteOperationAsync("SearchProducts", new[]
@@ -86,18 +86,18 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("brand", product.Brand),
                 new KeyValuePair<string, object>("version", product.Version),
                 new KeyValuePair<string, object>("priceFrom", product.Price),
-                new KeyValuePair<string, object>("priceTo", priceTo),
+                new KeyValuePair<string, object>("priceTo", product.PriceTo),
                 new KeyValuePair<string, object>("ram", product.RAM),
-                new KeyValuePair<string, object>("ramTo", RAMTo),
+                new KeyValuePair<string, object>("ramTo", product.RAMTo),
                 new KeyValuePair<string, object>("year", product.Year),
-                new KeyValuePair<string, object>("yearTo", yearTo),
+                new KeyValuePair<string, object>("yearTo", product.YearTo),
                 new KeyValuePair<string, object>("display", product.Display),
                 new KeyValuePair<string, object>("battery", product.Battery),
-                new KeyValuePair<string, object>("batteryTo",batteryTo),
+                new KeyValuePair<string, object>("batteryTo",product.BatteryTo),
                 new KeyValuePair<string, object>("camera", product.Camera),
-                new KeyValuePair<string, object>("cameraTo", cameraTo),
+                new KeyValuePair<string, object>("cameraTo", product.CameraTo),
                 new KeyValuePair<string, object>("memory", product.Memory),
-                new KeyValuePair<string, object>("memoryTo", memoryTo),
+                new KeyValuePair<string, object>("memoryTo", product.MemoryTo),
                 new KeyValuePair<string, object>("color", product.Color),
             });
             if (products == null)
