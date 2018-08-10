@@ -38,46 +38,45 @@
                             <div class="col-md-4">
                                 <input type="text" name="instance.display" id="new_products_display" class="form-control" placeholder="Product Display size in inch's" required>
                             </div>
-                            <div class="col-md-4">
-                                <input type="text" name="instance.memory" id="new_products_memory" class="form-control" placeholder="Product memory" required>
+                          </div>
+                          <div class="row add_d" style="margin:2% 0;">
+                                <div class="col-md-4">
+                                    <input type="text" name="instance.memory" id="new_products_memory" class="form-control" placeholder="Product memory" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="instance.description" id="new_products_description" class="form-control" placeholder="Product description" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="instance.color" id="new_products_color" class="form-control" placeholder="Product color" required>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <input type="text" name="instance.description" id="new_products_description" class="form-control" placeholder="Product description" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" name="instance.color" id="new_products_color" class="form-control" placeholder="Product color" required>
-                            </div>
-                        </div>
-                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="row add_d" style="margin:2% 0;">
 
-                            <div class="col-md-4">
-                                <input type="text" name="instance.battery" id="new_products_battery" class="form-control" placeholder="Product Battery size in mAh" required>
+                                <div class="col-md-4">
+                                    <input type="text" name="instance.battery" id="new_products_battery" class="form-control" placeholder="Product Battery size in mAh" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="instance.camera" id="new_products_camera" class="form-control" placeholder="Product Camera in mp" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="instance.year" id="new_products_yaer" class="form-control" placeholder="Product Announcmaent yaer" required>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <input type="text" name="instance.camera" id="new_products_camera" class="form-control" placeholder="Product Camera in mp" required>
+                            <div class="row add_d" style="margin:2% 0;">
+                                <div class="col-md-offset-2 col-md-4">
+                                    <input type="number" name="instance.quantity" id="new_products_quantity" class="form-control" placeholder="The quantity of products in your store" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="instance.image" required>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <input type="text" name="instance.year" id="new_products_yaer" class="form-control" placeholder="Product Announcmaent yaer" required>
+                            <div class="row add_d" style="margin:2% 0;">
+                                <div class="col-md-2 col-md-offset-5">
+                                    <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
+                                </div>
                             </div>
+                            <input type="hidden" name="cat_id">
                         </div>
-                        <div class="row add_d" style="margin:2% 0;">
-                            <div class="col-md-4">
-                                <input type="text" name="instance.memory" id="new_products_display" class="form-control" placeholder="Product Display size in inch's" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="number" name="instance.quantity" id="new_products_quantity" class="form-control" placeholder="The quantity of products in your store" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="file" class="form-control" name="instance.image" required>
-                            </div>
-                        </div>
-                        <div class="row add_d" style="margin:2% 0;">
-                            <div class="col-md-2 col-md-offset-5">
-                                <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
-                            </div>
-                        </div>
-                        <input type="hidden" name="cat_id">
-                    </div>
                 </form>
             </div>
         </div>
@@ -88,40 +87,48 @@
                 <table cellpadding="40" class="table prod_table">
                     <thead>
                         <tr class="key-0">
-                            <td>Product Name</td>
-                            <td>Product Brand</td>
-                            <td>Product Version</td>
-                            <td>Product Price</td>
-                            <td>Product RAM</td>
-                            <td>Product Year</td>
-                            <td>Product Display</td>
-                            <td>Product Battery</td>
-                            <td>Product Camera</td>
-                            <td colspan="2">Product Image</td>
-                            <td>Product Quantity</td>
-                            <td>Update Product</td>
+                            <th>Product Name</th>
+                            <th>Product Brand</th>
+                            <th>Product Version</th>
+                            <th>Product Price</th>
+                            <th>Product RAM</th>
+                            <th>Product Year</th>
+                            <th>Product Display</th>
+                            <th>Product Battery</th>
+                            <th>Product Camera</th>
+                            <th colspan="2">Product Image</th>
+                            <th>Product Quantity</th>
+                            <th>Update Product</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var prod in Model)
+                        @if(Model != null)  
                         {
-                            <tr>
-                                <td class="Name" data="@prod.Name">@prod.Name</td>
-                                <td class="Brand" data="@prod.Brand">@prod.Brand</td>
-                                <td class="Version" data="@prod.Version">@prod.Version</td>
-                                <td class="Price" data="@prod.Price">@prod.Price AMD</td>
-                                <td class="RAM" data="@prod.RAM">@prod.RAM GB</td>
-                                <td class="Year" data="@prod.Year">@prod.Year</td>
-                                <td class="Display" data="@prod.Display">@prod.Display inch</td>
-                                <td class="Battery" data="@prod.Battery">@prod.Battery mAh</td>
-                                <td class="Camera" data="@prod.Camera">@prod.Camera mp</td>
-                                <td class="Image" colspan="2" data="@prod.Image"><img src="@prod.Image" class="img-responsive" /></td>
-                                <td class="Quantity" data="@prod.Quantity">@prod.Quantity</td>
-                                <td>
-                                    <input data="@prod.Id" id="prod_id" hidden />
-                                    <input type='button' class=' btn btn-primary delete form-control action update' value='Update product'>
-                                </td>
-                            </tr>
+                            @foreach (var prod in Model)
+                            {
+                                <tr>
+                                    <td class="Name" data="@prod.Name">@prod.Name</td>
+                                    <td class="Brand" data="@prod.Brand">@prod.Brand</td>
+                                    <td class="Version" data="@prod.Version">@prod.Version</td>
+                                    <td class="Price" data="@prod.Price">@prod.Price AMD</td>
+                                    <td class="RAM" data="@prod.RAM">@prod.RAM GB</td>
+                                    <td class="Year" data="@prod.Year">@prod.Year</td>
+                                    <td class="Display" data="@prod.Display">@prod.Display inch</td>
+                                    <td class="Battery" data="@prod.Battery">@prod.Battery mAh</td>
+                                    <td class="Camera" data="@prod.Camera">@prod.Camera mp</td>
+                                    <td class="Image" colspan="2" data="@prod.Image"><img src="@prod.Image" class="img-responsive" /></td>
+                                    <td class="Quantity" data="@prod.Quantity">@prod.Quantity</td>
+                                    <td>
+                                        <input data="@prod.Id" id="prod_id" hidden />
+                                        <input type='button' class=' btn btn-primary delete form-control action update' value='Update product'>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>You have not added products yet</tr>
+
                         }
                     </tbody>
                 </table>

@@ -77,7 +77,7 @@ namespace ProductAPI.Controllers
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search([FromBody]Product product, [FromBody]decimal? priceTo = null, [FromBody]int? RAMTo = null, [FromBody]int? yearTo = null, [FromBody]int? batteryTo = null, [FromBody]int? cameraTo = null, [FromBody]int? memoryTo = null)
+        public async Task<IActionResult> Search([FromBody]Product product,decimal? priceTo = null,int? RAMTo = null,int? yearTo = null, int? batteryTo = null, int? cameraTo = null, int? memoryTo = null)
         {
             List<Product> result = new List<Product>();
             var products = (IEnumerable<Product>)await this.repository.ExecuteOperationAsync("SearchProducts", new[]

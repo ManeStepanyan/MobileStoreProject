@@ -1,16 +1,70 @@
 ﻿@using Newtonsoft.Json;
 @model List<WebClient.Models.ProductModel>
-<div class="row">
-    <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
-        <div id="success" class="alert alert-success" hidden>
-        </div>
-    </div>
-</div>
-<link rel="stylesheet" href="~/css/Hover.css" />
 
+<link rel="stylesheet" href="~/css/Hover.css" />
+<style>
+    .form-control{
+        max-width:85%;
+        margin:2% 0 2% 7.5%;
+    }
+    fieldset .collapse label {
+        display: block;
+        text-align: center;
+    }
+</style>
 <script src="//cdn.jsdelivr.net/jquery.color-animation/1/mainfile"></script>
 <div class="container product-container">
+    <form asp-controller="Product" asp-action="Search" method="post">
+        <fieldset>
+            <legend><a data-toggle="collapse" data-target="#demo" href="#" style="color:white;text-decoration:none;pointer-events:auto;">Search with your credentials</a></legend>
+            <div class="row collapse in" id="demo">
+                <div class="form-inline col-md-2">
+                    <div class="form-group">
+                        <label for="priceFrom">Price</label>
+                        <input type="text" class="form-control" id="priceFrom" name="instance.price" placeholder="From" />
+                        <input type="text" class="form-control" id="priceTo" name="instance.priceTo" placeholder="To">
+                    </div>
+                </div>
+                <div class="form-inline col-md-2">
+                    <div class="form-group">
+                        <label for="memoryFrom">Memory size</label>
+                        <input type="text" class="form-control" id="memoryFrom" name="instance.memory" placeholder="From" />
+                        <input type="text" class="form-control" id="memoryTo" name="instance.memoryTo" placeholder="To">
+                    </div>
+                </div>
+                <div class="form-inline col-md-2">
+                    <div class="form-group">
+                        <label for="ramFrom">RAM size</label>
+                        <input type="text" class="form-control" id="ramFrom" name="instance.ram" placeholder="From" />
+                        <input type="text" class="form-control" id="ramTo" name="instance.ramTo" placeholder="To">
+                    </div>
+                </div>
+                <div class="form-inline col-md-2">
+                    <div class="form-group">
+                        <label for="mpFrom">Camera in megapixels</label>
+                        <input type="text" class="form-control" id="mpFrom" name="instance.camera" placeholder="From" />
+                        <input type="text" class="form-control" id="mpto" name="instance.camerato" placeholder="To">
+                    </div>
+                </div>
+                <div class="form-inline col-md-2">
+                    <div class="form-group">
+                        <label for="batteryFrom">Battery size in mAh</label>
+                        <input type="text" class="form-control" id="batteryFrom" name="instance.battery" placeholder="From" />
+                        <input type="text" class="form-control" id="batteryTo" name="instance.batteryTo" placeholder="To">
+                    </div>
+                </div>
+                <div class="form-inline col-md-2">
+                    <div class="form-group">
+                        <label for="yearFrom">Publish Year</label>
+                        <input type="text" class="form-control" id="yearFrom" name="instance.year" placeholder="From" />
+                        <input type="text" class="form-control" id="yearTo" name="instance.yearTo" placeholder="To">
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
 
+        </fieldset>
+    </form>
     @foreach (var product in Model)
     {
         @if (Model.IndexOf(product) % 3 == 0)
@@ -33,13 +87,69 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="hovereffect">
+                <img class="img-responsive" src="@product.Image" alt="">
+                <div class="overlay">
+                    <h2>@product.Name</h2>
+                    <div class="price">@product.Price AMD</div>
+                    <div class="navbar-fixed-bottom" style="bottom:10px;">
+                        <div class="pull-right actions">
+                            <input type="text" data="@product.Id" hidden id="prod_id" />
+                            <button class="btn btn-success change-color add-to-cart">Add to Shopping Cart</button>
+                            <button class="btn btn-success change-color product-details">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="hovereffect">
+                <img class="img-responsive" src="@product.Image" alt="">
+                <div class="overlay">
+                    <h2>@product.Name</h2>
+                    <div class="price">@product.Price AMD</div>
+                    <div class="navbar-fixed-bottom" style="bottom:10px;">
+                        <div class="pull-right actions">
+                            <input type="text" data="@product.Id" hidden id="prod_id" />
+                            <button class="btn btn-success change-color add-to-cart">Add to Shopping Cart</button>
+                            <button class="btn btn-success change-color product-details">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if (Model.IndexOf(product) % 3 == 1)
         {
         @:</div>
     }
     }
 </div>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog" style="color:black">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
 
+                </button>
+                <h4 class="modal-title">Modal title</h4>
+
+            </div>
+            <div class="modal-body">
+                <p>Please sign in, or sign up if you dont have account yet to add to cart</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--End Modal-->
 <script>
     $(function () {
         $("div.anim").hover(function () {
@@ -98,9 +208,7 @@
                 else
                 {
                     <text>
-                $(".product-container").prepend(`<div class="alert alert-danger">
-                        Please <a href='@Url.Action("LoginView","Account")'>sign in</a> to add products to cart
-                    </div>`)
+                        $('#myModal').modal('toggle');
                     </text>
                 }
                         }
