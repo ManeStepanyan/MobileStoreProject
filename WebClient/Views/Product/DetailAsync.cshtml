@@ -1,22 +1,54 @@
-﻿@model WebClient.Models.ProductModel
+﻿@model KeyValuePair<WebClient.Models.SellerModel,WebClient.Models.ProductModel>
 <div class="container">
-    <div class="col-sm-6 col-md-4">
-        <div class="thumbnail anim">
-            <img src="@Model.Image" alt="..." class="img-responsive">
-            <div class="caption">
-                <h3>@Model.Name</h3>
-                <p class="description">Brand - @Model.Brand</p>
-                <p class="description">Year of anouncment - @Model.Year</p>
-                <p class="description">Ram - @Model.RAM GB</p>
-                <p class="description">Display - @Model.Display</p>
-                <p class="description">Camera - @Model.Camera px</p>
-                <p class="description">Battery - @Model.Battery mAh</p>
-                <div class="clearfix">
-                    <div class="price pull-left">@Model.Price AMD</div>
-                    
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-4">
+            <img src="@Model.Value.Image" alt="..." class="img-responsive">
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Panel</div>
+                <div class="panel-body">
+                    <p>@Model.Value.Description</p>
                 </div>
+
+                <table class="table">
+                    <tr>
+                        <td>
+                            <img src="~/images/ram.png" alt="Ram" />
+                        </td>
+                        <td>
+                            <h2>Ram</h2>
+                        </td>
+                        <td>
+                            @Model.Value.RAM GB
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="~/images/memory.png" alt="Memory" />
+                        </td>
+                        <td>
+                            <h2>Memory</h2>
+                        </td>
+                        <td>
+                            @Model.Value.RAM GB
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <h3>@Model.Value.Name</h3>
+            <p class="description">Brand - @Model.Value.Brand</p>
+            <p class="description">Year of anouncment - @Model.Value.Year</p>
+            <p class="description">Ram - @Model.Value.RAM GB</p>
+            <p class="description">Display - @Model.Value.Display</p>
+            <p class="description">Camera - @Model.Value.Camera px</p>
+            <p class="description">Battery - @Model.Value.Battery mAh</p>
+            <div class="clearfix">
+                <div class="price pull-left">@Model.Value.Price AMD</div>
+
             </div>
         </div>
+    </div>
     </div>
     <div class="pull-right">
         <div class="pull-right">

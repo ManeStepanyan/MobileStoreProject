@@ -54,20 +54,37 @@ namespace WebClient.Controllers
         }
         public async Task<IActionResult> DetailAsync(int id)
         {
-            Uri siteUri = new Uri("http://localhost:5002/api/Products/"+id);
+            Uri getSellerUri = new Uri("http://localhost:5003/api/SellerProduct/seller/"+id);
+            Uri productUri = new Uri("http://localhost:5002/api/Products/" + id);
+            SellerModel seller = new SellerModel();
             ProductModel product = new ProductModel();
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(siteUri))
+                using (HttpResponseMessage response = await client.GetAsync(getSellerUri))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        // ... Read the string.
+                        string res = await content.ReadAsStringAsync();
+                        seller = JsonConvert.DeserializeObject<SellerModel>(res);
+                    }
+                }
+            }
+
+            // ... Use HttpClient.
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.GetAsync(productUri))
                 {
                     using (HttpContent content = response.Content)
                     {
                         // ... Read the string.
                         string result = await content.ReadAsStringAsync();
                         product = JsonConvert.DeserializeObject<ProductModel>(result);
-                        return View(product);
+                        var data = new KeyValuePair<SellerModel, ProductModel>(seller, product);
+                        return View(data);
                     }
                 }
             }
