@@ -77,7 +77,7 @@ namespace ProductAPI.Controllers
 
 
         [HttpPost("search", Name = "Search")]
-        public async Task<IActionResult> Search(SearchProduct product)
+        public async Task<IActionResult> Search([FromBody]SearchProduct product)
         {
             List<Product> result = new List<Product>();
             var products = (IEnumerable<Product>)await this.repository.ExecuteOperationAsync("SearchProducts", new[]
