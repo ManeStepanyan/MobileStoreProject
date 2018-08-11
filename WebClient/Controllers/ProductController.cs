@@ -82,6 +82,7 @@ namespace WebClient.Controllers
                 var content = JsonConvert.SerializeObject(instance);
                 var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                 var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 using (HttpResponseMessage response = await client.PostAsync(
                 siteUri, byteContent))
                 {
