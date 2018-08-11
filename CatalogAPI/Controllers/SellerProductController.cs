@@ -161,7 +161,7 @@ namespace CatalogAPI.Controllers
             var userId = GetCurrentUser();
             using (var productClient = this.InitializeClient("http://localhost:5002/"))
             {
-                var content =(HttpContent) new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json"));
+                var content =(HttpContent) new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
                 var response = await productClient.PostAsync("/api/products/", content); ;
                 var temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
                 Int32.TryParse(temp.ToString(), out productId);
