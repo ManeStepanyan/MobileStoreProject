@@ -1,60 +1,165 @@
 ﻿@model KeyValuePair<WebClient.Models.SellerModel,WebClient.Models.ProductModel>
-<div class="container">
+<style>
+    table td{
+        text-align:center;
+    }
+    table td img{
+        margin:0 auto;
+    }
+</style>
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-lg-4">
-            <img src="@Model.Value.Image" alt="..." class="img-responsive">
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Panel</div>
-                <div class="panel-body">
-                    <p>@Model.Value.Description</p>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <img src="@Model.Value.Image" alt="..." class="img-responsive">
                 </div>
-
-                <table class="table">
-                    <tr>
-                        <td>
-                            <img src="~/images/ram.png" alt="Ram" />
-                        </td>
-                        <td>
-                            <h2>Ram</h2>
-                        </td>
-                        <td>
-                            @Model.Value.RAM GB
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="~/images/memory.png" alt="Memory" />
-                        </td>
-                        <td>
-                            <h2>Memory</h2>
-                        </td>
-                        <td>
-                            @Model.Value.RAM GB
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <h3>@Model.Value.Name</h3>
-            <p class="description">Brand - @Model.Value.Brand</p>
-            <p class="description">Year of anouncment - @Model.Value.Year</p>
-            <p class="description">Ram - @Model.Value.RAM GB</p>
-            <p class="description">Display - @Model.Value.Display</p>
-            <p class="description">Camera - @Model.Value.Camera px</p>
-            <p class="description">Battery - @Model.Value.Battery mAh</p>
-            <div class="clearfix">
-                <div class="price pull-left">@Model.Value.Price AMD</div>
-
+                <div class="col-sm-12 col-md-6 col-lg-6 col-lg-offset-3 col-md-offset-3 action">
+                    <input type="text" data="@Model.Key.Id" hidden id="prod_id" />
+                    <button class="btn btn-primary change-color add-to-cart" style="margin:0 auto;">Add to Shopping Cart</button>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
-    <div class="pull-right">
-        <div class="pull-right">
-            <input type="text" data="@Model.Key.Id" hidden id="prod_id" />
-            <button class="btn btn-primary change-color add-to-cart">Add to Shopping Cart</button>
-            <button class="btn btn-primary change-color product-details">Details</button>
+        <div class="col-md-4 col-lg-4">
+            <div class="panel panel-primary" style="color:black">
+                <div class="panel-heading">@Model.Value.Description ( @Model.Value.Year year)</div>
+                <div class="panel-body">
+                    <table class="table-bordered table-responsive">
+                        <colgroup>
+                            <col class="col-md-4">
+                            <col class="col-md-4">
+                            <col class="col-md-4">
+                        </colgroup>
+                        <tr>
+                            <td>
+                                <img src="~/images/ram.png" alt="Ram" class="img-responsive" />
+                            </td>
+                            <td>
+                                <h3>Ram</h3>
+                            </td>
+                            <td>
+                                <h3>@Model.Value.RAM GB</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="~/images/memory.png" alt="Memory" class="img-responsive" />
+                            </td>
+                            <td>
+                                <h3>Memory</h3>
+                            </td>
+                            <td>
+                                <h3>@Model.Value.Memory GB</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="~/images/display.png" alt="Display" class="img-responsive" />
+                            </td>
+                            <td>
+                                <h3>Display</h3>
+                            </td>
+                            <td>
+                                <h3>@Model.Value.Display Inches</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="~/images/battery.png" alt="Battery" class="img-responsive" />
+                            </td>
+                            <td>
+                                <h3>Battery</h3>
+                            </td>
+                            <td>
+                                <h3>@Model.Value.Battery mAh</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="~/images/camera.png" alt="Camera" class="img-responsive" />
+                            </td>
+                            <td>
+                                <h3>Camera</h3>
+                            </td>
+                            <td>
+                                <h3>@Model.Value.Camera mp</h3>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-footer"><span class="label label-success" style="font-size:15px;">@Model.Value.Price AMD</span></div>
+            </div>
+
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3">
+            <div class="panel panel-success" style="color:black">
+                <div class="panel-heading">@Model.Key.Name</div>
+                <div class="panel-body">
+                    <p>
+                        Address - @Model.Key.Address <br/>
+                        Cell Phone - (@Model.Key.CellPhone) <br/>
+                        Rating - 
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog" style="color:black">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+
+                </button>
+                <h4 class="modal-title">You can't use shopping cart as long as you are not signed in</h4>
+
+            </div>
+            <div class="modal-body">
+                <p>Please  <a href="/Account/LoginView">sign in</a>, or <a href="/Account/SignUp"> sign up</a> if you dont have account yet to add to cart</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+         $("div.action").on('click', 'button', function () {
+            var that = $(this)
+            if (that.hasClass('add-to-cart')) {
+                @if (Context.Request.Cookies["Is logged"] == "1")
+                {
+                    /*var quantity = 0;
+                    Int32.TryParse(Context.Request.Cookies["cart_quantity"],out quantity);
+                    quantity += 1;
+                    Context.Response.Cookies.Append("cart_quantity", quantity.ToString());*/
+                    <text>
+                        var id = $('button.add-to-cart').closest("div").find("input#prod_id").attr("data");
+                        $.ajax
+                            ({
+                        type: "POST",
+                                dataType: "Json",
+                                url: '@Url.Action("AddAsync", "ShoppingCart")',
+                                data: { id : id },
+                                async: false,
+                                success: function (data) {
+                            },
+                                error: function () {
+                            ErrorMessage("", '');
+                            }
+                    })
+                   //$("body").find(".navbar .navbar-collapse .navbar-nav li a .badge").html(quantity);
+
+                   </text>
+                }
+                else
+                {
+                    <text>
+                        $('#myModal').modal('toggle');
+                    </text>
+                }
+                        }
+        })
+    </script>
