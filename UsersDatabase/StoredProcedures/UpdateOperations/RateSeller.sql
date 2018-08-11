@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[RateSeller]
 	@Id int, 
-	@Rate decimal(5,2)
+	@Rate float
 AS
 Declare @oldRate decimal(5,2)
 	SELECT @oldRate= Rating

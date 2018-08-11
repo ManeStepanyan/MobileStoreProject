@@ -12,6 +12,6 @@ namespace WebClient.Models
         public string Address { get; set; }
         public string CellPhone { get; set; }
         public string Email { get; set; }
-        public decimal Rating { get; set; }
+        public double Rating { get; set; }
     }
 }

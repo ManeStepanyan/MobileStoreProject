@@ -67,7 +67,7 @@ namespace WebClient.Controllers
                     using (HttpContent content = response.Content)
                     {
                         // ... Read the string.
-                        string res = await content.ReadAsStringAsync();
+                        var res = await content.ReadAsAsync<string>();
                         seller = JsonConvert.DeserializeObject<SellerModel>(res);
                     }
                 }

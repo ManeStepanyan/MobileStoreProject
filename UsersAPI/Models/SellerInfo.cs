@@ -15,6 +15,6 @@ namespace UsersAPI.Models
         public string Login { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public decimal? Rating { get; set; }
+        public double? Rating { get; set; }
     }
 }
