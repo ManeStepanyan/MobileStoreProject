@@ -1,5 +1,4 @@
-﻿
-#define APISIM
+﻿#define APISIM
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -7,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Android.Graphics;
+using IdentityModel.Client;
 using MobileApplication.Src.Models;
 using Newtonsoft.Json;
 
@@ -23,6 +23,7 @@ namespace MobileApplication.Src.API
         /// </summary>
         private static Dictionary<int, Seller> SellerDataBase;
         public static UserModel User { get; private set; }
+        public static string SessionToken { get; private set; } = "DSFSDFS";
 
         private static readonly string ulr = string.Format("http://134.86.19.105:5003/api/SellerProduct/products/", 8);
 
@@ -87,6 +88,7 @@ namespace MobileApplication.Src.API
 
         public static bool SessionActivity() => (User != null) ? true : false;
 
+#if (ԷAPISIM)
         public static bool SigeIn(string Login, string password)
         {
             if (!UserDataBase.ContainsKey(Login) || UserDataBase[Login].Password != password)
@@ -97,7 +99,42 @@ namespace MobileApplication.Src.API
             User = UserDataBase[Login];
             return true;
         }
+#else
+        public static bool SigeIn(string login, string password)
+        {
+            
+            var client = new DiscoveryClient("http://134.86.19.105:5000");
+            client.Policy.RequireHttps = false;
 
+            var disco = client.GetAsync().Result;
+
+            
+            if (disco.IsError)
+            {
+                Console.WriteLine(disco.Error);
+                return false;
+            }
+
+            var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
+            var tokenResponse = tokenClient.RequestResourceOwnerPasswordAsync(login, password).Result; //
+
+
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return false;
+            }
+
+            var userInfoClient = new UserInfoClient(disco.UserInfoEndpoint);
+            var identityClaims = userInfoClient.GetAsync(tokenResponse.AccessToken).Result;
+            SessionToken = identityClaims.Json.ToString();
+            var claims = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(SessionToken);
+            var res = claims["user_id"] as Newtonsoft.Json.Linq.JArray;
+            var UserId = int.Parse(res[0].ToString());
+            //User = GetSellerById(UserId);
+            return true;
+        }
+#endif
         public static bool RegisterCustomer(string name, string surname, string login, string email, string password)
         {
             if (UserDataBase.ContainsKey(login))
@@ -129,7 +166,7 @@ namespace MobileApplication.Src.API
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = client.GetAsync($"{string.Format("http://134.86.19.105:5001/api/Sellers/",id , 8)}").Result;
+            var response = client.GetAsync($"{string.Format("http://134.86.19.105:5001/api/Sellers/", id, 8)}").Result;
             var res = response.Content.ReadAsStringAsync().Result;
             var seller = JsonConvert.DeserializeObject<Seller>(res);
 

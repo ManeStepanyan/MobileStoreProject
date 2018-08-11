@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace MobileApplication.Src.API
 {
@@ -32,6 +36,18 @@ namespace MobileApplication.Src.API
         public static IEnumerable<int> GetProductsBySellerId(int sellerId)
         {
             return CatalogDataBase[sellerId];
+        }
+
+
+        public static async Task<int> GetCatalogIdByProductId(int id)
+        {
+            var client = new HttpClient();
+            string ulr = string.Format("http://134.86.19.105:5003/api/sellerproduct/", id);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = client.GetAsync(ulr).Result;
+            var res = response.Content.ReadAsStringAsync().Result;
+            var catalogId = JsonConvert.DeserializeObject<int>(res);
+            return catalogId;
         }
     }
 }

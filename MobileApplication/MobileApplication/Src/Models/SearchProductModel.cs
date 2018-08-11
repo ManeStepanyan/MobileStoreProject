@@ -2,18 +2,22 @@
 {
     public class SearchProductModel
     {
+        public string Name { get; set; }
         public string Brand { get; set; }
-        public double? MinPrice { get; set; }
-        public double? MaxPrice { get; set; }
-        public int? MinRAM { get; set; }
-        public int? MaxRAM { get; set; }
-        public int? MinYear { get; set; }
-        public int? MaxYear { get; set; }
-        public int? MinBattery { get; set; }
-        public int? MaxBattery { get; set; }
-        public int? MinCamera { get; set; }
-        public int? MaxCamera { get; set; }
-        public int? MinMemory { get; set; }
-        public int? MaxMemory { get; set; }
+        public string Version { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? PriceTo { get; set; }
+        public int? RAM { get; set; }
+        public int? RAMTo { get; set; }
+        public int? Year { get; set; }
+        public int? YearTo { get; set; }
+        public double? Display { get; set; }
+        public int? Battery { get; set; }
+        public int? BatteryTo { get; set; }
+        public int? Camera { get; set; }
+        public int? CameraTo { get; set; }
+        public double? Memory { get; set; }
+        public double? MemoryTo { get; set; }
+        public string Color { get; set; }
     }
 }

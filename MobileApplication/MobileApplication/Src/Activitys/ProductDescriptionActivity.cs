@@ -101,7 +101,7 @@ namespace MobileApplication.Src.Activitys
         {
             if (UserAPIConection.SessionActivity())
             {
-                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id)) ? "Add to cart." : "Has already.";
+                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
                 Toast.MakeText(this, messige, ToastLength.Long).Show();
             }
             else

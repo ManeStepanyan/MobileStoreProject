@@ -71,21 +71,21 @@ namespace MobileApplication.Src.Dialogs
             var searchModel = new SearchProductModel()
             {
                 Brand = this.BrandAutoCompleteTextView.Text,
-                MinPrice = (this.PriceMinEditText.Text != "") ? (double?)double.Parse(this.PriceMinEditText.Text) : null,
-                MaxPrice = (this.PriceMaxEditText.Text != "") ? (double?)double.Parse(this.PriceMaxEditText.Text) : null,
-                MinRAM = (this.RAMMinEditText.Text != "") ? (int?)int.Parse(this.RAMMinEditText.Text) : null,
-                MaxRAM = (this.RAMMaxEditText.Text != "") ? (int?)int.Parse(this.RAMMaxEditText.Text) : null,
-                MinYear = (this.YearMinEditText.Text != "") ? (int?)int.Parse(this.YearMinEditText.Text) : null,
-                MaxYear = (this.YearMaxEditText.Text != "") ? (int?)int.Parse(this.YearMaxEditText.Text) : null,
-                MinBattery = (this.BatteryMinEditText.Text != "") ? (int?)int.Parse(this.BatteryMinEditText.Text) : null,
-                MaxBattery = (this.BatteryMaxEditText.Text != "") ? (int?)int.Parse(this.BatteryMaxEditText.Text) : null,
-                MinCamera = (this.CameraMinEditText.Text != "") ? (int?)int.Parse(this.CameraMinEditText.Text) : null,
-                MaxCamera = (this.CameraMaxEditText.Text != "") ? (int?)int.Parse(this.CameraMaxEditText.Text) : null,
-                MinMemory = (this.MemoryMinEditText.Text != "") ? (int?)int.Parse(this.MemoryMinEditText.Text) : null,
-                MaxMemory = (this.MemoryMaxEditText.Text != "") ? (int?)int.Parse(this.MemoryMaxEditText.Text) : null,
+                Price = (this.PriceMinEditText.Text != "") ? (decimal?)decimal.Parse(this.PriceMinEditText.Text) : null,
+                PriceTo = (this.PriceMaxEditText.Text != "") ? (decimal?)decimal.Parse(this.PriceMaxEditText.Text) : null,
+                RAM = (this.RAMMinEditText.Text != "") ? (int?)int.Parse(this.RAMMinEditText.Text) : null,
+                RAMTo = (this.RAMMaxEditText.Text != "") ? (int?)int.Parse(this.RAMMaxEditText.Text) : null,
+                Year = (this.YearMinEditText.Text != "") ? (int?)int.Parse(this.YearMinEditText.Text) : null,
+                YearTo = (this.YearMaxEditText.Text != "") ? (int?)int.Parse(this.YearMaxEditText.Text) : null,
+                Battery = (this.BatteryMinEditText.Text != "") ? (int?)int.Parse(this.BatteryMinEditText.Text) : null,
+                BatteryTo = (this.BatteryMaxEditText.Text != "") ? (int?)int.Parse(this.BatteryMaxEditText.Text) : null,
+                Camera = (this.CameraMinEditText.Text != "") ? (int?)int.Parse(this.CameraMinEditText.Text) : null,
+                CameraTo = (this.CameraMaxEditText.Text != "") ? (int?)int.Parse(this.CameraMaxEditText.Text) : null,
+                Memory = (this.MemoryMinEditText.Text != "") ? (int?)int.Parse(this.MemoryMinEditText.Text) : null,
+                MemoryTo = (this.MemoryMaxEditText.Text != "") ? (int?)int.Parse(this.MemoryMaxEditText.Text) : null,
                 
             };
-            var resource = ProductAPIConection.SearchProduct(searchModel);
+            var resource = ProductAPIConection.SearchProduct(searchModel).Result;
             this.GridView.Adapter = new ProductsAdapter(this.context, resource, Resource.Layout.ProductAdapterItem);
             this.Dismiss();
         }
