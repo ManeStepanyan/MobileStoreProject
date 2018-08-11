@@ -2,57 +2,57 @@
 <form asp-controller="Shop" asp-action="Update" method="post">
     <div style="margin:5% 0;">
         <div class="row add_d" style="margin:2% 0;">
-            <div class="col-md-4">
-                <input type="text" name="instance.id" id="products_id" class="form-control" hidden placeholder="@Model.Id" required>
-                <input type="text" name="instance.name" id="products_name" class="form-control" placeholder="@Model.Name">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.id" id="products_id" value="@Model.Id" hidden >
+                <input type="text" name="instance.name" id="products_name" class="form-control" value="@Model.Name">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.brand" id="products_brand" class="form-control" placeholder="@Model.Brand">
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.version" id="products_version" class="form-control" placeholder="@Model.Version">
-            </div>
-        </div>
-        <div class="row add_d" style="margin:2% 0;">
-            <div class="col-md-4">
-                <input type="text" name="instance.price" id="products_price" class="form-control" placeholder="@Model.Price AMD">
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.ram" id="products_ram" class="form-control" placeholder="@Model.RAM GB">
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.display" id="products_display" class="form-control" placeholder="@Model.Display inches">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.brand" id="products_brand" class="form-control" value="@Model.Brand">
+            </div> 
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.version" id="products_version" class="form-control" value="@Model.Version">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
-            <div class="col-md-4">
-                <input type="text" name="instance.memory" id="products_mmeory" class="form-control" placeholder="@Model.Memory GB">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.price" id="products_price" class="form-control" value="@Model.Price AMD">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.description" id="products_description" class="form-control" placeholder="@Model.Description ">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.ram" id="products_ram" class="form-control" value="@Model.RAM GB">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.color" id="products_color" class="form-control" placeholder="@Model.Color ">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.display" id="products_display" class="form-control" value="@Model.Display inches">
+            </div>
+        </div>
+        <div class="row add_d" style="margin:2% 0;">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.memory" id="products_mmeory" class="form-control" value="@Model.Memory GB">
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.description" id="products_description" class="form-control" value="@Model.Description ">
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.color" id="products_color" class="form-control" value="@Model.Color ">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
 
-            <div class="col-md-4">
-                <input type="text" name="instance.battery" id="products_battery" class="form-control" placeholder="@Model.Battery mAh">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.battery" id="products_battery" class="form-control" value="@Model.Battery mAh">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.camera" id="products_camera" class="form-control" placeholder="@Model.Camera mp">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.camera" id="products_camera" class="form-control" value="@Model.Camera mp">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="instance.year" id="products_yaer" class="form-control" placeholder="@Model.Year">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" name="instance.year" id="products_yaer" class="form-control" value="@Model.Year">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
-            <div class="col-md-4">
-                <input type="number" name="instance.quantity" id="products_quantity" class="form-control" placeholder="@Model.Quantity">
+            <div class="col-lg-4 col-lg-offset-2  col-md-4 col-md-offset-2 col-sm-6 col-xs-12">
+                <input type="number" name="instance.quantity" id="products_quantity" class="form-control" value="@Model.Quantity">
             </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" name="instance.image">
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <input type="text" class="form-control" name="instance.image" value="@Model.Image">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
