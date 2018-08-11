@@ -38,45 +38,45 @@
                             <div class="col-md-4">
                                 <input type="text" name="instance.display" id="new_products_display" class="form-control" placeholder="Product Display size in inch's" required>
                             </div>
-                          </div>
-                          <div class="row add_d" style="margin:2% 0;">
-                                <div class="col-md-4">
-                                    <input type="text" name="instance.memory" id="new_products_memory" class="form-control" placeholder="Product memory" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" name="instance.description" id="new_products_description" class="form-control" placeholder="Product description" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" name="instance.color" id="new_products_color" class="form-control" placeholder="Product color" required>
-                                </div>
-                            </div>
-                            <div class="row add_d" style="margin:2% 0;">
-
-                                <div class="col-md-4">
-                                    <input type="text" name="instance.battery" id="new_products_battery" class="form-control" placeholder="Product Battery size in mAh" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" name="instance.camera" id="new_products_camera" class="form-control" placeholder="Product Camera in mp" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" name="instance.year" id="new_products_yaer" class="form-control" placeholder="Product Announcmaent yaer" required>
-                                </div>
-                            </div>
-                            <div class="row add_d" style="margin:2% 0;">
-                                <div class="col-md-offset-2 col-md-4">
-                                    <input type="number" name="instance.quantity" id="new_products_quantity" class="form-control" placeholder="The quantity of products in your store" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" name="instance.image" required>
-                                </div>
-                            </div>
-                            <div class="row add_d" style="margin:2% 0;">
-                                <div class="col-md-2 col-md-offset-5">
-                                    <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
-                                </div>
-                            </div>
-                            <input type="hidden" name="cat_id">
                         </div>
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-4">
+                                <input type="text" name="instance.memory" id="new_products_memory" class="form-control" placeholder="Product memory" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.description" id="new_products_description" class="form-control" placeholder="Product description" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.color" id="new_products_color" class="form-control" placeholder="Product color" required>
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+
+                            <div class="col-md-4">
+                                <input type="text" name="instance.battery" id="new_products_battery" class="form-control" placeholder="Product Battery size in mAh" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.camera" id="new_products_camera" class="form-control" placeholder="Product Camera in mp" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="instance.year" id="new_products_yaer" class="form-control" placeholder="Product Announcmaent yaer" required>
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-offset-2 col-md-4">
+                                <input type="number" name="instance.quantity" id="new_products_quantity" class="form-control" placeholder="The quantity of products in your store" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name="instance.image" required>
+                            </div>
+                        </div>
+                        <div class="row add_d" style="margin:2% 0;">
+                            <div class="col-md-2 col-md-offset-5">
+                                <input type="submit" value="add" name="action" class="form-control btn btn-primary add action">
+                            </div>
+                        </div>
+                        <input type="hidden" name="cat_id">
+                    </div>
                 </form>
             </div>
         </div>
@@ -102,7 +102,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(Model != null)  
+                        @if (Model != null)
                         {
                             @foreach (var prod in Model)
                             {
