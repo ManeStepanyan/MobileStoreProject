@@ -40,7 +40,7 @@ namespace WebClient.Controllers
                     using (HttpContent content = response.Content)
                     {
                         // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
+                        var result = await content.ReadAsStringAsync();
                         var cont = JsonConvert.SerializeObject(result);
                         var buffer = System.Text.Encoding.UTF8.GetBytes(result);
                         var byteContent = new ByteArrayContent(buffer);
@@ -50,14 +50,6 @@ namespace WebClient.Controllers
                         using (
                             HttpResponseMessage res = await client.PostAsync(UriToAdd, byteContent))
                         {
-                            /*   using (HttpContent content1 = res.Content)
-                               {
-                                   string res1 = await content1.ReadAsStringAsync();
-                                   var a = JsonConvert.DeserializeObject(res1);
-                                   if(a.Equals(200))
-                                       return true;
-                                   else return false;
-                               } */
                             if (res.IsSuccessStatusCode) return true;
                             return false;
                         }
@@ -68,7 +60,7 @@ namespace WebClient.Controllers
 
         public async Task<IActionResult> GetAsync()
         {
-            Uri Uri = new Uri("http://localhost:5005/api/ShopCart");
+            var Uri = new Uri("http://localhost:5005/api/ShopCart");
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
@@ -78,7 +70,7 @@ namespace WebClient.Controllers
                     using (HttpContent content = response.Content)
                     {
                         // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
+                        var result = await content.ReadAsStringAsync();
                         var products = JsonConvert.DeserializeObject<List<KeyValuePair<ProductModel,int>>>(result);
                         return View(products);
                     }

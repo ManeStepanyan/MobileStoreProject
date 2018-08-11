@@ -17,6 +17,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
 {
+    /// <summary>
+    /// defines relationship between seller and product
+    /// </summary>
     [Produces("application/json")]
     [Route("api/sellerproduct")]
     public class SellerProductController : Controller
@@ -24,6 +27,11 @@ namespace CatalogAPI.Controllers
         private IHttpContextAccessor _httpContextAccessor;
         private readonly Repo<SellerProduct> repo;
 
+        /// <summary>
+        /// Initializing new repository to access db and http context accessor
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="httpContextAccessor"></param>
         public SellerProductController(Repo<SellerProduct> repo, IHttpContextAccessor httpContextAccessor)
         {
             this._httpContextAccessor = httpContextAccessor;
@@ -31,6 +39,10 @@ namespace CatalogAPI.Controllers
         }
 
         // GET: api/SellerProduct
+        /// <summary>
+        /// Getting all correspondence between Sellers And Products
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -42,11 +54,16 @@ namespace CatalogAPI.Controllers
         }
 
         // GET: api/SellerProduct/5
+        /// <summary>
+        /// Getting all products which were added by specified seller
+        /// </summary>
+        /// <param name="id"> seller id </param>
+        /// <returns></returns>
         [HttpGet("products/{id}", Name = "GetProductsBySellerId")]
         public async Task<IActionResult> GetProductsBySellerId(int id)
         {
             int selid = 0;
-            List<Product> list = new List<Product>();
+            var list = new List<Product>();
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
                 HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + id);
@@ -74,12 +91,16 @@ namespace CatalogAPI.Controllers
 
             return Ok(list);
         }
+        /// <summary>
+        /// Getting product by given catalog id
+        /// </summary>
+        /// <param name="id">catalog id </param>
+        /// <returns></returns>
         [HttpGet("catalog/{id}", Name = "GetProductByCatalogId")]
         public async Task<IActionResult> GetProductsByCatalogId(int id)
         {
-            Product product = new Product();
-            int productId;
-            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetProductByCatalogId", new[] { new KeyValuePair<string, object>("catalogId", id) })).ToString(), out productId);
+            var product = new Product();
+            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetProductByCatalogId", new[] { new KeyValuePair<string, object>("catalogId", id) })).ToString(), out int productId);
             if (productId == 0)
                 return NotFound();
 
@@ -140,8 +161,8 @@ namespace CatalogAPI.Controllers
             var userId = GetCurrentUser();
             using (var productClient = this.InitializeClient("http://localhost:5002/"))
             {
-                HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await productClient.PostAsync("/api/products/", content); ;
+                var content =(HttpContent) new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json"));
+                var response = await productClient.PostAsync("/api/products/", content); ;
                 var temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
                 Int32.TryParse(temp.ToString(), out productId);
                 if (productId == 0)
@@ -149,8 +170,8 @@ namespace CatalogAPI.Controllers
 
                 using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
                 {
-                    HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                     temp = JsonConvert.DeserializeObject<int>(await resp.Content.ReadAsStringAsync());
+                    var resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
+                    temp = JsonConvert.DeserializeObject<int>(await resp.Content.ReadAsStringAsync());
                     Int32.TryParse(temp.ToString(), out sellerId);
                     if (sellerId == 0) return NotFound();
                 }
@@ -161,37 +182,11 @@ namespace CatalogAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Policy = "Seller")]
-        public async Task<IActionResult> Put(int id, [FromBody]JToken jsonbody)
-        {
-            var userId = GetCurrentUser();
-            int sellerId = 0, currentSellerId = 0;
-            Int32.TryParse((await this.repo.ExecuteOperationAsync("GetSellerByProductId", new[] { new KeyValuePair<string, object>("id", id) })).ToString(), out sellerId);
-            if (sellerId == 0)
-                return NotFound();
-
-            using (var sellerClient = this.InitializeClient("http://localhost:5001/"))
-            {
-                HttpResponseMessage resp = await sellerClient.GetAsync("/api/sellers/users/" + userId);
-                var temp = JsonConvert.DeserializeObject<int>(await resp.Content.ReadAsStringAsync());
-                Int32.TryParse(temp.ToString(), out currentSellerId);
-                if (currentSellerId == 0) return NotFound();
-            }
-            if (currentSellerId == sellerId)
-            {
-                using (var productClient = this.InitializeClient("http://localhost:5002/"))
-                {
-                    HttpContent content = new StringContent(jsonbody.ToString(), Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await productClient.PutAsync("/api/products/", content);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return new StatusCodeResult(200);
-                    }
-                }
-            }
-            return NotFound();
-        }
+       /// <summary>
+       /// Deleting product
+       /// </summary>
+       /// <param name="id"> product id </param>
+       /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         [Authorize(Policy = "Seller")]
@@ -204,7 +199,7 @@ namespace CatalogAPI.Controllers
             var userId = GetCurrentUser();
             using (var sellerClient = InitializeClient("http://localhost:5001/"))
             {
-                HttpResponseMessage response = await sellerClient.GetAsync("/api/sellers/users/" + userId);
+                var response = await sellerClient.GetAsync("/api/sellers/users/" + userId);
                 var temp = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
                 Int32.TryParse(temp.ToString(), out currentSellerId);
                 if (currentSellerId == 0) return NotFound();
@@ -225,6 +220,11 @@ namespace CatalogAPI.Controllers
             }
             return NotFound();
         }
+        /// <summary>
+        /// Initializing http client
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
 
         public HttpClient InitializeClient(string uri)
         {

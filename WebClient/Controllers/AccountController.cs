@@ -21,8 +21,7 @@ namespace WebClient.Controllers
 
     public class AccountController : Controller
     {
-        private AccountService _accountService;
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public AccountController(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -39,8 +38,7 @@ namespace WebClient.Controllers
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             if (disco.IsError)
             {
-                Console.WriteLine(disco.Error);
-               // return Ok();
+                return NotFound();
             }
             var tokenClient = new TokenClient(disco.TokenEndpoint, "SuperAdmin", "secret");
             var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(login, password); //
@@ -48,8 +46,7 @@ namespace WebClient.Controllers
             
             if (tokenResponse.IsError)
             {
-                Console.WriteLine(tokenResponse.Error);
-              //  return Ok();
+                return NotFound();
             }
 
             var userInfoClient = new UserInfoClient(disco.UserInfoEndpoint);

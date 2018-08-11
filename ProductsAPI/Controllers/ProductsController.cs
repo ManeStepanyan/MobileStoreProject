@@ -13,7 +13,9 @@ namespace ProductAPI.Controllers
     [Route("api/products")]
     public class ProductsController : Controller
     {
-
+        /// <summary>
+        /// Repository to manage method calls to db
+        /// </summary>
         private readonly Repo<Product> repository;
 
 
@@ -23,7 +25,10 @@ namespace ProductAPI.Controllers
 
         }
 
-
+        /// <summary>
+        /// Getting all products
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Products
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -36,7 +41,11 @@ namespace ProductAPI.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Getting products by id
+        /// </summary>
+        /// <param name="id">product id</param>
+        /// <returns></returns>
 
         // GET: api/Products/5
         [HttpGet("{Id}", Name = "GetProductById")]
@@ -50,17 +59,6 @@ namespace ProductAPI.Controllers
             return Ok(res);
         }
 
-        [HttpGet("name/{Name}", Name = "GetProductByName")]
-        public async Task<IActionResult> Get(string name)
-        {
-            var res = await this.repository.ExecuteOperationAsync("GetProductByName", new[] { new KeyValuePair<string, object>("name", name) });
-
-            if (res == null)
-            {
-                return NotFound();
-            }
-            return Ok(res);
-        }
 
         // GET: api/Products/5
         [HttpGet("search/{listOfparams}", Name = "GetListOfProducts")]
@@ -75,11 +73,16 @@ namespace ProductAPI.Controllers
             return Ok(products);
         }
 
+        /// <summary>
+        /// Searching products by specified characteristics
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
 
         [HttpPost("search", Name = "Search")]
         public async Task<IActionResult> Search([FromBody]SearchProduct product)
         {
-            List<Product> result = new List<Product>();
+            var result = new List<Product>();
             var products = (IEnumerable<Product>)await this.repository.ExecuteOperationAsync("SearchProducts", new[]
             {
                 new KeyValuePair<string, object>("name", product.Name),
@@ -148,7 +151,12 @@ namespace ProductAPI.Controllers
             return Ok(temp);
         }
 
-
+        /// <summary>
+        /// Updating product
+        /// </summary>
+        /// <param name="id">product id</param>
+        /// <param name="product">characteristics to be updated</param>
+        /// <returns></returns>
         // PUT: api/Products/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Product product)
@@ -175,6 +183,12 @@ namespace ProductAPI.Controllers
             return Ok(await this.repository.ExecuteOperationAsync("GetProduct", new[]
                                   { new KeyValuePair<string, object>("id", id) }));
         }
+        /// <summary>
+        /// Updating product quantity after the order
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="orderedQuantity"></param>
+        /// <returns></returns>
         [HttpPut("quantity/{id}")]
         public async Task<IActionResult> Put(int id, int orderedQuantity)
         {
@@ -199,6 +213,11 @@ namespace ProductAPI.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Delete product
+        /// </summary>
+        /// <param name="id">id of product to be deleted </param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

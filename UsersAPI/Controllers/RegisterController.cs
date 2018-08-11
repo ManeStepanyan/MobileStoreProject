@@ -34,32 +34,35 @@ namespace UsersAPI.Controllers
         }
 
 
-        // GET: api/Register/5
-        /*   [HttpGet("{id}", Name = "GetById")]
-           public string Get(int id)
-           {
-               return "value";
-           } */
 
         // POST: api/Register
+        /// <summary>
+        /// Register
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]UserInformation user)
-        { int ex1 = 0, ex2 = 0;
+        {
             user.ActivationCode = Guid.NewGuid().ToString();
-         Int32.TryParse(this.repo.ExecuteOperation("ExistsLogin", new[] { new KeyValuePair<string, object>("login", user.Login) }).ToString(),out ex1);
+            Int32.TryParse(this.repo.ExecuteOperation("ExistsLogin", new[] { new KeyValuePair<string, object>("login", user.Login) }).ToString(),out int ex1);
             if (ex1!=2)
                 return new StatusCodeResult(412);
 
-            Int32.TryParse(this.repo.ExecuteOperation("ExistsEmail", new[] { new KeyValuePair<string, object>("email", user.Email) }).ToString(), out ex2);
+            Int32.TryParse(this.repo.ExecuteOperation("ExistsEmail", new[] { new KeyValuePair<string, object>("email", user.Email) }).ToString(), out int ex2);
             if (ex2!=2)
                 return new StatusCodeResult(416);
             await this.repo.ExecuteOperationAsync("CreateUser", new[] { new KeyValuePair<string, object>("name", user.Name), new KeyValuePair<string, object>("surname", user.Surname ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("email", (this.IsValidEmail(user.Email)) ? user.Email : throw new Exception("Invalid Email")), new KeyValuePair<string, object>("address", user.Address ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("cellphone", user.CellPhone ?? DBNull.Value.ToString()), new KeyValuePair<string, object>("login", user.Login), new KeyValuePair<string, object>("password", MyCryptography.Encrypt(user.Password)), new KeyValuePair<string, object>("Role_Id", user.RoleId), new KeyValuePair<string, object>("activationCode", user.ActivationCode) });
             this.SendVerificationLinkEmail(user.Email, user.ActivationCode);
             return Ok("Registration has been done,And Account activation link has been sent your email:" + user.Email);
-            //     return new StatusCodeResult(200);
 
 
         }
+        /// <summary>
+        /// Sending verification letter
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <param name="ActivationCode"></param>
         public void SendVerificationLinkEmail(string Email, string ActivationCode)
         {
             // creating verification url
@@ -76,10 +79,10 @@ namespace UsersAPI.Controllers
             var fromEmailPassword = "heraxos11";
 
             // messege subject
-            string subject = "Confirmation of email address";
+            var subject = "Confirmation of email address";
 
             // messege body
-            string body = "<br/><br/> We are excited to tell you that your account is" +
+            var body = "<br/><br/> We are excited to tell you that your account is" +
       " successfully created. Please click on the below link to verify your account" +
       " <br/><br/><a href='" + link + "'>" + link + "</a> ";
 

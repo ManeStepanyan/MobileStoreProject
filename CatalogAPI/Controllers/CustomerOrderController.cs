@@ -17,6 +17,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CatalogAPI.Controllers
 {
+    /// <summary>
+    /// Defining relationship betweeb customer and order
+    /// </summary>
     [Produces("application/json")]
     [Route("api/customerorder")]
     public class CustomerOrderController : Controller

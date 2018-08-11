@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ProductsAPI.Models
 {
+    /// <summary>
+    /// Product
+    /// </summary>
     public class Product
     {
         public int Id { get; set; }

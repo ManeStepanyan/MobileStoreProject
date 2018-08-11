@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace CatalogAPI.Models
 {
+    /// <summary>
+    /// Order
+    /// </summary>
     public class Order
     {
         public int Id { get; set; }

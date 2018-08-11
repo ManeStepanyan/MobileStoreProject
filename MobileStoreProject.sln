@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersAPI", "UsersAPI\UsersA
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "UsersDatabase", "UsersDatabase\UsersDatabase.sqlproj", "{316D747B-42F4-4077-9C6A-6B2E766B4D7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{C1EADE59-B2EC-4CF8-96C3-CA7E41396346}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsAPI", "ProductsAPI\ProductsAPI.csproj", "{B3399B3B-EE45-48C6-B32C-9A2A0B263C3B}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CatalogDatabase", "CatalogDatabase\CatalogDatabase.sqlproj", "{33E2FDBA-AD64-4C46-BD22-A7A3D67747F8}"
@@ -59,10 +57,6 @@ Global
 		{316D747B-42F4-4077-9C6A-6B2E766B4D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{316D747B-42F4-4077-9C6A-6B2E766B4D7B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{316D747B-42F4-4077-9C6A-6B2E766B4D7B}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{C1EADE59-B2EC-4CF8-96C3-CA7E41396346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1EADE59-B2EC-4CF8-96C3-CA7E41396346}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1EADE59-B2EC-4CF8-96C3-CA7E41396346}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1EADE59-B2EC-4CF8-96C3-CA7E41396346}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3399B3B-EE45-48C6-B32C-9A2A0B263C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3399B3B-EE45-48C6-B32C-9A2A0B263C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3399B3B-EE45-48C6-B32C-9A2A0B263C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU

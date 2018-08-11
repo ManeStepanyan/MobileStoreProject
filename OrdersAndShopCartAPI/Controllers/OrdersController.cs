@@ -14,6 +14,9 @@ namespace OrdersAndShopCartAPI.Controllers
     [Route("api/orders")]
     public class OrdersController : Controller
     {
+        /// <summary>
+        /// Repository to manage method calls to db
+        /// </summary>
         private readonly Repo<Order> repo;
 
         public OrdersController(Repo<Order> repo)

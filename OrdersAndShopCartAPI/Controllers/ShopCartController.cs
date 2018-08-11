@@ -19,7 +19,13 @@ namespace OrdersAndShopCartAPI.Controllers
     [Route("api/ShopCart")]
     public class ShopCartController : Controller
     {
+        /// <summary>
+        ///  Repository to manage method calls to db
+        /// </summary>
         private readonly Repo<ShopCart> repo;
+        /// <summary>
+        /// http context accessor
+        /// </summary>
         private IHttpContextAccessor _httpContextAccessor;
         public ShopCartController(Repo<ShopCart> repo, IHttpContextAccessor httpContextAccessor)
         {
@@ -27,6 +33,10 @@ namespace OrdersAndShopCartAPI.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
         // GET: api/ShopCart
+        /// <summary>
+        /// Returning current user's shopcart
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Customer")]
         public async Task<IActionResult> Get()
@@ -37,8 +47,8 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {
-                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users/" + userId);
-                CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
+                var response = await customerClient.GetAsync("/api/customers/users/" + userId);
+                var customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
             var info = (IEnumerable<ShopCart>)(await this.repo.ExecuteOperationAsync("GetCatalogsByCustomerId", new[] { new KeyValuePair<string, object>("id", currentCustomerId) }));
@@ -53,7 +63,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 {
                     foreach (var id in catalogIdsAndQuantites)
                     {
-                        HttpResponseMessage response = await catalogClient.GetAsync("/api/sellerproduct/catalog/" + id.Key);
+                        var response = await catalogClient.GetAsync("/api/sellerproduct/catalog/" + id.Key);
                         if (response.IsSuccessStatusCode)
                         {
                             list.Add(new KeyValuePair<Product, int>((Product)(await response.Content.ReadAsAsync(typeof(Product))),id.Value));
@@ -74,6 +84,11 @@ namespace OrdersAndShopCartAPI.Controllers
         }
 
         // POST: api/ShopCart
+        /// <summary>
+        /// Adding product to shopcart by current customer
+        /// </summary>
+        /// <param name="catalogId">catalog id </param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Customer")]
         public async Task<IActionResult> Post([FromBody]int catalogId)
@@ -99,6 +114,11 @@ namespace OrdersAndShopCartAPI.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// deleting product from shopcart
+        /// </summary>
+        /// <param name="catalogId">catalog id</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromBody]JToken  catalogId)
         {
@@ -106,18 +126,24 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {              
-                HttpResponseMessage response = await customerClient.GetAsync("/api/customers/users" + userId);
-                CustomerPublicInfo customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
+                var response = await customerClient.GetAsync("/api/customers/users" + userId);
+                var customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
             var res = await this.repo.ExecuteOperationAsync("DeleteFromShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
             if (res == null) return NotFound();
             return Ok();
         }
+        /// <summary>
+        /// initialzing http client
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
         public HttpClient InitializeClient(string uri)
         {
             var client = new HttpClient
             {
+
                 BaseAddress = new Uri(uri)
             };
             var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();

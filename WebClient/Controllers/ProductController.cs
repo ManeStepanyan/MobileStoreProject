@@ -29,7 +29,7 @@ namespace WebClient.Controllers
         {
             if (matchedProducts == null)
             {
-                Uri siteUri = new Uri("http://localhost:5002/api/Products");
+                var siteUri = new Uri("http://localhost:5002/api/Products");
                 // ... Use HttpClient.
                 using (HttpClient client = new HttpClient())
                 {
@@ -38,7 +38,7 @@ namespace WebClient.Controllers
                         using (HttpContent content = response.Content)
                         {
                             // ... Read the string.
-                            string result = await content.ReadAsStringAsync();
+                            var result = await content.ReadAsStringAsync();
                             var product = JsonConvert.DeserializeObject<List<ProductModel>>(result);
                             return View(product);
                         }
@@ -54,10 +54,10 @@ namespace WebClient.Controllers
         }
         public async Task<IActionResult> DetailAsync(int id)
         {
-            Uri getSellerUri = new Uri("http://localhost:5003/api/SellerProduct/seller/"+id);
-            Uri productUri = new Uri("http://localhost:5002/api/Products/" + id);
-            SellerModel seller = new SellerModel();
-            ProductModel product = new ProductModel();
+            var getSellerUri = new Uri("http://localhost:5003/api/SellerProduct/seller/"+id);
+            var productUri = new Uri("http://localhost:5002/api/Products/" + id);
+            var seller = new SellerModel();
+            var product = new ProductModel();
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
@@ -81,7 +81,7 @@ namespace WebClient.Controllers
                     using (HttpContent content = response.Content)
                     {
                         // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
+                        var result = await content.ReadAsStringAsync();
                         product = JsonConvert.DeserializeObject<ProductModel>(result);
                         var data = new KeyValuePair<SellerModel, ProductModel>(seller, product);
                         return View(data);
@@ -92,7 +92,7 @@ namespace WebClient.Controllers
 
         public async Task<IActionResult> Search(SearchProductModel instance)
         {
-            Uri siteUri = new Uri("http://localhost:5002/api/Products/Search");
+            var siteUri = new Uri("http://localhost:5002/api/Products/Search");
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {

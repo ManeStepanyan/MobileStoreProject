@@ -26,18 +26,18 @@ namespace WebClient.Controllers
         public async Task<IActionResult> SellerAsync()
         {
             // ... Target page.
-            Uri siteUri = new Uri("http://localhost:5001/api/sellers")  ;
-            List<SellerModel> sellers = new List<SellerModel>();
+            var siteUri = new Uri("http://localhost:5001/api/sellers")  ;
+            var sellers = new List<SellerModel>();
 
             // ... Use HttpClient.
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(siteUri))
+                using (var response = await client.GetAsync(siteUri))
                 {
                     using (HttpContent content = response.Content)
                     {
                         // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
+                        var result = await content.ReadAsStringAsync();
                         sellers = JsonConvert.DeserializeObject<List<SellerModel>>(result);
 
                         if (result != null &&
@@ -62,19 +62,19 @@ namespace WebClient.Controllers
             }
 
             // ... Target page.
-            Uri idSiteUri = new Uri("http://localhost:5003/api/SellerProduct/products/" + _httpContextAccessor.HttpContext.Request.Cookies["seller_id"]);
+            var idSiteUri = new Uri("http://localhost:5003/api/SellerProduct/products/" + _httpContextAccessor.HttpContext.Request.Cookies["seller_id"]);
              
 
              // ... Use HttpClient.
-             using (HttpClient client = new HttpClient())
+             using (var client = new HttpClient())
              {
                  client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
-                 using (HttpResponseMessage response = await client.GetAsync(idSiteUri))
+                 using (var response = await client.GetAsync(idSiteUri))
                     {
                      using (HttpContent content = response.Content)
                      {
                         // ... Read the string.
-                        string result = await content.ReadAsStringAsync();
+                        var result = await content.ReadAsStringAsync();
                         var products = JsonConvert.DeserializeObject<List<ProductModel>>(result);
                         return View(products);
 
@@ -84,10 +84,10 @@ namespace WebClient.Controllers
          }
         public async Task<IActionResult> Post(ProductModel instance)
         {
-            Uri siteUri = new Uri("http://localhost:5003/api/SellerProduct");
+            var siteUri = new Uri("http://localhost:5003/api/SellerProduct");
 
             // ... Use HttpClient.
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.SetBearerToken(_httpContextAccessor.HttpContext.Request.Cookies["token"]);
                 var content = JsonConvert.SerializeObject(instance);
@@ -112,7 +112,7 @@ namespace WebClient.Controllers
         public async Task<IActionResult> UpdateViewAsync(int id)
         {
             // ... Target page.
-            Uri siteUri = new Uri("http://localhost:5002/api/Products/"+id);
+            var siteUri = new Uri("http://localhost:5002/api/Products/"+id);
             var product = new ProductModel();
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
@@ -151,8 +151,6 @@ namespace WebClient.Controllers
                 using (HttpResponseMessage response = await client.PutAsync(
                 siteUri, byteContent))
                 {
-             //       var responseString = await response.Content.ReadAsStringAsync();
-              //      var responseStr = JsonConvert.DeserializeObject<String>(responseString);
                     return RedirectToAction("Index", "Shop");
                 }
             }

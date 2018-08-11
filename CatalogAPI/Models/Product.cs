@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace CatalogAPI.Models
 {
+    /// <summary>
+    /// Product
+    /// </summary>
 
     public class Product
     {

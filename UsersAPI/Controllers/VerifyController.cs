@@ -9,6 +9,9 @@ using UsersAPI.Models;
 
 namespace UsersAPI.Controllers
 {
+    /// <summary>
+    /// Verify user after confirming their registration by getting an email
+    /// </summary>
     [Produces("application/json")]
     [Route("api/Verify")]
     public class VerifyController : Controller

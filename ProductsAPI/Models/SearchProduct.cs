@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ProductsAPI.Models
 {
+    /// <summary>
+    /// Model for searching product
+    /// </summary>
     public class SearchProduct
     {
         public string Name { get; set; }

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace OrdersAndShopCartAPI.Models
 {
+    /// <summary>
+    /// ShopCart
+    /// </summary>
     public class ShopCart
     {
         public int CustomerId { get; set; }
