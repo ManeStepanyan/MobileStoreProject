@@ -169,7 +169,7 @@ namespace ProductAPI.Controllers
                 new KeyValuePair<string, object>("quantity", product.Quantity),
                 new KeyValuePair<string, object>("memory", product.Memory),
                 new KeyValuePair<string, object>("color", product.Color),
-                new KeyValuePair<string, object>("desciption", product.Description)
+                new KeyValuePair<string, object>("description", product.Description)
             });
 
             return Ok(await this.repository.ExecuteOperationAsync("GetProduct", new[]

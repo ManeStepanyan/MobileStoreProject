@@ -6,12 +6,12 @@
     @Price MONEY=null,
 	@RAM int=null,
 	@Year int=null,
-	@Display decimal(3,2)=null,
+	@Display float=null,
 	@Battery int = null,
 	@Camera int =null,
 	@Image varchar(200)=null,
 	@Quantity int = null,
-	@Memory DECIMAL(3,2)= null,
+	@Memory float= null,
 	@Color VARCHAR(10)= null,
 	@Description VARCHAR(100)= null
 AS
