@@ -1,62 +1,81 @@
 ﻿@model WebClient.Models.ProductModel
+<style>
+    .add_d label{
+        display:block;
+        text-align:center;
+    }
+</style>
 <form asp-controller="Shop" asp-action="Update" method="post">
     <div style="margin:5% 0;">
         <div class="row add_d" style="margin:2% 0;">
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                 <input type="text" name="instance.id" id="products_id" value="@Model.Id" hidden >
+                <label for="products_name">Name</label>
                 <input type="text" name="instance.name" id="products_name" class="form-control" value="@Model.Name">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_brand">Brand</label>
                 <input type="text" name="instance.brand" id="products_brand" class="form-control" value="@Model.Brand">
             </div> 
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_version">Version</label>
                 <input type="text" name="instance.version" id="products_version" class="form-control" value="@Model.Version">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_price">Price</label>
                 <input type="text" name="instance.price" id="products_price" class="form-control" value="@Model.Price AMD">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_ram">Ram</label>
                 <input type="text" name="instance.ram" id="products_ram" class="form-control" value="@Model.RAM GB">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_display">Display</label>
                 <input type="text" name="instance.display" id="products_display" class="form-control" value="@Model.Display inches">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-                <input type="text" name="instance.memory" id="products_mmeory" class="form-control" value="@Model.Memory GB">
+                <label for="products_memeory">Memory</label>
+                <input type="text" name="instance.memory" id="products_memeory" class="form-control" value="@Model.Memory GB">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_description">Description</label>
                 <input type="text" name="instance.description" id="products_description" class="form-control" value="@Model.Description ">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_color">color</label>
                 <input type="text" name="instance.color" id="products_color" class="form-control" value="@Model.Color ">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
-
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_battery">Battery</label>
                 <input type="text" name="instance.battery" id="products_battery" class="form-control" value="@Model.Battery mAh">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_camera">Camera</label>
                 <input type="text" name="instance.camera" id="products_camera" class="form-control" value="@Model.Camera mp">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                <label for="products_yaer">Year</label>
                 <input type="text" name="instance.year" id="products_yaer" class="form-control" value="@Model.Year">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
             <div class="col-lg-4 col-lg-offset-2  col-md-4 col-md-offset-2 col-sm-6 col-xs-12">
+                <label for="products_quantity">Quantity</label>
                 <input type="number" name="instance.quantity" id="products_quantity" class="form-control" value="@Model.Quantity">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-                <input type="text" class="form-control" name="instance.image" value="@Model.Image">
+                <label for="products_image">Image</label>
+                <input type="text" name="instance.image" id="products_image" class="form-control" value="@Model.Image">
             </div>
         </div>
         <div class="row add_d" style="margin:2% 0;">
-            <div class="col-md-2 col-md-offset-5">
+            <div class="col-lg-2 col-lg-offset-5 col-md-2 col-md-offset-5 col-md-2 col-md-offset-       ">
                 <input type="submit" value="update" name="action" class="form-control btn btn-success add action">
             </div>
         </div>
