@@ -73,7 +73,7 @@ namespace WebClient.Controllers
             }
         }
 
-        public async Task<IActionResult> Search(SearchModel instance)
+        public async Task<IActionResult> Search(SearchProductModel instance)
         {
             Uri siteUri = new Uri("http://localhost:5002/api/Products/Search");
             // ... Use HttpClient.

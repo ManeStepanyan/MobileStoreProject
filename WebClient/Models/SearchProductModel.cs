@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebClient.Models
 {
-    public class SearchProduct
+    public class SearchProductModel
     {
         public string Name { get; set; }
         public string Brand { get; set; }
