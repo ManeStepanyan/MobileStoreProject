@@ -74,7 +74,7 @@ namespace MobileApplication.Src.Dialogs
         {
             if (UserAPIConection.SessionActivity())
             {
-                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id)) ? "Add to cart." : "Has already.";
+                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
                 Toast.MakeText(this.context, messige, ToastLength.Long).Show();
             }
             else

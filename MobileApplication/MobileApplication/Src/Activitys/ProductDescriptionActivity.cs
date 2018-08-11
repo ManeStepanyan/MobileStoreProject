@@ -65,7 +65,7 @@ namespace MobileApplication.Src.Activitys
             this.BarndYearView = FindViewById<TextView>(Resource.Id.ProductYearTextView);
             this.BarndYearView.Text = this.product.Year.ToString();
 
-            this.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id)).Result;
+            this.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id));
 
             this.SellerNameTextView = FindViewById<TextView>(Resource.Id.SellerNameTextView);
             this.SellerNameTextView.Text = this.Seller.Name;
@@ -86,7 +86,7 @@ namespace MobileApplication.Src.Activitys
         private void SellerDescriptionLinerLayout_Click(object sender, System.EventArgs e)
         {
             var newActivity = new Intent(this, typeof(SellerDescriptionActivity));
-            ActivityCommunication.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id)).Result;
+            ActivityCommunication.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id));
             StartActivity(newActivity);
         }
 
@@ -101,7 +101,7 @@ namespace MobileApplication.Src.Activitys
         {
             if (UserAPIConection.SessionActivity())
             {
-                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id)) ? "Add to cart." : "Has already.";
+                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
                 Toast.MakeText(this, messige, ToastLength.Long).Show();
             }
             else
