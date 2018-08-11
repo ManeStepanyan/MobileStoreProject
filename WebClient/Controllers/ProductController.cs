@@ -76,7 +76,7 @@ namespace WebClient.Controllers
             return View(product);
         }
 
-        public async Task<IActionResult> Search(SearchModel instance//,decimal? priceTo = null,int? RAMTo = null,int? yearTo = null,int? batteryTo = null,int? cameraTo = null,int? memoryTo = null)
+        public async Task<IActionResult> Search(SearchModel instance)//,decimal? priceTo = null,int? RAMTo = null,int? yearTo = null,int? batteryTo = null,int? cameraTo = null,int? memoryTo = null)
         {
             Uri siteUri = new Uri("http://localhost:5002/api/Products/Search/");
             // ... Use HttpClient.
