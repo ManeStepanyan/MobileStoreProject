@@ -117,6 +117,7 @@ namespace UsersAPI.Controllers
         }
         [HttpPut]
         [Route("sellers/id/rate")]
+        [Authorize(Policy ="Customer")]
         public void RateSeller(int id, decimal? rating)
         {
             this.publicRepo.ExecuteOperation("RateSeller", new[] { new KeyValuePair<string, object>("id", id), new KeyValuePair<string, object>("rating", rating) });
