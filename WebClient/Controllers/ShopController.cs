@@ -151,9 +151,9 @@ namespace WebClient.Controllers
                 using (HttpResponseMessage response = await client.PutAsync(
                 siteUri, byteContent))
                 {
-                    var responseString = await response.Content.ReadAsStringAsync();
-                    var responseStr = JsonConvert.DeserializeObject<String>(responseString);
-                    return RedirectToAction("Index", "Shop", new { msg = responseStr });
+             //       var responseString = await response.Content.ReadAsStringAsync();
+              //      var responseStr = JsonConvert.DeserializeObject<String>(responseString);
+                    return RedirectToAction("Index", "Shop");
                 }
             }
         }
