@@ -5,8 +5,11 @@ using Android.OS;
 using Android.Widget;
 using MobileApplication.Activitys;
 using MobileApplication.Src.API;
+using MobileApplication.Src.Cache;
+using MobileApplication.Src.Download;
 using MobileApplication.Src.Models;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace MobileApplication.Src.Activitys
 {
@@ -36,7 +39,19 @@ namespace MobileApplication.Src.Activitys
             SetContentView(Resource.Layout.ProductDescriptionActivity);
 
             this.ProductImageView = FindViewById<ImageView>(Resource.Id.ProductImageView);
-            //this.ProductImageView.SetImageBitmap(GetImageBitmapFromUrl(this.product.Image));
+            new Task(() => {
+                var ulr = this.product.Image;
+                if (ImageCache.Cache.ContainsKey(ulr))
+                {
+                    this.ProductImageView.SetImageBitmap(ImageCache.Cache[ulr]);
+                }
+                else
+                {
+                    var image = ImageDownload.GetImageBitmapFromUrl(ulr);
+                    this.ProductImageView.SetImageBitmap(image);
+                    ImageCache.Cache.Add(ulr, image);
+                }
+            }).Start();
             this.NameTextView = FindViewById<TextView>(Resource.Id.ProductNameTextView);
             this.NameTextView.Text = this.product.Name;
             this.BarndTextView = FindViewById<TextView>(Resource.Id.ProductBrandTextView);
@@ -50,7 +65,7 @@ namespace MobileApplication.Src.Activitys
             this.BarndYearView = FindViewById<TextView>(Resource.Id.ProductYearTextView);
             this.BarndYearView.Text = this.product.Year.ToString();
 
-            this.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id));
+            this.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id)).Result;
 
             this.SellerNameTextView = FindViewById<TextView>(Resource.Id.SellerNameTextView);
             this.SellerNameTextView.Text = this.Seller.Name;
@@ -71,7 +86,7 @@ namespace MobileApplication.Src.Activitys
         private void SellerDescriptionLinerLayout_Click(object sender, System.EventArgs e)
         {
             var newActivity = new Intent(this, typeof(SellerDescriptionActivity));
-            ActivityCommunication.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id));
+            ActivityCommunication.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id)).Result;
             StartActivity(newActivity);
         }
 
@@ -94,22 +109,6 @@ namespace MobileApplication.Src.Activitys
                 var newActivity = new Intent(this, typeof(SignInActivity));
                 StartActivity(newActivity);
             }
-        }
-
-        private static Bitmap GetImageBitmapFromUrl(string url)
-        {
-            Bitmap imageBitmap = null;
-
-            using (var webClient = new WebClient())
-            {
-                var imageBytes = webClient.DownloadData(url);
-                if (imageBytes != null && imageBytes.Length > 0)
-                {
-                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
-                }
-            }
-
-            return imageBitmap;
         }
     }
 }

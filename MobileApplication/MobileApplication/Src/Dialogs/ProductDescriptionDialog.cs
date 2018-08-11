@@ -6,7 +6,10 @@ using Android.Widget;
 using MobileApplication.Activitys;
 using MobileApplication.Src.Activitys;
 using MobileApplication.Src.API;
+using MobileApplication.Src.Cache;
+using MobileApplication.Src.Download;
 using MobileApplication.Src.Models;
+using System.Threading.Tasks;
 
 namespace MobileApplication.Src.Dialogs
 {
@@ -22,8 +25,22 @@ namespace MobileApplication.Src.Dialogs
             base.OnCreateView(inflater, container, savedInstanceState);
             this.product = ActivityCommunication.Product;
             var view = inflater.Inflate(Resource.Layout.ProductDescriptionDialog, container, false);
-            var ImageView = view.FindViewById<ImageView>(Resource.Id.ProductImageView);
-            //ImageView.SetImageBitmap(this.product.Image);
+            var ProductImageView = view.FindViewById<ImageView>(Resource.Id.ProductImageView);
+
+            new Task(() => {
+                var ulr = this.product.Image;
+                if (ImageCache.Cache.ContainsKey(ulr))
+                {
+                    ProductImageView.SetImageBitmap(ImageCache.Cache[ulr]);
+                }
+                else
+                {
+                    var image = ImageDownload.GetImageBitmapFromUrl(ulr);
+                    ProductImageView.SetImageBitmap(image);
+                    ImageCache.Cache.Add(ulr, image);
+                }
+            }).Start();
+
             var NameTextView = view.FindViewById<TextView>(Resource.Id.ProductNameTextView);
             NameTextView.Text = this.product.Name;
             var BrandTextView = view.FindViewById<TextView>(Resource.Id.ProductBrandTextView);

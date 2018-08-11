@@ -1,8 +1,14 @@
-﻿using System;
+﻿
+#define APISIM
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Android.Graphics;
 using MobileApplication.Src.Models;
+using Newtonsoft.Json;
 
 namespace MobileApplication.Src.API
 {
@@ -17,6 +23,8 @@ namespace MobileApplication.Src.API
         /// </summary>
         private static Dictionary<int, Seller> SellerDataBase;
         public static UserModel User { get; private set; }
+
+        private static readonly string ulr = string.Format("http://134.86.19.105:5003/api/SellerProduct/products/", 8);
 
         static UserAPIConection()
         {
@@ -106,7 +114,7 @@ namespace MobileApplication.Src.API
         {
             return true;
         }
-
+#if (APISIM)
         public static Seller GetSellerById(int id)
         {
             if (!SellerDataBase.ContainsKey(id))
@@ -115,7 +123,19 @@ namespace MobileApplication.Src.API
             }
             return SellerDataBase[id];
         }
+#else
+        public static async Task<Seller> GetSellerById(int id)
+        {
+            var client = new HttpClient();
 
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = client.GetAsync($"{string.Format("http://134.86.19.105:5001/api/Sellers/",id , 8)}").Result;
+            var res = response.Content.ReadAsStringAsync().Result;
+            var seller = JsonConvert.DeserializeObject<Seller>(res);
+
+            return seller;
+        }
+#endif
         private static List<string> items = new List<string>()
                     {
                             "A1","A2","A3","A4","A5",
