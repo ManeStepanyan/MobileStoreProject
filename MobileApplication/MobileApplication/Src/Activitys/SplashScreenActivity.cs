@@ -17,7 +17,7 @@ namespace MobileApplication.Src.Activitys
         // Launches the startup task
         protected override void OnResume()
         {
-            UserAPIConection.LogOut();
+            UserAPIController.LogOut();
             base.OnResume();
             Task startupWork = new Task(() => {
                 StartActivity(typeof(HomeActivity));

@@ -1,5 +1,5 @@
 <resources>
-  <string name="ip">134.86.19.105</string>
+  <string name="ip">192.168.6.30</string>
   
   <string name="app_name">Store</string>
   <string name="action_settings">Settings</string>

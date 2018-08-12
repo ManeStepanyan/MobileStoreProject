@@ -31,7 +31,7 @@ namespace MobileApplication.Src.Activitys
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.MyAccountActivity);
 
-            var user = UserAPIConection.User;
+            var user = UserAPIController.User;
             this.NameEditText = FindViewById<EditText>(Resource.Id.name_client);
             this.NameEditText.Hint = user.Name;
             this.SurNameEditText = FindViewById<EditText>(Resource.Id.sname_client);
@@ -69,7 +69,7 @@ namespace MobileApplication.Src.Activitys
                 return;
             }
 
-            var user = UserAPIConection.User;
+            var user = UserAPIController.User;
             var newUser = new UserModel(
                 user.Name, this.SurNameEditText.Text,
                 null,
@@ -79,7 +79,7 @@ namespace MobileApplication.Src.Activitys
                 null,
                 null);
 
-            UserAPIConection.UpdateCustomer(newUser);
+            UserAPIController.UpdateCustomer(newUser);
             StartActivity(typeof(HomeActivity));
         }
     }

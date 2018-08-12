@@ -57,7 +57,7 @@ namespace MobileApplication.Src.Dialogs
             this.CameraMaxEditText = view.FindViewById<EditText>(Resource.Id.CameraMaxEditText);
 
             this.BrandAutoCompleteTextView = view.FindViewById<AutoCompleteTextView>(Resource.Id.BrandAutoCompleteTextView);
-            var items = ProductAPIConection.GetBrands();
+            var items = ProductAPIController.GetBrands();
             var adapter = new ArrayAdapter(this.Context, Android.Resource.Layout.SimpleDropDownItem1Line, items);
             this.BrandAutoCompleteTextView.Adapter = adapter;
 
@@ -85,7 +85,7 @@ namespace MobileApplication.Src.Dialogs
                 MemoryTo = (this.MemoryMaxEditText.Text != "") ? (int?)int.Parse(this.MemoryMaxEditText.Text) : null,
                 
             };
-            var resource = ProductAPIConection.SearchProduct(searchModel).Result;
+            var resource = ProductAPIController.SearchProduct(searchModel).Result;
             this.GridView.Adapter = new ProductsAdapter(this.context, resource, Resource.Layout.ProductAdapterItem);
             this.Dismiss();
         }

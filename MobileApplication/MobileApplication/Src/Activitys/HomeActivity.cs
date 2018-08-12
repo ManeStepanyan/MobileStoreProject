@@ -35,7 +35,6 @@ namespace MobileApplication
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
             SetContentView(Resource.Layout.activity_main);
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
@@ -47,7 +46,7 @@ namespace MobileApplication
 
             this.SearchView = FindViewById<SearchView>(Resource.Id.searchView);
             this.SearchView.QueryTextChange += SearchView_QueryTextChange;
-            this.Products = ProductAPIConection.GetProducts().Result;
+            this.Products = ProductAPIController.GetProducts().Result;
             this.Adapter = new ProductsAdapter(this, this.Products, Resource.Layout.ProductAdapterItem);
             this.ProductsGridView = FindViewById<GridView>(Resource.Id.ProductListView);
             this.ProductsGridView.ItemClick += ProductsGridView_ItemClick;
@@ -81,14 +80,14 @@ namespace MobileApplication
                 case Resource.Id.action_cart:
                     {
                         var newActivity = new Intent(this,
-                                (UserAPIConection.SessionActivity()) ? typeof(CartActivity) : typeof(SignInActivity));
+                                (UserAPIController.SessionActivity()) ? typeof(CartActivity) : typeof(SignInActivity));
                         StartActivity(newActivity);
                         break;
                     }
                 case Resource.Id.action_account:
                     {
                         var newActivity = new Intent(this,
-                                (UserAPIConection.SessionActivity()) ? typeof(MyAccountActivity) : typeof(SignInActivity));
+                                (UserAPIController.SessionActivity()) ? typeof(MyAccountActivity) : typeof(SignInActivity));
                         StartActivity(newActivity);
                         break;
                     }
@@ -138,7 +137,7 @@ namespace MobileApplication
 
         private void GoToCartPage_Click(object sender, System.EventArgs e)
         {
-            var newActivity = (UserAPIConection.SessionActivity()) ? this.CartActivityGenericTask.Result :
+            var newActivity = (UserAPIController.SessionActivity()) ? this.CartActivityGenericTask.Result :
                 new Intent(this, typeof(SignInActivity));
             StartActivity(newActivity);
         }

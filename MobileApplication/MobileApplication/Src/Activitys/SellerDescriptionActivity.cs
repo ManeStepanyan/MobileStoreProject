@@ -32,7 +32,7 @@ namespace MobileApplication.Src.Activitys
             FindViewById<TextView>(Resource.Id.SellerAddressTextView).Text = seller.Address;
             FindViewById<TextView>(Resource.Id.SellerCellPhoneTextView).Text = seller.CellPhone;
             FindViewById<TextView>(Resource.Id.SellerEmailTextView).Text = seller.Email;
-            var products = CatalogAPIConection.GetProductsBySellerId(seller.Id).Select(a => ProductAPIConection.GetProductById(a).Result);
+            var products = CatalogAPIController.GetProductsBySellerId(seller.Id);
             this.Adapter = new ProductsAdapter(this, products, Resource.Layout.ProductAdapterItem);
             var ProductsGridView = FindViewById<GridView>(Resource.Id.ProductListView);
             ProductsGridView.Adapter = Adapter;
