@@ -23,9 +23,7 @@ namespace AuthenticationServer
         {
 
             services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IProfileService, ProfileService>();
-
-              services.AddMvc();       
+            services.AddMvc();
             services.AddIdentityServer().AddDeveloperSigningCredential()
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
                     .AddInMemoryApiResources(Config.GetApiResources())
@@ -34,7 +32,7 @@ namespace AuthenticationServer
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddTransient<IProfileService, ProfileService>();
             //adding policies
-            
+
             services.AddSingleton(new Repo<User>(
                 new MapInfo(this.Configuration["Mappers:Users"]),
                 new SpExecuter(this.Configuration["ConnectionStrings:UsersDB"])));

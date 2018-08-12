@@ -149,9 +149,9 @@ namespace WebClient.Controllers
                     if (response.IsSuccessStatusCode)
                         return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Registration has been done,And Account activation link has been sent to your email:" + email + " please open the link in message to verify your account and use it", flag = true });
                     if ((int)response.StatusCode == 412)
-                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Such an username already exist's please change it", flag = false });
+                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Such an username already exists please change it", flag = false });
                     if ((int)response.StatusCode == 416)
-                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Such an email exist's please try change it", flag = false });
+                        return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Such an email exists please try change it", flag = false });
                 }
                 return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Some data was incorrect please try again", flag = false });
             }

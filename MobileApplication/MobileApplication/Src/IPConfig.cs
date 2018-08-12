@@ -2,6 +2,6 @@
 {
     public static class IPConfig
     {
-        public const string IP = "134.86.19.105";
+        public const string IP ="134.86.19.105";
     }
 }
