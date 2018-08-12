@@ -19,7 +19,7 @@ namespace MobileApplication.Src.Activitys
 
             SetContentView(Resource.Layout.CartActivity);
 
-            var products = OrdersAndShopCartAPIConection.GetAllProducts().Select(a => ProductAPIConection.GetProductById(a).Result);
+            var products = OrdersAndShopCartAPIController.GetAllProducts();
             var adapter = new CartListViewAdapter(this, products, Resource.Layout.CartListViewRow);
 
             var ListView = FindViewById<ListView>(Resource.Id.CartListView);

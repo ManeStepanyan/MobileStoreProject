@@ -36,7 +36,7 @@
                 android:id="@+id/PriceMinEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -45,7 +45,7 @@
                 android:id="@+id/PriceMaxEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -79,7 +79,7 @@
                 android:id="@+id/MemoryMinEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -88,7 +88,7 @@
                 android:id="@+id/MemoryMaxEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -110,7 +110,7 @@
                 android:id="@+id/RAMMinEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -119,7 +119,7 @@
                 android:id="@+id/RAMMaxEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -141,7 +141,7 @@
                 android:id="@+id/YearMinEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -150,7 +150,7 @@
                 android:id="@+id/YearMaxEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -172,7 +172,7 @@
                 android:id="@+id/BatteryMinEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -181,7 +181,7 @@
                 android:id="@+id/BatteryMaxEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -203,7 +203,7 @@
                 android:id="@+id/CameraMinEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />
@@ -212,7 +212,7 @@
                 android:id="@+id/CameraMaxEditText"
                 style="@style/LoginEditText"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="50" />

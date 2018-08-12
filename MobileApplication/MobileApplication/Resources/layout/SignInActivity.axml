@@ -28,7 +28,7 @@
         <EditText
             android:id="@+id/login_signin"
             android:hint="Username"
-            android:inputType="textPersonName"
+            android:inputType="none"
             android:textSize="16dp"
             android:layout_marginBottom="35dp"
             android:layout_above="@+id/editText2"

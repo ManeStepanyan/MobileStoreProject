@@ -73,7 +73,7 @@ namespace MobileApplication.Activitys
                 this.ErrorTextView.Text = "Name\nPlease enter all the fields.";
             }
 
-            if (!UserAPIConection.RegisterCustomer(
+            if (!UserAPIController.RegisterCustomer(
                 this.NameEditText.Text,
                 this.SurNameEditText.Text,
                 this.LoginEditText.Text,

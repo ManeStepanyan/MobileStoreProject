@@ -1,26 +1,28 @@
-﻿#define APISIM
+﻿//#define APISIM
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Android.App;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Http;
+using MobileApplication.Src.IP;
 using MobileApplication.Src.Models;
 using Newtonsoft.Json;
 
 namespace MobileApplication.Src.API
 {
-    public static class ProductAPIConection
+    public static class ProductAPIController
     {
         private static Dictionary<string, Product> ProductDataBase;
         private static int IndexId = 0;
 #if (!APISIM)
-        private static string ulr = string.Format("http://134.86.19.105:5002/api/Products", 8);
+        private static string ulr = string.Format($"http://{Resource.String.ip}:5002/api/Products", 8);
 #endif
 
-        static ProductAPIConection()
+        static ProductAPIController()
         {
             IndexId = 0;
             ProductDataBase = new Dictionary<string, Product>();
@@ -45,7 +47,7 @@ namespace MobileApplication.Src.API
         public static void AddProduct(int sellerId, Product product)
         {
             product.Id = IndexId++;
-            CatalogAPIConection.AddProduct(sellerId, product.Id);
+            CatalogAPIController.AddProduct(sellerId, product.Id);
             ProductDataBase.Add(product.Name, product);
         }
 
@@ -78,7 +80,7 @@ namespace MobileApplication.Src.API
 
 
 
-#if (APISIM)
+#if (!APISIM)
         public static List<Product> SearchProduct(string name)
         {
             return ProductDataBase.Select(a => a.Value).Where(a => a.Name.IndexOf(name) != -1).ToList();
@@ -116,6 +118,7 @@ namespace MobileApplication.Src.API
         }
 #endif
 
+#if (APISIM)
         private static bool ChechSerach(SearchProductModel model, Product product)
         {
             return ((model.Price == null) || ((double)model.Price < (double)product.Price)) &&
@@ -132,14 +135,17 @@ namespace MobileApplication.Src.API
                     ((model.MemoryTo == null) || (model.MemoryTo < product.Memory)) &&
                     ((model.Brand == "") || (product.Brand.IndexOf(model.Brand) != -1));
         }
+#endif
 
-#if (!APISIM)
+
+#if (APISIM)
         public static Task<List<Product>> GetProducts() => new Task<List<Product>>(() =>  ProductDataBase.Select(a => a.Value).ToList());
 #else
-        public static async Task<List<Product>> GetProducts()
+        public async static Task<List<Product>> GetProducts()
         {
             var client = new HttpClient();
-            string ulr = string.Format("http://134.86.19.105:5002/api/Products");
+
+            var ulr = string.Format($"http://{IPConfig.IP}:5002/api/Products");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = client.GetAsync(ulr).Result;
             var res = response.Content.ReadAsStringAsync().Result;

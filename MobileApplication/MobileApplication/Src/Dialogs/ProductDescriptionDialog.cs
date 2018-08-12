@@ -66,15 +66,15 @@ namespace MobileApplication.Src.Dialogs
         private void BuyNowButton_Click(object sender, System.EventArgs e)
         {
             var newActivity = new Intent(this.context, 
-                (UserAPIConection.SessionActivity()) ? typeof(BuyActivity) : typeof(SignInActivity));
+                (UserAPIController.SessionActivity()) ? typeof(BuyActivity) : typeof(SignInActivity));
             StartActivity(newActivity);
         }
 
         private void AddToCartButton_Click(object sender, System.EventArgs e)
         {
-            if (UserAPIConection.SessionActivity())
+            if (UserAPIController.SessionActivity())
             {
-                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
+                var messige = (OrdersAndShopCartAPIController.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
                 Toast.MakeText(this.context, messige, ToastLength.Long).Show();
             }
             else

@@ -65,7 +65,7 @@ namespace MobileApplication.Src.Activitys
             this.BarndYearView = FindViewById<TextView>(Resource.Id.ProductYearTextView);
             this.BarndYearView.Text = this.product.Year.ToString();
 
-            this.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id));
+            this.Seller = UserAPIController.GetSellerById(CatalogAPIController.GetSellerIdByProductId(this.product.Id).Result).Result;
 
             this.SellerNameTextView = FindViewById<TextView>(Resource.Id.SellerNameTextView);
             this.SellerNameTextView.Text = this.Seller.Name;
@@ -86,22 +86,22 @@ namespace MobileApplication.Src.Activitys
         private void SellerDescriptionLinerLayout_Click(object sender, System.EventArgs e)
         {
             var newActivity = new Intent(this, typeof(SellerDescriptionActivity));
-            ActivityCommunication.Seller = UserAPIConection.GetSellerById(CatalogAPIConection.GetSellerIdByProductId(this.product.Id));
+            ActivityCommunication.Seller = UserAPIController.GetSellerById(CatalogAPIController.GetSellerIdByProductId(this.product.Id).Result).Result;
             StartActivity(newActivity);
         }
 
         private void BuyNowButton_Click(object sender, System.EventArgs e)
         {
             var newActivity = new Intent(this,
-                (UserAPIConection.SessionActivity()) ? typeof(BuyActivity) : typeof(SignInActivity));
+                (UserAPIController.SessionActivity()) ? typeof(BuyActivity) : typeof(SignInActivity));
             StartActivity(newActivity);
         }
 
         private void AddToCartButton_Click(object sender, System.EventArgs e)
         {
-            if (UserAPIConection.SessionActivity())
+            if (UserAPIController.SessionActivity())
             {
-                var messige = (OrdersAndShopCartAPIConection.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
+                var messige = (OrdersAndShopCartAPIController.AddProduct(this.product.Id).Result) ? "Add to cart." : "Has already.";
                 Toast.MakeText(this, messige, ToastLength.Long).Show();
             }
             else

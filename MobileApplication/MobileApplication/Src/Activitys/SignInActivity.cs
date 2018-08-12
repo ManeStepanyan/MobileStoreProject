@@ -48,7 +48,7 @@ namespace MobileApplication.Activitys
                 return;
             }
 
-            if (!UserAPIConection.SigeIn(this.LogInEditText.Text, this.PasswordEditText.Text))
+            if (!UserAPIController.SigeIn(this.LogInEditText.Text, this.PasswordEditText.Text))
             {
                 this.LogInTitleTextView.Text = "Wrong login or password.";
                 return;
