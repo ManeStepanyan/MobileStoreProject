@@ -85,8 +85,17 @@ namespace MobileApplication.Src.Dialogs
                 MemoryTo = (this.MemoryMaxEditText.Text != "") ? (int?)int.Parse(this.MemoryMaxEditText.Text) : null,
                 
             };
-            var resource = ProductAPIController.SearchProduct(searchModel).Result;
-            this.GridView.Adapter = new ProductsAdapter(this.context, resource, Resource.Layout.ProductAdapterItem);
+            try
+            {
+                var resource = ProductAPIController.SearchProduct(searchModel).Result;
+                this.GridView.Adapter = new ProductsAdapter(this.context, resource, Resource.Layout.ProductAdapterItem);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
             this.Dismiss();
         }
 

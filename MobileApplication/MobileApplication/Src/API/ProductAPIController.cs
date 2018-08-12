@@ -80,15 +80,29 @@ namespace MobileApplication.Src.API
 
 
 
-#if (!APISIM)
+#if (APISIM)
         public static List<Product> SearchProduct(string name)
         {
             return ProductDataBase.Select(a => a.Value).Where(a => a.Name.IndexOf(name) != -1).ToList();
         }
 #else
-        public static Task<List<Product>> SearchProduct(string name)
+        public static async Task<List<Product>> SearchProduct(string name)
         {
+            var searchProductModel = new SearchProductModel() { Name = name };
+            Uri siteUri = new Uri("http://192.168.6.30:5002/api/Products/Search/");
 
+            using (HttpClient client = new HttpClient())
+            {
+                var content = JsonConvert.SerializeObject(searchProductModel);
+                var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = client.PostAsync(siteUri, byteContent).Result;
+                var res = response.Content.ReadAsStringAsync().Result;
+                var products = JsonConvert.DeserializeObject<List<Product>>(res);
+
+                return products;
+            }
         }
 #endif
 
@@ -143,6 +157,8 @@ namespace MobileApplication.Src.API
 #else
         public async static Task<List<Product>> GetProducts()
         {
+            var temp = SearchProduct("Arm").Result;
+
             var client = new HttpClient();
 
             var ulr = string.Format($"http://{IPConfig.IP}:5002/api/Products");
