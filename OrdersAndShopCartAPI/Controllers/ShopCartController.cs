@@ -126,7 +126,7 @@ namespace OrdersAndShopCartAPI.Controllers
             var userId = GetCurrentUser();
             using (var customerClient = InitializeClient("http://localhost:5001/"))
             {              
-                var response = await customerClient.GetAsync("/api/customers/users" + userId);
+                var response = await customerClient.GetAsync("/api/customers/users/" + userId);
                 var customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
