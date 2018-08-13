@@ -96,7 +96,7 @@
                             <th>Product Display</th>
                             <th>Product Battery</th>
                             <th>Product Camera</th>
-                            <th colspan="2">Product Image</th>
+                            <th>Product Image</th>
                             <th>Product Quantity</th>
                             <th>Update Product</th>
                         </tr>
@@ -116,7 +116,7 @@
                                     <td class="Display" data="@prod.Display">@prod.Display inch</td>
                                     <td class="Battery" data="@prod.Battery">@prod.Battery mAh</td>
                                     <td class="Camera" data="@prod.Camera">@prod.Camera mp</td>
-                                    <td class="Image" colspan="2" data="@prod.Image"><img src="@prod.Image" class="img-responsive" /></td>
+                                    <td class="Image"  data="@prod.Image"><img src="@prod.Image" class="img-responsive" style="max-height:15%;"/></td>
                                     <td class="Quantity" data="@prod.Quantity">@prod.Quantity</td>
                                     <td>
                                         <input data="@prod.Id" id="prod_id" hidden />
@@ -136,7 +136,7 @@
         </div>
         <div class='row'>
             <div class='col-md-offset-5 col-md-2'>
-                <a href='home.php' type='button' class=' btn btn-primary form-control'>Back</a>
+                <a href='@Url.Action("Index","Home")' type='button' class=' btn btn-primary form-control'>Back</a>
             </div>
         </div>
     </div>
