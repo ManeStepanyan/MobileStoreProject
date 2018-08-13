@@ -130,7 +130,7 @@ namespace OrdersAndShopCartAPI.Controllers
                 var customer = (CustomerPublicInfo)((await response.Content.ReadAsAsync(typeof(CustomerPublicInfo))));
                 currentCustomerId = customer.Id;
             }
-            var res = await this.repo.ExecuteOperationAsync("DeleteFromShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("CatalogId", catalogId) });
+            var res = await this.repo.ExecuteOperationAsync("DeleteFromShopCart", new[] { new KeyValuePair<string, object>("CustomerId", currentCustomerId), new KeyValuePair<string, object>("catalogId", (int)catalogId) });
             if (res == null) return NotFound();
             return Ok();
         }

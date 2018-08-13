@@ -1,6 +1,6 @@
 ﻿@model List<KeyValuePair<WebClient.Models.ProductModel, int>>
 @{decimal? total = 0; }
-@if (Model != null)
+@if (Model != null && Model.Count != 0)
 {
     <div class="row" style="color:rgb(15, 68, 213);">
         <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">

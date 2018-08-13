@@ -27,13 +27,11 @@ namespace WebClient.Controllers
         //  [Authorize(Policy = "Customer")]
         public async Task<bool> AddAsync(int id)
         {
-            var Uri = new Uri("http://localhost:5003/api/" + id);
+            var Uri = new Uri("http://localhost:5003/api/sellerproduct/" + id);
 
             // ... Use HttpClient.
             using (HttpClient client = new HttpClient())
             {
-                var authInfo = _httpContextAccessor.HttpContext.AuthenticateAsync();
-                var token = authInfo.Result.Properties.Items.Values.ElementAt(0);
                 var t = _httpContextAccessor.HttpContext.Request.Cookies["token"];
                 client.SetBearerToken(t);
                 using (HttpResponseMessage response = await client.GetAsync(Uri))
