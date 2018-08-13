@@ -115,11 +115,11 @@ namespace OrdersAndShopCartAPI.Controllers
 
         // DELETE: api/ApiWithActions/5
         /// <summary>
-        /// deleting product from shopcart
+        // deleting product from shopcart
         /// </summary>
         /// <param name="catalogId">catalog id</param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete([FromBody]JToken  catalogId)
         {
             int currentCustomerId;
