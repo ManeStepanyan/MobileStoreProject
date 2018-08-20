@@ -21,7 +21,10 @@ namespace AuthenticationServer
                    .AddJsonFile("appsettings.json").Build();
         public void ConfigureServices(IServiceCollection services)
         {
-
+            this.RegisterServices(services);
+        }
+        public IServiceCollection RegisterServices(IServiceCollection services)
+        {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddMvc();
             services.AddIdentityServer().AddDeveloperSigningCredential()
@@ -31,11 +34,10 @@ namespace AuthenticationServer
                     .AddProfileService<ProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddTransient<IProfileService, ProfileService>();
-            //adding policies
-
             services.AddSingleton(new Repo<User>(
                 new MapInfo(this.Configuration["Mappers:Users"]),
                 new SpExecuter(this.Configuration["ConnectionStrings:UsersDB"])));
+            return services;
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

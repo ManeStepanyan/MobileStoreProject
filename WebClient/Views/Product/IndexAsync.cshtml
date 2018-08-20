@@ -135,26 +135,26 @@
 <script>
     $(function () {
         $("div.anim").hover(function () {
-            $(this).find("button.change-color").removeClass("btn-primary").addClass("btn-success")
+            $(this).find("button.change-color").removeClass("btn-primary").addClass("btn-success");
             $(this).find(".caption").stop().animate({
                 color: "white"
-            },200)
+            }, 200);
             $(this).stop().animate({
                 top: "50px",
-                backgroundColor: "#00b0cc",
-            }, 200)
+                backgroundColor: "#00b0cc"
+            }, 200);
         }, function () {
             $(this).find("button.change-color").removeClass("btn-success").addClass("btn-primary")
             $(this).find(".caption").stop().animate({
                 color: "black"
-            })
+            });
             $(this).stop().animate({
                 top: "0",
                 backgroundColor: "#fff"
             }, "slow");
-            });
+        });
         $("div.actions").on('click', 'button', function () {
-            var that = $(this)
+            var that = $(this);
             if (that.hasClass('product-details')) {
                 var id = $('button.product-details').closest("div").find("input#prod_id").attr("data");
                 var url = '@Url.Action("DetailAsync","Product",new { id = "_id_" })';
@@ -168,31 +168,31 @@
                     quantity += 1;
                     Context.Response.Cookies.Append("cart_quantity", quantity.ToString());
                     <text>
-                        var id = $('button.add-to-cart').closest("div").find("input#prod_id").attr("data");
-                        $.ajax
-                            ({
+                var Id = $('button.add-to-cart').closest("div").find("input#prod_id").attr("data");
+                $.ajax
+                    ({
                         type: "POST",
-                                dataType: "Json",
-                                url: '@Url.Action("AddAsync", "ShoppingCart")',
-                                data: { id : id },
-                                async: false,
-                                success: function (data) {
-                            },
-                                error: function () {
+                        dataType: "Json",
+                        url: '@Url.Action("AddAsync", "ShoppingCart")',
+                        data: { id: Id },
+                        async: false,
+                        success: function (data) {
+                        },
+                        error: function () {
                             ErrorMessage("", '');
-                            }
-                    })
-                   $("body").find(".navbar .navbar-collapse .navbar-nav li a .badge").html(@quantity);
+                        }
+                    });
+                $("body").find(".navbar .navbar-collapse .navbar-nav li a .badge").html(@quantity);
 
                    </text>
                 }
                 else
                 {
                     <text>
-                        $('#myModal').modal('toggle');
+                $('#myModal').modal('toggle');
                     </text>
                 }
-                        }
-        })
-    })
+            }
+        });
+    });
 </script>

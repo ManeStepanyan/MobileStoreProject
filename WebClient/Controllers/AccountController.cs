@@ -126,7 +126,7 @@ namespace WebClient.Controllers
                     if ((int)response.StatusCode == 416)
                         return RedirectToAction("RegisterSellerView", "Account", new { msg = "Such an email exist's please try change it", flag = false });
                 }
-                return RedirectToAction("RegisterCustomerView", "Account", new { msg = "Some data was incorrect please try again", flag = false });
+                return RedirectToAction("RegisterSellerView", "Account", new { msg = "Some data was incorrect please try again", flag = false });
             }
         }
 
