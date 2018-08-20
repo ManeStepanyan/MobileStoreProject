@@ -16,28 +16,9 @@ namespace AuthenticationServer
 {
     public class Startup
     {
-        private IConfiguration Configuration = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json").Build();
         public void ConfigureServices(IServiceCollection services)
         {
-            this.RegisterServices(services);
-        }
-        public IServiceCollection RegisterServices(IServiceCollection services)
-        {
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddMvc();
-            services.AddIdentityServer().AddDeveloperSigningCredential()
-                    .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                    .AddInMemoryApiResources(Config.GetApiResources())
-                    .AddInMemoryClients(Config.GetClients())
-                    .AddProfileService<ProfileService>();
-            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
-            services.AddTransient<IProfileService, ProfileService>();
-            services.AddSingleton(new Repo<User>(
-                new MapInfo(this.Configuration["Mappers:Users"]),
-                new SpExecuter(this.Configuration["ConnectionStrings:UsersDB"])));
-            return services;
+            ServiceCollectionExtensions.RegisterServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
