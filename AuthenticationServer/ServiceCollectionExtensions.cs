@@ -19,16 +19,19 @@ namespace AuthenticationServer
                    .AddJsonFile("appsettings.json").Build();
         public static IServiceCollection RegisterServices(
             this IServiceCollection services)
-        {
+        {   // My user repository
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddMvc();
+            //Add identity server4
             services.AddIdentityServer().AddDeveloperSigningCredential()
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
                     .AddInMemoryApiResources(Config.GetApiResources())
                     .AddInMemoryClients(Config.GetClients())
                     .AddProfileService<ProfileService>();
+            //Inject the classes we just created
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddTransient<IProfileService, ProfileService>();
+
             services.AddSingleton(new Repo<User>(
             new MapInfo(Configuration["Mappers:Users"]),
             new SpExecuter(Configuration["ConnectionStrings:UsersDB"])));

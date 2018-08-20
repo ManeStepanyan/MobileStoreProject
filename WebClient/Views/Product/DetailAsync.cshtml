@@ -125,8 +125,8 @@
     </div>
 </div>
     <script>
-         $("div.action").on('click', 'button', function () {
-            var that = $(this)
+        $("div.action").on('click', 'button', function () {
+            var that = $(this);
             if (that.hasClass('add-to-cart')) {
                 @if (Context.Request.Cookies["Is logged"] == "1")
                 {
@@ -135,30 +135,30 @@
                     quantity += 1;
                     Context.Response.Cookies.Append("cart_quantity", quantity.ToString());*/
                     <text>
-                        var id = $('button.add-to-cart').closest("div").find("input#prod_id").attr("data");
-                        $.ajax
-                            ({
+                var id = $('button.add-to-cart').closest("div").find("input#prod_id").attr("data");
+                $.ajax
+                    ({
                         type: "POST",
-                                dataType: "Json",
-                                url: '@Url.Action("AddAsync", "ShoppingCart")',
-                                data: { id : id },
-                                async: false,
-                                success: function (data) {
-                            },
-                                error: function () {
+                        dataType: "Json",
+                        url: '@Url.Action("AddAsync", "ShoppingCart")',
+                        data: { id: id },
+                        async: false,
+                        success: function (data) {
+                        },
+                        error: function () {
                             ErrorMessage("", '');
-                            }
-                    })
-                   //$("body").find(".navbar .navbar-collapse .navbar-nav li a .badge").html(quantity);
+                        }
+                    });
+                //$("body").find(".navbar .navbar-collapse .navbar-nav li a .badge").html(quantity);
 
                    </text>
                 }
                 else
                 {
                     <text>
-                        $('#myModal').modal('toggle');
+                $('#myModal').modal('toggle');
                     </text>
                 }
-                        }
-        })
+            }
+        });
     </script>

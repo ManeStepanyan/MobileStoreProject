@@ -49,7 +49,6 @@ namespace AuthenticationServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-             //   new IdentityResources.Email(),
                 new IdentityResource
                 {
                     Name = JwtClaimTypes.Role,

@@ -58,12 +58,12 @@ namespace WebClient.Controllers
                 Expires = DateTime.Now.AddDays(1d)
                 
             };
-            if(claims["role"][0] == 2)
-                Response.Cookies.Append("seller_id", (string)claims["user_id"][0], option);
-            else if(claims["role"][0] == 3)
-                Response.Cookies.Append("customer_id", (string)claims["user_id"][0], option);
+            if(claims["role"] == "2")
+                Response.Cookies.Append("seller_id", (string)claims["user_id"], option);
+            else if(claims["role"] == "3")
+                Response.Cookies.Append("customer_id", (string)claims["user_id"], option);
 
-            Response.Cookies.Append("role", (string)claims["role"][0], option);
+            Response.Cookies.Append("role", (string)claims["role"], option);
             Response.Cookies.Append("Is logged", "1", option);
             Response.Cookies.Append("token", tokenResponse.AccessToken);
             return RedirectToAction("Index","Home");

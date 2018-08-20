@@ -29,7 +29,7 @@ namespace AuthenticationServer.Services
         }
 
         /// <summary>
-        /// Gets profile data.
+        /// Gets user profile data in terms of claims when calling /connect/userinfo ( to load claims for a user)
         /// </summary>
         /// <param name="context">Context</param>
         /// <returns>profile data getting task</returns>
@@ -37,7 +37,6 @@ namespace AuthenticationServer.Services
         {
             try
             {
-                context.IssuedClaims.AddRange(context.Subject.Claims);
                 // depending on the scope accessing the user data.
                 if (!string.IsNullOrEmpty(context.Subject.Identity.Name))
                 {

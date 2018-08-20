@@ -17,26 +17,16 @@ namespace Cryptography
             return DecryptString(str);
         }
 
-        
-        
+             
         
         private static readonly byte[] bIV =
         { 0x50, 0x08, 0xF1, 0xDD, 0xDE, 0x3C, 0xF2, 0x18,
         0x44, 0x74, 0x19, 0x2C, 0x53, 0x49, 0xAB, 0xBC };
-
-        
-        
-        
-        
-        
+     
         
         private const string cryptoKey =
             "Q3JpcHRvZ3JhZmlhcyBjb20gUmluamRhZWwgLyBBRVM=";
-
-        
-        
-        
-        
+   
         
         public static string EncryptString(string text)
         {
@@ -52,10 +42,7 @@ namespace Cryptography
                     
                     Rijndael rijndael = new RijndaelManaged
                     {
-
-                        
-                        
-                        
+                
                         KeySize = 256
                     };
 
@@ -88,9 +75,7 @@ namespace Cryptography
         }
 
         
-        
-        
-        
+  
         
         public static string DecryptString(string text)
         {
@@ -106,10 +91,7 @@ namespace Cryptography
                     
                     Rijndael rijndael = new RijndaelManaged
                     {
-
-                        
-                        
-                        
+    
                         KeySize = 256
                     };
 

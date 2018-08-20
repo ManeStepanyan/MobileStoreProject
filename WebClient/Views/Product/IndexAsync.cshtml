@@ -84,6 +84,7 @@
             </div>
         </fieldset>
     </form>
+
     @foreach (var product in Model)
     {
         @if (Model.IndexOf(product) % 3 == 0)
@@ -144,7 +145,7 @@
                 backgroundColor: "#00b0cc"
             }, 200);
         }, function () {
-            $(this).find("button.change-color").removeClass("btn-success").addClass("btn-primary")
+            $(this).find("button.change-color").removeClass("btn-success").addClass("btn-primary");
             $(this).find(".caption").stop().animate({
                 color: "black"
             });
@@ -157,8 +158,8 @@
             var that = $(this);
             if (that.hasClass('product-details')) {
                 var id = $('button.product-details').closest("div").find("input#prod_id").attr("data");
-                var url = '@Url.Action("DetailAsync","Product",new { id = "_id_" })';
-                window.location.href = url.replace("_id_", id);
+                var url = '@Url.Action("DetailAsync","Product",new { id = "id" })';
+                window.location.href = url.replace("id", id);
             }
             else if (that.hasClass('add-to-cart')) {
                 @if (Context.Request.Cookies["Is logged"] == "1")

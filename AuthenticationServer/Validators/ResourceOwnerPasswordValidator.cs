@@ -41,7 +41,6 @@ namespace AuthenticationServer.Validators
             {
                 // getting user
                 var user = await this._userRepository.FindAsync(context.UserName);
-                var del = user.Password;
                 // checking password
                 if (user != null)
                 {
