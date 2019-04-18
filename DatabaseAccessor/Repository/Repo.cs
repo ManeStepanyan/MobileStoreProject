@@ -31,8 +31,6 @@ namespace DatabaseAccess.Repository
             // setting fields
              this._mapInfo = mapInfo;
              this._spExecuter = spExecuter;
-         //   this._spExecuter = new SpExecuter("Data Source=(local);Initial Catalog=UsersDatabase;Integrated Security=True");
-         //   this._mapInfo = new MapInfo("UserMap.xml");
         }
 
         /// <summary>
@@ -50,9 +48,8 @@ namespace DatabaseAccess.Repository
             var spParams = null as IEnumerable<KeyValuePair<string, object>>;
 
             if (parameters != null)
-                spParams = this.ConstructParameters(operationInfo.ParametersMappInfo, parameters); //.ToList();
-            else spParams = parameters; //.ToList();
-
+                spParams = this.ConstructParameters(operationInfo.ParametersMappInfo, parameters);
+            else spParams = parameters; 
             // executing specific operation
             if (operationInfo.ReturnDataType == ReturnDataType.Entity)
                 return this._spExecuter.ExecuteEntitySp<TResult>(operationInfo.SpName, spParams);

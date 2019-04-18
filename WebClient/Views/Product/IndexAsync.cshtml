@@ -79,11 +79,12 @@
                         <div class="form-inline col-md-2">
                             <input type="submit" value="search" name="action" class="btn btn-primary add action pull-right" style="margin-top:17%">
                         </div>
-                        </div>
                     </div>
+                </div>
             </div>
         </fieldset>
     </form>
+</div>
 
     @foreach (var product in Model)
     {
@@ -107,12 +108,11 @@
                 </div>
             </div>
         </div>
-        @if (Model.IndexOf(product) % 3 == 1)
+        @if (Model.IndexOf(product) % 3 == 2)
         {
         @:</div>
     }
     }
-</div>
 <div class="modal fade" id="myModal">
     <div class="modal-dialog" style="color:black">
         <div class="modal-content">
